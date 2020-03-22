@@ -4,9 +4,8 @@ namespace Movys.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using Movys.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using Movys.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +15,7 @@ namespace Movys.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.MovieWatchList = new HashSet<MoviesUser>();
         }
 
         // Audit info
@@ -33,5 +33,7 @@ namespace Movys.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<MoviesUser> MovieWatchList { get; set; }
     }
 }

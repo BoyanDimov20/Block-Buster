@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
 
-    public class TVShow
-    {
+    using Movys.Data.Common.Models;
 
+    public class TVShow : BaseDeletableModel<string>
+    {
+        [Required]
         public string Title { get; set; }
 
         public string ReleaseYear { get; set; }
@@ -17,10 +20,6 @@
 
         public int ReviewsCount { get; set; }
 
-        public ICollection<CastMember> Creators { get; set; }
-
-        public ICollection<CastMember> Stars { get; set; } = new HashSet<CastMember>();
-
-        public ICollection<int> Seasons { get; set; } = new HashSet<int>();
+        public ICollection<TVShowsCastMember> CastMembers { get; set; } = new HashSet<TVShowsCastMember>();
     }
 }

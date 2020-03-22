@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Movys.Data.Common.Models;
-    using Movys.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Movys.Data.Common.Models;
+    using Movys.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -31,6 +30,12 @@
         public DbSet<CastMember> CastMembers { get; set; }
 
         public DbSet<Movie> Movies { get; set; }
+
+        public DbSet<MoviesUser> MoviesUsers { get; set; }
+
+        public DbSet<MoviesCastMember> MoviesCastMembers { get; set; }
+
+        public DbSet<TVShowsCastMember> TVShowsCastMembers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

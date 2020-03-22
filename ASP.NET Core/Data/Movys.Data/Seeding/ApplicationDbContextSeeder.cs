@@ -27,6 +27,8 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new CastMembersSeeder(),
+                              new MoviesSeeder(),
                           };
 
             foreach (var seeder in seeders)

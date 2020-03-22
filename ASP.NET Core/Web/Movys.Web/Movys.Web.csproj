@@ -39,4 +39,8 @@
     <ProjectReference Include="..\Movys.Web.Infrastructure\Movys.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\Movys.Web.ViewModels\Movys.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
 </Project>

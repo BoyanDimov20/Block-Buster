@@ -1,12 +1,15 @@
 ﻿namespace Movys.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Movys.Data.Common.Models;
 
-    public class Movie
+    public class Movie : BaseDeletableModel<string>
     {
-        public int Id { get; set; }
-
+        [Required]
         public string Title { get; set; }
+
+        public string Description { get; set; }
 
         public string ReleaseYear { get; set; }
 
@@ -16,11 +19,8 @@
 
         public int ReviewsCount { get; set; }
 
-        public ICollection<CastMember> Directors { get; set; }
+        public ICollection<MoviesCastMember> CastMembers { get; set; } = new HashSet<MoviesCastMember>();
 
-        public ICollection<CastMember> Writers { get; set; }
-
-        public ICollection<CastMember> Stars { get; set; } = new HashSet<CastMember>();
-
+        public ICollection<MoviesUser> UserWatched { get; set; } = new HashSet<MoviesUser>();
     }
 }
