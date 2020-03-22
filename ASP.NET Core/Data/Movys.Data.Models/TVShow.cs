@@ -20,6 +20,8 @@
 
         public int ReviewsCount { get; set; }
 
-        public ICollection<TVShowsCastMember> CastMembers { get; set; } = new HashSet<TVShowsCastMember>();
+        public virtual ICollection<TVShowsCastMember> CastMembers { get; set; } = new HashSet<TVShowsCastMember>();
+
+        public virtual ICollection<GenresTVShow> Genres { get; set; } = new HashSet<GenresTVShow>();
     }
 }

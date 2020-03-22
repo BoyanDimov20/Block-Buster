@@ -18,8 +18,8 @@
 
         public string BornInfo { get; set; }
 
-        public ICollection<MoviesCastMember> Movies { get; set; }
+        public virtual ICollection<MoviesCastMember> Movies { get; set; }
 
-        public ICollection<TVShowsCastMember> TVShows { get; set; }
+        public virtual ICollection<TVShowsCastMember> TVShows { get; set; }
     }
 }

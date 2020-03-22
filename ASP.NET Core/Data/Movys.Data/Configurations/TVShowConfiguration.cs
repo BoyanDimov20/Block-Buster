@@ -15,6 +15,10 @@
             builder.HasMany(x => x.CastMembers)
                 .WithOne(x => x.TVShow)
                 .HasForeignKey(x => x.TVShowId);
+
+            builder.HasMany(x => x.Genres)
+                .WithOne(x => x.TVShow)
+                .HasForeignKey(x => x.TVShowId);
         }
     }
 }

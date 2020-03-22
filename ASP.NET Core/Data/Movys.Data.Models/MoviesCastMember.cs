@@ -20,5 +20,7 @@
         [Required]
         public RoleType RoleType { get; set; }
 
+        public string RoleName { get; set; }
+
     }
 }

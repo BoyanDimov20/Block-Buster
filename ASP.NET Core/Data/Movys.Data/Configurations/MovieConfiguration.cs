@@ -19,6 +19,10 @@
             builder.HasMany(x => x.UserWatched)
                 .WithOne(x => x.Movie)
                 .HasForeignKey(x => x.MovieId);
+
+            builder.HasMany(x => x.Genres)
+                .WithOne(x => x.Movie)
+                .HasForeignKey(x => x.MovieId);
         }
     }
 }

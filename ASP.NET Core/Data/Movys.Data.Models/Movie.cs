@@ -19,8 +19,10 @@
 
         public int ReviewsCount { get; set; }
 
-        public ICollection<MoviesCastMember> CastMembers { get; set; } = new HashSet<MoviesCastMember>();
+        public virtual ICollection<MoviesCastMember> CastMembers { get; set; } = new HashSet<MoviesCastMember>();
 
-        public ICollection<MoviesUser> UserWatched { get; set; } = new HashSet<MoviesUser>();
+        public virtual ICollection<MoviesUser> UserWatched { get; set; } = new HashSet<MoviesUser>();
+
+        public virtual ICollection<GenresMovie> Genres { get; set; } = new HashSet<GenresMovie>();
     }
 }

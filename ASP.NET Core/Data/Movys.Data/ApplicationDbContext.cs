@@ -37,6 +37,12 @@
 
         public DbSet<TVShowsCastMember> TVShowsCastMembers { get; set; }
 
+        public DbSet<Genre> Genres { get; set; }
+
+        public DbSet<GenresMovie> GenresMovies { get; set; }
+
+        public DbSet<GenresTVShow> GenresTVShows { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movys.Data;
 
 namespace Movys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200322230120_AddingGenres")]
+    partial class AddingGenres
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,42 +287,22 @@ namespace Movys.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genres");
-                });
-
-            modelBuilder.Entity("Movys.Data.Models.GenresMovie", b =>
-                {
-                    b.Property<string>("GenreId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("MovieId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("GenreId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("GenresMovies");
-                });
-
-            modelBuilder.Entity("Movys.Data.Models.GenresTVShow", b =>
-                {
-                    b.Property<string>("GenreId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TVShowId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("GenreId", "TVShowId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
 
                     b.HasIndex("TVShowId");
 
-                    b.ToTable("GenresTVShows");
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("Movys.Data.Models.Movie", b =>
@@ -546,34 +528,15 @@ namespace Movys.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Movys.Data.Models.GenresMovie", b =>
+            modelBuilder.Entity("Movys.Data.Models.Genre", b =>
                 {
-                    b.HasOne("Movys.Data.Models.Genre", "Genre")
-                        .WithMany("Movies")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Movys.Data.Models.Movie", "Movie")
+                    b.HasOne("Movys.Data.Models.Movie", null)
                         .WithMany("Genres")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
+                        .HasForeignKey("MovieId");
 
-            modelBuilder.Entity("Movys.Data.Models.GenresTVShow", b =>
-                {
-                    b.HasOne("Movys.Data.Models.Genre", "Genre")
-                        .WithMany("TVShows")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Movys.Data.Models.TVShow", "TVShow")
+                    b.HasOne("Movys.Data.Models.TVShow", null)
                         .WithMany("Genres")
-                        .HasForeignKey("TVShowId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TVShowId");
                 });
 
             modelBuilder.Entity("Movys.Data.Models.MoviesCastMember", b =>

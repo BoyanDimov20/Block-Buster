@@ -29,6 +29,7 @@
                               new SettingsSeeder(),
                               new CastMembersSeeder(),
                               new MoviesSeeder(),
+                              new GenresSeeder(),
                           };
 
             foreach (var seeder in seeders)
