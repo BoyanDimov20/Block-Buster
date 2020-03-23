@@ -45,6 +45,19 @@
                 await dbContext.CastMembers.AddAsync(castMember1);
                 await dbContext.CastMembers.AddAsync(castMember2);
             }
+
+            if (!dbContext.MoviesCastMembers.Any(x => x.RoleType == RoleType.Director))
+            {
+                CastMember director = new CastMember
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "Sean Anders",
+                    ImageUrl = "https://m.media-amazon.com/images/M/MV5BMTU5Njk2ODU2MF5BMl5BanBnXkFtZTcwMjM0NTgxOA@@._V1_SY1000_CR0,0,693,1000_AL_.jpg",
+                    BornInfo = string.Empty,
+                    Description = "Sean Anders is an American film director and screenwriter.",
+                };
+                await dbContext.CastMembers.AddAsync(director);
+            }
         }
     }
 }

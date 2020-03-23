@@ -15,6 +15,8 @@
 
         public string CastMemberImageUrl { get; set; }
 
-        // TODO: In-Movie Name
+        public string RoleName { get; set; }
+
+        public RoleType RoleType { get; set; }
     }
 }
