@@ -2,6 +2,7 @@
 
 @model Movys.Web.ViewModels.Movies.SingleMovieViewModel
 
+
 <div class="hero mv-single-hero">
     <div class="container">
         <div class="row">
@@ -223,7 +224,7 @@
                                                 <h3>Related Movies To</h3>
                                                 <h2>@Model.Title</h2>
                                             </div>
-                                            <a href="#" class="redbtn">Write Review</a>
+                                            
                                         </div>
                                         <div class="topbar-filter">
                                             <p>Found <span>56 reviews</span> in total</p>
@@ -236,6 +237,46 @@
                                                 <option value="date">Release date Descending</option>
                                                 <option value="date">Release date Ascending</option>
                                             </select>
+                                        </div>
+                                        <div class="mv-user-review-item">
+                                            <form>
+                                                <div class="user-infor">
+                                                    <img src="~/images/uploads/userava1.jpg" alt="">
+                                                    <div>
+                                                        <div class="review-content">
+                                                            <input type="text" placeholder="Title"> 
+                                                        </div>
+                                                        <div class="no-star">
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star"></i>
+                                                            <i class="ion-android-star last"></i>
+                                                        </div>
+                                                        <p class="time">
+                                                            <a href="#"> @User.Identity.Name</a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="review-content">
+                                                    <p>
+                                                        <textarea class="form-control" id="Content" rows="4" placeholder="Write a review"></textarea>
+                                                    </p>
+                                                </div>
+
+                                                <p>
+                                                    <div class="btn pull-right">
+                                                        <a href="#" class="redbtn">Write Review</a>
+                                                    </div>
+                                                </p>
+
+                                                
+                                            </form>
                                         </div>
                                         <div class="mv-user-review-item">
                                             <div class="user-infor">
