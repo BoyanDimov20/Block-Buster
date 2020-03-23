@@ -32,6 +32,10 @@
             appUser.HasMany(x => x.MovieWatchList)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
+
+            appUser.HasMany(x => x.Reviews)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
         }
     }
 }

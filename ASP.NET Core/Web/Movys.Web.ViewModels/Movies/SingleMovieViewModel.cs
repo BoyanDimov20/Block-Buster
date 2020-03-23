@@ -24,5 +24,7 @@
         public int ReviewsCount { get; set; }
 
         public IEnumerable<CastMemberViewModel> CastMembers { get; set; }
+
+        public IEnumerable<GenreViewModel> Genres { get; set; }
     }
 }

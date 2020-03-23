@@ -35,5 +35,7 @@ namespace Movys.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<MoviesUser> MovieWatchList { get; set; }
+
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }

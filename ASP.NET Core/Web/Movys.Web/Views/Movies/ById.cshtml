@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
-                    <h1 class="bd-hd">Skyfall: Quantum of Spectre <span>2015</span></h1>
+                    <h1 class="bd-hd">@Model.Title <span>@Model.ReleaseYear</span></h1>
                     <div class="social-btn">
                         <a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
                         <div class="hover-bnt">
@@ -53,7 +53,7 @@
                             <i class="ion-android-star"></i>
                             <p>
                                 <span>8.1</span> /10<br>
-                                <span class="rv">56 Reviews</span>
+                                <span class="rv">@Model.ReviewsCount Reviews</span>
                             </p>
                         </div>
                         <div class="rate-star">
@@ -66,6 +66,7 @@
                             <i class="ion-ios-star"></i>
                             <i class="ion-ios-star"></i>
                             <i class="ion-ios-star"></i>
+                            <i class="ion-ios-star-outline"></i>
                             <i class="ion-ios-star-outline"></i>
                         </div>
                     </div>
@@ -157,19 +158,39 @@
                                             </div>  
                                             <div class="sb-it">
                                                 <h6>Writer: </h6>
-                                                <p><a href="#">Joss Whedon,</a> <a href="#">Stan Lee</a></p>
+                                                <p>
+                                                    @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Writer))
+                                                    {
+                                                        <a href="#">@writer.CastMemberName,</a>
+
+                                                    }
+                                                    <a href="#">Stan Lee</a>
+                                                </p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Stars: </h6>
-                                                <p><a href="#">Robert Downey Jr,</a> <a href="#">Chris Evans,</a> <a href="#">Mark Ruffalo,</a><a href="#"> Scarlett Johansson</a></p>
+                                                <p>
+                                                    @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Actor))
+                                                    {
+                                                        <a href="#">@actor.CastMemberName,</a>
+                                                    }
+                                                    <a href="#">Chris Evans,</a>
+                                                    <a href="#">Mark Ruffalo,</a>
+                                                    <a href="#"> Scarlett Johansson</a>
+                                                </p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Genres:</h6>
-                                                <p><a href="#">Action, </a> <a href="#"> Sci-Fi,</a> <a href="#">Adventure</a></p>
+                                                <p>
+                                                    @foreach (var genre in Model.Genres)
+                                                    {
+                                                        <a href="#">@genre.GenreName,</a>
+                                                    }
+                                                </p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Release Date:</h6>
-                                                <p>May 1, 2015 (U.S.A)</p>
+                                                <p>@Model.ReleaseYear</p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Run Time:</h6>
@@ -200,7 +221,7 @@
                                         <div class="rv-hd">
                                             <div class="div">
                                                 <h3>Related Movies To</h3>
-                                                <h2>Skyfall: Quantum of Spectre</h2>
+                                                <h2>@Model.Title</h2>
                                             </div>
                                             <a href="#" class="redbtn">Write Review</a>
                                         </div>
