@@ -109,22 +109,15 @@
                                                     <div class="cast-it">
                                                         <div class="cast-left">
                                                             <img width="40" height="40" src="@castMember.CastMemberImageUrl" alt="">
-                                                            <a href="#">@castMember.CastMemberName</a>
+                                                            <a asp-controller="Celebs" asp-action="ById" asp-route-id="@castMember.CastMemberId">@castMember.CastMemberName</a>
                                                         </div>
                                                         <p>...  @castMember.RoleName</p>
                                                     </div>
                                                 }
-                                                <div class="cast-it">
-                                                    <div class="cast-left">
-                                                        <img src="~/images/uploads/cast2.jpg" alt="">
-                                                        <a href="#">Chris Hemsworth</a>
-                                                    </div>
-                                                    <p>...  Thor</p>
-                                                </div>
                                             </div>
                                             <div class="title-hd-sm">
                                                 <h4>User reviews</h4>
-                                                <a href="#" class="time">See All 56 Reviews <i class="ion-ios-arrow-right"></i></a>
+                                                <a href="#" class="time">See All @Model.ReviewsCount Reviews <i class="ion-ios-arrow-right"></i></a>
                                             </div>
                                             <!-- movie user review -->
                                             <div class="mv-user-review-item">

@@ -38,24 +38,27 @@
             <span></span>
         </div>
     </div>
+    
     <!--end of preloading-->
     <!--login form popup-->
     <div class="login-wrapper" id="login-content">
         <div class="login-content">
             <a href="#" class="close">x</a>
             <h3>Login</h3>
-            <form method="post" action="#">
+            <form method="post" asp-controller="Users" asp-action="Login">
                 <div class="row">
-                    <label for="username">
-                        Username:
-                        <input type="text" name="username" id="username" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                    <label>
+                        Username
+                        <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
+                        <input type="text" id="LoginInputModelUsername" name="LoginInputModelUsername" placeholder="Username" required="required" />
                     </label>
                 </div>
 
                 <div class="row">
-                    <label for="password">
-                        Password:
-                        <input type="password" name="password" id="password" placeholder="******" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                    <label>
+                        Password
+                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                        <input type="password" id="LoginInputModelPassword" name="LoginInputModelPassword" placeholder="Password" required="required" />
                     </label>
                 </div>
                 <div class="row">
@@ -85,34 +88,38 @@
         <div class="login-content">
             <a href="#" class="close">x</a>
             <h3>sign up</h3>
-            <form method="post" action="#">
+            <form method="post">
                 <div class="row">
-                    <label for="username-2">
-                        Username:
-                        <input type="text" name="username" id="username-2" placeholder="Hugh Jackman" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$" required="required" />
+                    <label>
+                        Username
+                        <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
+                        <input type="text" id="RegisterInputModelUsername" name="RegisterInputModelUsername" placeholder="Username" required="required" />
                     </label>
                 </div>
 
                 <div class="row">
-                    <label for="email-2">
-                        your email:
-                        <input type="password" name="email" id="email-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                    <label>
+                        Email
+                        <!--pattern="(?=^.{8,} $)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                        <input type="email" id="RegisterInputModelEmail" name="RegisterInputModelEmail" placeholder="Email" required="required" />
                     </label>
                 </div>
                 <div class="row">
-                    <label for="password-2">
-                        Password:
-                        <input type="password" name="password" id="password-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                    <label>
+                        Password
+                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                        <input type="password" id="RegisterInputModelPassword" name="RegisterInputModelPassword" placeholder="Password" required="required" />
                     </label>
                 </div>
                 <div class="row">
-                    <label for="repassword-2">
-                        re-type Password:
-                        <input type="password" name="password" id="repassword-2" placeholder="" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required="required" />
+                    <label>
+                        Re-Type Passowrd
+                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                        <input type="password" id="RegisterInputModelConfirmPassword" name="RegisterInputModelConfirmPassword" placeholder="Re-Type Password" required="required" />
                     </label>
                 </div>
                 <div class="row">
-                    <button type="submit">sign up</button>
+                    <button asp-controller="Users" asp-action="Register" type="submit">sign up</button>
                 </div>
             </form>
         </div>

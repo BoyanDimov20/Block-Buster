@@ -6,6 +6,7 @@
 
     using Movys.Data.Models;
     using Movys.Services.Mapping;
+    using Movys.Web.ViewModels.Users;
 
     public class SingleMovieViewModel : IMapFrom<Movie>
     {
@@ -26,5 +27,9 @@
         public IEnumerable<CastMemberViewModel> CastMembers { get; set; }
 
         public IEnumerable<GenreViewModel> Genres { get; set; }
+
+        public LoginInputModel LoginInputModel { get; set; }
+
+        public RegisterInputModel RegisterInputModel { get; set; }
     }
 }
