@@ -85,11 +85,13 @@
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseStatusCodePagesWithRedirects("/Errors/404");
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
+                app.UseStatusCodePagesWithRedirects("/Errors/404");
             }
 
             app.UseHttpsRedirection();
