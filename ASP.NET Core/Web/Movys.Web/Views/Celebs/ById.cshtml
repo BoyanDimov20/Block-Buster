@@ -27,10 +27,10 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct">
                     <h1 class="bd-hd">@Model.Name</h1>
-                    <p class="ceb-single">Actor  |  Producer</p>
+                    <p class="ceb-single">@string.Join(" | ", Model.Movies.Select(x => x.RoleType).Distinct())</p>
                     <div class="social-link cebsingle-socail">
-                        <a href="#"><i class="ion-social-facebook"></i></a>
-                        <a href="#"><i class="ion-social-twitter"></i></a>
+                        <a href="@Model.FacebookUrl"><i class="ion-social-facebook"></i></a>
+                        <a href="@Model.TwitterUrl"><i class="ion-social-twitter"></i></a>
                         <a href="#"><i class="ion-social-googleplus"></i></a>
                         <a href="#"><i class="ion-social-linkedin"></i></a>
                     </div>
@@ -97,11 +97,11 @@
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Country:  </h6>
-                                                <p>Australian</p>
+                                                <p>@Model.CountryBornIn</p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Height:</h6>
-                                                <p>186 cm/p>
+                                                <p>@Model.Height cm</p>
                                             </div>
                                             <div class="sb-it">
                                                 <h6>Keywords:</h6>
@@ -127,7 +127,7 @@
                                                 <h2>@Model.Name</h2>
                                             </div>
                                         </div>
-                                        <p>@Model.Description</p>
+                                        <p>@Model.FullBiography</p>
                                         <p></p>
                                         <p></p>
                                         <p></p>

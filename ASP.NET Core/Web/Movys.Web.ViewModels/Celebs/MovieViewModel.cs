@@ -11,6 +11,8 @@
     {
         public string RoleName { get; set; }
 
+        public string RoleType { get; set; }
+
         public string MovieId { get; set; }
 
         public string MovieTitle { get; set; }

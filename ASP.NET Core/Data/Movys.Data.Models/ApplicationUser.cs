@@ -16,6 +16,7 @@ namespace Movys.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.MovieWatchList = new HashSet<MoviesUser>();
+            this.Reviews = new HashSet<Review>();
         }
 
         // Audit info

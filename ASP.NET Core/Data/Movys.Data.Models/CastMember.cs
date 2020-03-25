@@ -16,10 +16,26 @@
 
         public string Description { get; set; }
 
+        public string FullBiography { get; set; }
+
         public string BornInfo { get; set; }
 
-        public virtual ICollection<MoviesCastMember> Movies { get; set; }
+        public string CountryBornIn { get; set; }
 
-        public virtual ICollection<TVShowsCastMember> TVShows { get; set; }
+        public int Height { get; set; }
+
+        public string FacebookUrl { get; set; }
+
+        public string TwitterUrl { get; set; }
+
+        public string GoogleUrl { get; set; }
+
+        public string LinkedInUrl { get; set; }
+
+        public virtual ICollection<Media> MediaUrls { get; set; } = new HashSet<Media>();
+
+        public virtual ICollection<MoviesCastMember> Movies { get; set; } = new HashSet<MoviesCastMember>();
+
+        public virtual ICollection<TVShowsCastMember> TVShows { get; set; } = new HashSet<TVShowsCastMember>();
     }
 }
