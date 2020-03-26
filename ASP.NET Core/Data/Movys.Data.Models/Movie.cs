@@ -23,6 +23,6 @@
 
         public virtual ICollection<GenresMovie> Genres { get; set; } = new HashSet<GenresMovie>();
 
-        public virtual ICollection<Review> Review { get; set; } = new HashSet<Review>();
+        public virtual ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
     }
 }

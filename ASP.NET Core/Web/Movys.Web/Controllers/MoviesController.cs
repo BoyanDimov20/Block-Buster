@@ -28,7 +28,7 @@
         {
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderBy(x => x.ReviewsCount).ToList(),
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).ToList(),
             };
 
             return this.View(viewModel);

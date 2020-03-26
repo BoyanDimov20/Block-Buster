@@ -1,4 +1,4 @@
-﻿
+﻿@using Movys.Data.Models
 @model Movys.Web.ViewModels.Movies.ListingMoviesViewModel
 
 <div class="hero common-hero">
@@ -31,7 +31,7 @@
                         <option value="date">Release date Descending</option>
                         <option value="date">Release date Ascending</option>
                     </select>
-                    <a href="movielist.html" class="list"><i class="ion-ios-list-outline active"></i></a>
+                    <a class="list"><i class="ion-ios-list-outline active"></i></a>
                     <a href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
                 </div>
 
@@ -40,24 +40,28 @@
                     <div class="movie-item-style-2">
                         <img src="@Model.Movies[i].ImageUrl" alt="">
                         <div class="mv-item-infor">
-                            <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@Model.Movies[i].Id">@Model.Movies[i].Title <span>@Model.Movies[i].ReleaseYear</span></a></h6>
-                            <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+                            <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@Model.Movies[i].Id">@Model.Movies[i].Title <span>(@Model.Movies[i].ReleaseYear)</span></a></h6>
+                            <p class="rate"><i class="ion-android-star"></i><span>@Model.Movies[i].Rating</span> /10</p>
                             <p class="describe">@Model.Movies[i].Description</p>
-                            <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: @Model.Movies[i].ReleaseYear</span></p>
                             <p>
                                 Director:
-                                @foreach (var director in Model.Movies[i].CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Director))
+                                @foreach (var director in Model.Movies[i].CastMembers.Where(x => x.RoleType == RoleType.Director))
                                 {
                                     <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName, </a>
                                 }
                             </p>
                             <p>
                                 Stars:
-                                @foreach (var actor in Model.Movies[i].CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Actor))
+                                @foreach (var actor in Model.Movies[i].CastMembers.Where(x => x.RoleType == RoleType.Actor))
                                 {
                                     <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName, </a>
                                 }
                             </p>
+                            <p>Release Year: @Model.Movies[i].ReleaseYear</p>
+                            <p>
+                                Genres: @String.Join(", ", @Model.Movies[i].Genres.Select(x => x.GenreName))
+                            </p>
+
                         </div>
                     </div>
                 }

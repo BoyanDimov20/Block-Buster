@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     using Movys.Data.Models;
     using Movys.Services.Mapping;
+    using Movys.Web.ViewModels.Reviews;
     using Movys.Web.ViewModels.Users;
 
     public class SingleMovieViewModel : IMapFrom<Movie>
@@ -22,7 +24,11 @@
 
         public string TrailerUrl { get; set; }
 
-        public int ReviewsCount { get; set; }
+        public int ReviewsCount => this.Reviews.Count();
+
+        public double Rating => (this.ReviewsCount == 0) ? 0 : this.Reviews.Average(x => x.Rating);
+
+        public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
         public IEnumerable<CastMemberViewModel> CastMembers { get; set; }
 
