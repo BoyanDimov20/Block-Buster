@@ -11,6 +11,5 @@
         public LoginInputModel LoginInputModel { get; set; }
 
         public RegisterInputModel RegisterInputModel { get; set; }
-
     }
 }

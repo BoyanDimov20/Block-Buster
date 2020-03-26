@@ -23,5 +23,15 @@
             SingleMovieViewModel viewModel = this.moviesService.GetAll<SingleMovieViewModel>().First(x => x.Id == id);
             return this.View(viewModel);
         }
+
+        public IActionResult ListingMostPopular()
+        {
+            ListingMoviesViewModel viewModel = new ListingMoviesViewModel
+            {
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderBy(x => x.ReviewsCount).ToList(),
+            };
+
+            return this.View(viewModel);
+        }
     }
 }

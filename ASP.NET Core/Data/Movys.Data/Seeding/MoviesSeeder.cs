@@ -22,7 +22,6 @@
                     TrailerUrl = "https://www.youtube.com/watch?v=8ugaeA-nMTc",
                     ImageUrl = "https://images-na.ssl-images-amazon.com/images/I/71lVAGaqBtL._AC_SY550_.jpg",
                     ReleaseYear = "2008",
-                    ReviewsCount = 0,
                 };
 
                 Movie movie1 = new Movie
@@ -33,7 +32,6 @@
                     TrailerUrl = "https://www.youtube.com/watch?v=arhMMJx7tCU",
                     ImageUrl = "https://cineboom.eu/wp-content/uploads/2015/03/daddys_home_ver3.jpg",
                     ReleaseYear = "2015",
-                    ReviewsCount = 0,
                 };
 
                 await dbContext.Movies.AddAsync(movie);

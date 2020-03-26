@@ -17,12 +17,12 @@
 
         public string TrailerUrl { get; set; }
 
-        public int ReviewsCount { get; set; }
-
         public virtual ICollection<MoviesCastMember> CastMembers { get; set; } = new HashSet<MoviesCastMember>();
 
         public virtual ICollection<MoviesUser> UserWatched { get; set; } = new HashSet<MoviesUser>();
 
         public virtual ICollection<GenresMovie> Genres { get; set; } = new HashSet<GenresMovie>();
+
+        public virtual ICollection<Review> Review { get; set; } = new HashSet<Review>();
     }
 }

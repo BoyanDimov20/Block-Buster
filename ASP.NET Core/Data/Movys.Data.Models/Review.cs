@@ -17,5 +17,9 @@
         public virtual ApplicationUser User { get; set; }
 
         public string UserId { get; set; }
+
+        public virtual Movie Movie { get; set; }
+
+        public string MovieId { get; set; }
     }
 }
