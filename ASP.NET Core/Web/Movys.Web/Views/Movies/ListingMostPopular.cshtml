@@ -22,20 +22,11 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
                     <p>Found <span>@Model.MoviesCount movies</span> in total</p>
-                    <label>Sort by:</label>
-                    <select>
-                        <option value="popularity">Popularity Descending</option>
-                        <option value="popularity">Popularity Ascending</option>
-                        <option value="rating">Rating Descending</option>
-                        <option value="rating">Rating Ascending</option>
-                        <option value="date">Release date Descending</option>
-                        <option value="date">Release date Ascending</option>
-                    </select>
                     <a class="list"><i class="ion-ios-list-outline active"></i></a>
                     <a href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
                 </div>
 
-                @for (int i = 0; i < 5 && i < Model.Movies.Count; i++)
+                @for (int i = 0; i < Model.Movies.Count; i++)
                 {
                     <div class="movie-item-style-2">
                         <img src="@Model.Movies[i].ImageUrl" alt="">
@@ -61,7 +52,6 @@
                             <p>
                                 Genres: @String.Join(", ", @Model.Movies[i].Genres.Select(x => x.GenreName))
                             </p>
-
                         </div>
                     </div>
                 }
@@ -72,10 +62,12 @@
                         <option value="saab">10 Movies</option>
                     </select>
                     <div class="pagination2">
-                        <span>Page 1 of 2:</span>
-                        <a class="active" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#"><i class="ion-arrow-right-b"></i></a>
+                        <span>Page @ViewData["CurrentPage"] of @ViewData["PagesCount"]:</span>
+
+                        @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
+                        {
+                            <a asp-action="ListingMostPopular" asp-route-id="@i">@i</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -83,7 +75,7 @@
                 <div class="sidebar">
                     <div class="searh-form">
                         <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" action="#">
+                        <form class="form-style-1" asp-action="ListingMostPopular">
                             <div class="row">
                                 <div class="col-md-12 form-it">
                                     <label>Movie name</label>
