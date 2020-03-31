@@ -1,0 +1,48 @@
+﻿@model Movys.Web.ViewModels.Users.RegisterInputModel
+
+<div id="preloader">
+    <div class="login-content">
+        <img class="logo" src="~/images/logo1.png" alt="" width="119" height="58">
+        <br />
+        <br />
+        <h3>Register</h3>
+        <br />
+        <form method="post">
+            <div class="row">
+                <label>
+                    <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
+                    <input type="text" asp-for="Username" placeholder="Username" required="required"/>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </label>
+            </div>
+            <br />
+            <div class="row">
+                <label>
+                    <!--pattern="(?=^.{8,} $)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                    <input type="email" asp-for="Email" placeholder="Email" required="required"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </label>
+            </div>
+            <br />
+            <div class="row">
+                <label>
+                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                    <input type="password" asp-for="Password" placeholder="Password" required="required"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </label>
+            </div>
+            <br />
+            <div class="row">
+                <label>
+                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                    <input type="password" asp-for="ConfirmPassword" placeholder="Re-Type Password" required="required"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </label>
+            </div>
+            <br />
+            <div class="row">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -38,93 +38,8 @@
             <span></span>
         </div>
     </div>
-    
     <!--end of preloading-->
-    <!--login form popup-->
-    <div class="login-wrapper" id="login-content">
-        <div class="login-content">
-            <a href="#" class="close">x</a>
-            <h3>Login</h3>
-            <form method="post" asp-controller="Users" asp-action="Login">
-                <div class="row">
-                    <label>
-                        Username
-                        <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
-                        <input type="text" id="LoginInputModelUsername" name="LoginInputModelUsername" placeholder="Username" required="required" />
-                    </label>
-                </div>
-
-                <div class="row">
-                    <label>
-                        Password
-                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
-                        <input type="password" id="LoginInputModelPassword" name="LoginInputModelPassword" placeholder="Password" required="required" />
-                    </label>
-                </div>
-                <div class="row">
-                    <div class="remember">
-                        <div>
-                            <input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
-                        </div>
-                        <a href="#">Forget password ?</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <button type="submit">Login</button>
-                </div>
-            </form>
-            <div class="row">
-                <p>Or via social</p>
-                <div class="social-btn-2">
-                    <a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
-                    <a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--end of login form popup-->
-    <!--signup form popup-->
-    <div class="login-wrapper" id="signup-content">
-        <div class="login-content">
-            <a href="#" class="close">x</a>
-            <h3>sign up</h3>
-            <form method="post">
-                <div class="row">
-                    <label>
-                        Username
-                        <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
-                        <input type="text" id="RegisterInputModelUsername" name="RegisterInputModelUsername" placeholder="Username" required="required" />
-                    </label>
-                </div>
-
-                <div class="row">
-                    <label>
-                        Email
-                        <!--pattern="(?=^.{8,} $)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
-                        <input type="email" id="RegisterInputModelEmail" name="RegisterInputModelEmail" placeholder="Email" required="required" />
-                    </label>
-                </div>
-                <div class="row">
-                    <label>
-                        Password
-                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
-                        <input type="password" id="RegisterInputModelPassword" name="RegisterInputModelPassword" placeholder="Password" required="required" />
-                    </label>
-                </div>
-                <div class="row">
-                    <label>
-                        Re-Type Passowrd
-                        <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
-                        <input type="password" id="RegisterInputModelConfirmPassword" name="RegisterInputModelConfirmPassword" placeholder="Re-Type Password" required="required" />
-                    </label>
-                </div>
-                <div class="row">
-                    <button asp-controller="Users" asp-action="Register" type="submit">sign up</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!--end of signup form popup-->
+   
     <!-- BEGIN | Header -->
     <header class="ht-header">
         <div class="container">
@@ -194,8 +109,8 @@
                             </ul>
                         </li>
                         <li><a href="#">Help</a></li>
-                        <li class="loginLink"><a href="#">LOG In</a></li>
-                        <li class="btn signupLink"><a href="#">sign up</a></li>
+                        <li class="loginLink"><a asp-controller="Users" asp-action="Login">LOG In</a></li>
+                        <li class="btn signupLink"><a asp-controller="Users" asp-action="Register">sign up</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

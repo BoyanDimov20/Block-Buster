@@ -20,6 +20,11 @@
             this.userManager = userManager;
         }
 
+        public IActionResult Register()
+        {
+            return this.View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterInputModel inputModel)
         {
@@ -43,9 +48,16 @@
                 {
                     this.ModelState.AddModelError(string.Empty, error.Description);
                 }
+
+                return this.Register();
             }
 
-            return this.Redirect("/Shared/Error");
+            return this.Register();
+        }
+
+        public IActionResult Login()
+        {
+            return this.View();
         }
 
         [HttpPost]

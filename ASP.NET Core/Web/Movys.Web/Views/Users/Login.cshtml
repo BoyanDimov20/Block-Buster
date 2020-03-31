@@ -1,0 +1,47 @@
+﻿@model Movys.Web.ViewModels.Users.LoginInputModel
+
+<div id="preloader">
+    <div class="login-content">
+        <img class="logo" src="~/images/logo1.png" alt="" width="119" height="58">
+        <br />
+        <br />
+        <a href="#" class="close">x</a>
+        <h3>Login</h3>
+        <br />
+        <form method="post" asp-controller="Users" asp-action="Login">
+            <div class="row">
+                <label>
+                    <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
+                    <input type="text" asp-for="Username" required="required" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </label>
+            </div>
+            <br />
+            <div class="row">
+                <label>
+                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                    <input type="password" asp-for="Password" required="required" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </label>
+            </div>
+            <div class="row">
+                <div class="remember">
+                    <div>
+                        <input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+                    </div>
+                    <a href="#">Forget password ?</a> <!--TODO-->
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <div class="row">
+            <p>Or via social</p>
+            <div class="social-btn-2">
+                <a class="fb" href="#"><i class="ion-social-facebook"></i>Facebook</a>
+                <a class="tw" href="#"><i class="ion-social-twitter"></i>twitter</a>
+            </div>
+        </div>
+    </div>
+</div>
