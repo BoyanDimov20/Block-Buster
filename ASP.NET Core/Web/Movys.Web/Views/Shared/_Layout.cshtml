@@ -98,19 +98,28 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav flex-child-menu menu-right">
-                        <li class="dropdown first">
-                            <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                                pages <i class="fa fa-angle-down" aria-hidden="true"></i>
-                            </a>
-                            <ul class="dropdown-menu level1">
-                                <li><a href="landing.html">Landing</a></li>
-                                <li><a href="404.html">404 Page</a></li>
-                                <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Help</a></li>
-                        <li class="loginLink"><a asp-controller="Users" asp-action="Login">LOG In</a></li>
-                        <li class="btn signupLink"><a asp-controller="Users" asp-action="Register">sign up</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="dropdown first">
+                                <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                                    profile <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </a>
+
+                                <ul class="dropdown-menu level1">
+                                    <li><a asp-controller="Profiles" asp-action="UserProfile">User Profile</a></li>
+                                    <li><a asp-controller="Profiles" asp-action="UserRating">User Rating</a></li>
+                                    <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Help</a></li>
+                            <li class="btn signupLink"><a asp-controller="Users" asp-action="Logout">Logout</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="#">Help</a></li>
+                            <li class="loginLink"><a asp-controller="Users" asp-action="Login">LOG In</a></li>
+                            <li class="btn signupLink"><a asp-controller="Users" asp-action="Register">sign up</a></li>
+                        }
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

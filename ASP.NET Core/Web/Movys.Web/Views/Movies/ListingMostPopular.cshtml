@@ -66,7 +66,7 @@
 
                         @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
                         {
-                            <a asp-action="ListingMostPopular" asp-route-id="@i">@i</a>
+                            <a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a>
                         }
                     </div>
                 </div>

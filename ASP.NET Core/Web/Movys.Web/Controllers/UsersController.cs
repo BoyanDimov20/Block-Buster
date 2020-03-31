@@ -80,5 +80,12 @@
 
             return this.Redirect("/");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+
+            return this.Redirect("/");
+        }
     }
 }

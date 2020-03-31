@@ -13,5 +13,6 @@
 
         public int MoviesCount => this.Movies.Count();
 
+        public int PageIndex { get; set; }
     }
 }
