@@ -7,16 +7,17 @@
 
     using Microsoft.AspNetCore.Mvc;
     using Movys.Services.Data;
-    using Movys.Web.Infrastructure;
     using Movys.Web.ViewModels.Movies;
 
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
+        private readonly IGenresMovieService genresMovieService;
 
-        public MoviesController(IMoviesService moviesService)
+        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService)
         {
             this.moviesService = moviesService;
+            this.genresMovieService = genresMovieService;
         }
 
         public IActionResult ById(string id)
@@ -31,6 +32,7 @@
             int pageSize = 5;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
             int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
+            this.ViewData["RecordsCount"] = recordsCount;
 
             if (recordsCount % 5 == 0)
             {
@@ -44,6 +46,7 @@
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
+                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
             };
 
             return this.View(viewModel);

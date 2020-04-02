@@ -14,5 +14,13 @@
         public int MoviesCount => this.Movies.Count();
 
         public int PageIndex { get; set; }
+
+        public string Result { get; set; }
+
+        public string Genre { get; set; }
+
+        public double Rating { get; set; }
+
+        public IEnumerable<GenreViewModel> Genres { get; set; }
     }
 }

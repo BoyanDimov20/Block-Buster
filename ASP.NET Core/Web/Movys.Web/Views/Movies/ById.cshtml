@@ -146,7 +146,7 @@
                                                 <p>
                                                     @foreach (var director in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Director))
 	                                                {
-                                                        <a href="#">@director.CastMemberName,</a>
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName,</a>
 	                                                }
                                                 </p>
                                             </div>  
@@ -155,7 +155,7 @@
                                                 <p>
                                                     @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Writer))
                                                     {
-                                                        <a href="#">@writer.CastMemberName,</a>
+                                                    <a asp-controller="Celebs" asp-action="ById" asp-route-id="@writer.CastMemberId">@writer.CastMemberName,</a>
 
                                                     }
                                                 </p>
@@ -165,7 +165,7 @@
                                                 <p>
                                                     @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Actor))
                                                     {
-                                                        <a href="#">@actor.CastMemberName,</a>
+                                                    <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName,</a>
                                                     }
                                                 </p>
                                             </div>

@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="hero-ct">
-                    <h1> Most Popular Movies - list</h1>
+                    <h1>@ViewData["SearchString"]</h1>
                     <ul class="breadcumb">
                         <li class="active"><a href="/">Home</a></li>
-                        <li> <span class="ion-ios-arrow-right"></span>Most Popular Movies</li>
+                        <li><span class="ion-ios-arrow-right"></span>Search</li>
                     </ul>
                 </div>
             </div>
@@ -21,7 +21,7 @@
         <div class="row ipad-width2">
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
-                    <p>Found <span>@ViewData["RecordsCount"] movies</span> in total</p>
+                    <p>Found <span>@Model.MoviesCount movies</span> in total</p>
                     <a class="list"><i class="ion-ios-list-outline active"></i></a>
                     <a href="moviegrid.html" class="grid"><i class="ion-grid"></i></a>
                 </div>
@@ -75,21 +75,22 @@
                 <div class="sidebar">
                     <div class="searh-form">
                         <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" method="get" asp-controller="Search" asp-action="Result" asp-route-result="@Model.Result">
+                        <form class="form-style-1" asp-action="ListingMostPopular">
                             <div class="row">
                                 <div class="col-md-12 form-it">
                                     <label>Movie name</label>
-                                    <input asp-for="Result" name="result" type="text" placeholder="Enter keywords">
+                                    <input type="text" placeholder="Enter keywords">
                                 </div>
                                 <div class="col-md-12 form-it">
                                     <label>Genres & Subgenres</label>
                                     <div class="group-ip">
-                                        <select asp-for="Genre" name="genre" multiple="" class="ui fluid dropdown">
+                                        <select name="skills" multiple="" class="ui fluid dropdown">
                                             <option value="">Enter to filter genres</option>
-                                            @foreach (var genre in Model.Genres)
-                                            {
-                                                <option value="@genre.GenreId">@genre.GenreName</option>
-                                            }
+                                            <option value="Action1">Action 1</option>
+                                            <option value="Action2">Action 2</option>
+                                            <option value="Action3">Action 3</option>
+                                            <option value="Action4">Action 4</option>
+                                            <option value="Action5">Action 5</option>
                                         </select>
                                     </div>
 
@@ -97,11 +98,11 @@
                                 <div class="col-md-12 form-it">
                                     <label>Rating Range</label>
 
-                                    <select asp-for="Rating" name="rating">
-                                        <option value="0">-- Any --</option>
-                                        <option value="5">-- 5.0+ --</option>
-                                        <option value="7.5">-- 7.5+ --</option>
-                                        <option value="9">-- 9.0+ --</option>
+                                    <select>
+                                        <option value="range">-- Select the rating range below --</option>
+                                        <option value="saab">-- Select the rating range below --</option>
+                                        <option value="saab">-- Select the rating range below --</option>
+                                        <option value="saab">-- Select the rating range below --</option>
                                     </select>
 
                                 </div>

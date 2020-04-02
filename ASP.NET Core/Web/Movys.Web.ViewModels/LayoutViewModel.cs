@@ -8,8 +8,6 @@
 
     public class LayoutViewModel
     {
-        public LoginInputModel LoginInputModel { get; set; }
-
-        public RegisterInputModel RegisterInputModel { get; set; }
+        public string Result { get; set; }
     }
 }
