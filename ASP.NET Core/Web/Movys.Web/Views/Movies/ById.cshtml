@@ -1,5 +1,5 @@
 ﻿@using Movys.Common
-
+@using Movys.Data.Models
 @model Movys.Web.ViewModels.Movies.SingleMovieViewModel
 
 
@@ -53,22 +53,23 @@
                         <div class="rate">
                             <i class="ion-android-star"></i>
                             <p>
-                                <span>8.1</span> /10<br>
+                                <span>@Model.Rating</span> /10<br>
                                 <span class="rv">@Model.ReviewsCount Reviews</span>
                             </p>
                         </div>
                         <div class="rate-star">
                             <p>Rate This Movie:  </p>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star-outline"></i>
-                            <i class="ion-ios-star-outline"></i>
+                            @for (int i = 1; i <= 10; i++)
+                            {
+                                if (i <= @Model.Rating)
+                                {
+                                    <i class="ion-ios-star"></i>
+                                }
+                                else
+                                {
+                                    <i class="ion-ios-star-outline"></i>
+                                }
+                            }
                         </div>
                     </div>
                     <div class="movie-tabs">
@@ -144,7 +145,7 @@
                                             <div class="sb-it">
                                                 <h6>Director: </h6>
                                                 <p>
-                                                    @foreach (var director in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Director))
+                                                    @foreach (var director in Model.CastMembers.Where(x => x.RoleType == RoleType.Director))
 	                                                {
                                                         <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName,</a>
 	                                                }
@@ -153,7 +154,7 @@
                                             <div class="sb-it">
                                                 <h6>Writer: </h6>
                                                 <p>
-                                                    @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Writer))
+                                                    @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == RoleType.Writer))
                                                     {
                                                     <a asp-controller="Celebs" asp-action="ById" asp-route-id="@writer.CastMemberId">@writer.CastMemberName,</a>
 
@@ -163,7 +164,7 @@
                                             <div class="sb-it">
                                                 <h6>Stars: </h6>
                                                 <p>
-                                                    @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == Movys.Data.Models.RoleType.Actor))
+                                                    @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == RoleType.Actor))
                                                     {
                                                     <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName,</a>
                                                     }
@@ -209,7 +210,7 @@
                                                 <h3>Related Movies To</h3>
                                                 <h2>@Model.Title</h2>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="topbar-filter">
                                             <p>Found <span>56 reviews</span> in total</p>
@@ -224,12 +225,12 @@
                                             </select>
                                         </div>
                                         <div class="mv-user-review-item">
-                                            <form>
+                                            <form method="post" asp-action="ReviewForm" asp-route-id="@Model.Id">
                                                 <div class="user-infor">
                                                     <img src="~/images/uploads/userava1.jpg" alt="">
                                                     <div>
                                                         <div class="review-content">
-                                                            <input type="text" placeholder="Title"> 
+                                                            <input asp-for="ReviewFormInputModel.Title" name="Title" type="text" placeholder="Title">
                                                         </div>
                                                         <div class="no-star">
                                                             <i class="ion-android-star"></i>
@@ -244,138 +245,54 @@
                                                             <i class="ion-android-star last"></i>
                                                         </div>
                                                         <p class="time">
-                                                            <a href="#"> @User.Identity.Name</a>
+                                                            Logged as <a asp-controller="Profiles" asp-action="UserProfile"> @User.Identity.Name</a>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div class="review-content">
                                                     <p>
-                                                        <textarea class="form-control" id="Content" rows="4" placeholder="Write a review"></textarea>
+                                                        <textarea class="form-control" asp-for="ReviewFormInputModel.Content" name="Content" rows="4" placeholder="Write a review"></textarea>
                                                     </p>
                                                 </div>
 
                                                 <p>
                                                     <div class="btn pull-right">
-                                                        <a href="#" class="redbtn">Write Review</a>
+                                                        <button class="redbtn" type="submit">Write Review</button>
                                                     </div>
                                                 </p>
-
-                                                
+                                                <br />
+                                                <br />
                                             </form>
                                         </div>
-                                        <div class="mv-user-review-item">
-                                            <div class="user-infor">
-                                                <img src="~/images/uploads/userava1.jpg" alt="">
-                                                <div>
-                                                    <h3>Best Marvel movie in my opinion</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
+                                        
+                                        @foreach (var review in Model.Reviews)
+                                        {
+                                            <div class="mv-user-review-item">
+                                                <div class="user-infor">
+                                                    <img src="~/images/uploads/userava1.jpg" alt="">
+                                                    <div>
+                                                        <h3>@review.Title</h3>
+                                                        <div class="no-star">
+                                                            @for (int i = 1; i <= 10; i++)
+                                                            {
+                                                                if (i <= review.Rating)
+                                                                {
+                                                                    <i class="ion-android-star"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="ion-android-star last"></i>
+                                                                }
+                                                            }
+                                                        </div>
+                                                        <p class="time">
+                                                            @review.CreatedOn.ToString("dd MMMM yyyy") by <a href="#"> @User.Identity.Name</a>
+                                                        </p>
                                                     </div>
-                                                    <p class="time">
-                                                        17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                    </p>
                                                 </div>
+                                                <p>@review.Content</p>
                                             </div>
-                                            <p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
-                                        </div>
-                                        <div class="mv-user-review-item">
-                                            <div class="user-infor">
-                                                <img src="~/images/uploads/userava2.jpg" alt="">
-                                                <div>
-                                                    <h3>Just about as good as the first one!</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    </div>
-                                                    <p class="time">
-                                                        17 December 2016 by <a href="#"> hawaiipierson</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p>Avengers Age of Ultron is an excellent sequel and a worthy MCU title! There are a lot of good and one thing that feels off in my opinion. </p>
-
-                                            <p>THE GOOD:</p>
-
-                                            <p>First off the action in this movie is amazing, to buildings crumbling, to evil blue eyed robots tearing stuff up, this movie has the action perfectly handled. And with that action comes visuals. The visuals are really good, even though you can see clearly where they are through the movie, but that doesn't detract from the experience. While all the CGI glory is taking place, there are lovable characters that are in the mix. First off the original characters, Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye, are just as brilliant as they are always. And Joss Whedon fixed my main problem in the first Avengers by putting in more Hawkeye and him more fleshed out. Then there is the new Avengers, Quicksilver, Scarletwich, and Vision, they are pretty cool in my opinion. Vision in particular is pretty amazing in all his scenes.</p>
-
-                                            <p>THE BAD:</p>
-
-                                            <p>The beginning of the film it's fine until towards the second act and there is when it starts to feel a little rushed. Also I do feel like there are scenes missing but there was talk of an extended version on Blu-Ray so that's cool.</p>
-                                        </div>
-                                        <div class="mv-user-review-item">
-                                            <div class="user-infor">
-                                                <img src="~/images/uploads/userava3.jpg" alt="">
-                                                <div>
-                                                    <h3>One of the most boring exepirences from watching a movie</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    </div>
-                                                    <p class="time">
-                                                        26 March 2017 by<a href="#"> christopherfreeman</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p>I can't right much... it's just so forgettable...Okay, from what I remember, I remember just sitting down on my seat and waiting for the movie to begin. 5 minutes into the movie, boring scene of Tony Stark just talking to his "dead" friends saying it's his fault. 10 minutes in: Boring scene of Ultron and Jarvis having robot space battles(I dunno:/). 15 minutes in: I leave the theatre.2nd attempt at watching it: I fall asleep. What woke me up is the next movie on Netflix when the movie was over.</p>
-
-                                            <p>Bottemline: It's boring...</p>
-
-                                            <p>10/10 because I'm a Marvel Fanboy</p>
-                                        </div>
-                                        <div class="mv-user-review-item ">
-                                            <div class="user-infor">
-                                                <img src="~/images/uploads/userava4.jpg" alt="">
-                                                <div>
-                                                    <h3>That spirit of fun</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    </div>
-                                                    <p class="time">
-                                                        26 March 2017 by <a href="#"> juliawest</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p>If there were not an audience for Marvel comic heroes than clearly these films would not be made, to answer one other reviewer although I sympathize with him somewhat. The world is indeed an infinitely more complex place than the world of Marvel comics with clearly identifiable heroes and villains. But I get the feeling that from Robert Downey, Jr. on down the organizer and prime mover as Iron Man behind the Avengers these players do love doing these roles because it's a lot of fun. If they didn't show that spirit of fun to the audience than these films would never be made.</p>
-
-                                            <p>So in that spirit of fun Avengers: Age Of Ultron comes before us and everyone looks like they're having a good time saving the world. A computer program got loose and took form in this dimension named Ultron and James Spader who is completely unrecognizable is running amuck in the earth. No doubt Star Trek fans took notice that this guy's mission is to cleanse the earth much like that old earth probe NOMAD which got its programming mixed up in that classic Star Trek prime story. Wouldst Captain James T. Kirk of the Enterprise had a crew like Downey has at his command.</p>
-                                            <p>My favorite is always Chris Evans because of the whole cast he best gets into the spirit of being a superhero. Of all of them, he's already played two superheroes, Captain America and Johnny Storm the Human Torch. I'll be before he's done Evans will play a couple of more as long as the money's good and he enjoys it.</p>
-
-                                            <p>Pretend you're a kid again and enjoy, don't take it so seriously.</p>
-                                        </div>
+                                        }
                                         <div class="mv-user-review-item last">
                                             <div class="user-infor">
                                                 <img src="~/images/uploads/userava5.jpg" alt="">
@@ -427,188 +344,67 @@
                                         <h2>Avengers: Age of Ultron</h2>
                                         <!-- //== -->
                                         <div class="title-hd-sm">
-                                            <h4>Directors & Credit Writers</h4>
+                                            <h4>Directors</h4>
                                         </div>
                                         <div class="mvcast-item">
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JW</h4>
-                                                    <a href="#">Joss Whedon</a>
+                                            @foreach (var director in Model.CastMembers.Where(x => x.RoleType == RoleType.Director))
+                                            {
+                                                <div class="cast-it">
+                                                    <div class="cast-left">
+                                                        <img width="40" height="40" src="@director.CastMemberImageUrl" alt="" />
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName</a>
+                                                    </div>
+                                                    <p>...  Director</p>
                                                 </div>
-                                                <p>...  Director</p>
-                                            </div>
+                                            }
                                         </div>
                                         <!-- //== -->
                                         <div class="title-hd-sm">
-                                            <h4>Directors & Credit Writers</h4>
+                                            <h4>Writers</h4>
                                         </div>
                                         <div class="mvcast-item">
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>SL</h4>
-                                                    <a href="#">Stan Lee</a>
+                                            @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == RoleType.Writer))
+                                            {
+                                                <div class="cast-it">
+                                                    <div class="cast-left">
+                                                        <img width="40" height="40" src="@writer.CastMemberImageUrl" alt=""/>
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@writer.CastMemberId">@writer.CastMemberName</a>
+                                                    </div>
+                                                    <p>...  @writer.RoleName</p>
                                                 </div>
-                                                <p>...  (based on Marvel comics)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JK</h4>
-                                                    <a href="#">Jack Kirby</a>
-                                                </div>
-                                                <p>...  (based on Marvel comics)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JS</h4>
-                                                    <a href="#">Joe Simon</a>
-                                                </div>
-                                                <p>...  (character created by: Captain America)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JS</h4>
-                                                    <a href="#">Joe Simon</a>
-                                                </div>
-                                                <p>...  (character created by: Thanos)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>RT</h4>
-                                                    <a href="#">Roy Thomas</a>
-                                                </div>
-                                                <p>...  (character created by: Ultron, Vision)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JB</h4>
-                                                    <a href="#">John Buscema</a>
-                                                </div>
-                                                <p>...  (character created by: Ultron, Vision)</p>
-                                            </div>
+                                            }
                                         </div>
                                         <!-- //== -->
                                         <div class="title-hd-sm">
-                                            <h4>Cast</h4>
+                                            <h4>Actors</h4>
                                         </div>
                                         <div class="mvcast-item">
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast1.jpg" alt="">
-                                                    <a href="#">Robert Downey Jr.</a>
+                                            @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == RoleType.Actor))
+                                            {
+                                                <div class="cast-it">
+                                                    <div class="cast-left">
+                                                        <img width="40" height="40" src="@actor.CastMemberImageUrl" alt="">
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName</a>
+                                                    </div>
+                                                    <p>...  @actor.RoleName</p>
                                                 </div>
-                                                <p>...  Robert Downey Jr.</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast2.jpg" alt="">
-                                                    <a href="#">Chris Hemsworth</a>
-                                                </div>
-                                                <p>...  Thor</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast3.jpg" alt="">
-                                                    <a href="#">Mark Ruffalo</a>
-                                                </div>
-                                                <p>...  Bruce Banner/ Hulk</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast4.jpg" alt="">
-                                                    <a href="#">Chris Evans</a>
-                                                </div>
-                                                <p>...  Steve Rogers/ Captain America</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast5.jpg" alt="">
-                                                    <a href="#">Scarlett Johansson</a>
-                                                </div>
-                                                <p>...  Natasha Romanoff/ Black Widow</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast6.jpg" alt="">
-                                                    <a href="#">Jeremy Renner</a>
-                                                </div>
-                                                <p>...  Clint Barton/ Hawkeye</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast7.jpg" alt="">
-                                                    <a href="#">James Spader</a>
-                                                </div>
-                                                <p>...  Ultron</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <img src="~/images/uploads/cast9.jpg" alt="">
-                                                    <a href="#">Don Cheadle</a>
-                                                </div>
-                                                <p>...  James Rhodes/ War Machine</p>
-                                            </div>
+                                            }
                                         </div>
                                         <!-- //== -->
                                         <div class="title-hd-sm">
                                             <h4>Produced by</h4>
                                         </div>
                                         <div class="mvcast-item">
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>VA</h4>
-                                                    <a href="#">Victoria Alonso</a>
+                                            @foreach (var producer in Model.CastMembers.Where(x => x.RoleType == RoleType.Producer))
+                                            {
+                                                <div class="cast-it">
+                                                    <div class="cast-left">
+                                                        <img width="40" height="40" src="@producer.CastMemberImageUrl" alt=""/>
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@producer.CastMemberId">@producer.CastMemberName</a>
+                                                    </div>
+                                                    <p>...  @producer.RoleName</p>
                                                 </div>
-                                                <p>...  executive producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>MB</h4>
-                                                    <a href="#">Mitchel Bell</a>
-                                                </div>
-                                                <p>...  co-producer (as Mitch Bell)</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JC</h4>
-                                                    <a href="#">Jamie Christopher</a>
-                                                </div>
-                                                <p>...  associate producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>LD</h4>
-                                                    <a href="#">Louis D’Esposito</a>
-                                                </div>
-                                                <p>...  executive producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JF</h4>
-                                                    <a href="#">Jon Favreau</a>
-                                                </div>
-                                                <p>...  executive producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>KF</h4>
-                                                    <a href="#">Kevin Feige</a>
-                                                </div>
-                                                <p>...  producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>AF</h4>
-                                                    <a href="#">Alan Fine</a>
-                                                </div>
-                                                <p>...  executive producer</p>
-                                            </div>
-                                            <div class="cast-it">
-                                                <div class="cast-left">
-                                                    <h4>JF</h4>
-                                                    <a href="#">Jeffrey Ford</a>
-                                                </div>
-                                                <p>...  associate producer</p>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>

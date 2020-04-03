@@ -3,21 +3,25 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
     using Movys.Services.Data;
     using Movys.Web.ViewModels.Movies;
+    using Movys.Web.ViewModels.Reviews;
 
     public class MoviesController : BaseController
     {
         private readonly IMoviesService moviesService;
         private readonly IGenresMovieService genresMovieService;
+        private readonly IReviewsService reviewsService;
 
-        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService)
+        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService, IReviewsService reviewsService)
         {
             this.moviesService = moviesService;
             this.genresMovieService = genresMovieService;
+            this.reviewsService = reviewsService;
         }
 
         public IActionResult ById(string id)
@@ -47,9 +51,19 @@
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
                 Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
+                Reviews = this.reviewsService.GetAll<ReviewViewModel>().ToList(),
             };
 
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReviewForm(ReviewFormInputModel inputModel, string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, id, userId);
+
+            return this.Redirect($"/Movies/ById?id={id}");
         }
     }
 }

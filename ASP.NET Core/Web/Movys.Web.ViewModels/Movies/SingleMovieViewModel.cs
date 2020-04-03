@@ -34,8 +34,6 @@
 
         public IEnumerable<GenreViewModel> Genres { get; set; }
 
-        public LoginInputModel LoginInputModel { get; set; }
-
-        public RegisterInputModel RegisterInputModel { get; set; }
+        public ReviewFormInputModel ReviewFormInputModel { get; set; } = new ReviewFormInputModel();
     }
 }

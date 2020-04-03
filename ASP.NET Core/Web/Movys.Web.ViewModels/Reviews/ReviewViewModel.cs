@@ -15,6 +15,8 @@
 
         public double Rating { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         //public string UserUserName { get; set; }
 
         //public string UserId { get; set; }

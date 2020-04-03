@@ -22,5 +22,7 @@
         public double Rating { get; set; }
 
         public IEnumerable<GenreViewModel> Genres { get; set; }
+
+        public IEnumerable<ReviewViewModel> Reviews { get; set; }
     }
 }
