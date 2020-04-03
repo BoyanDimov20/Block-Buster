@@ -38,7 +38,34 @@
             int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
             this.ViewData["RecordsCount"] = recordsCount;
 
-            if (recordsCount % 5 == 0)
+            if (recordsCount % 5 == 0 || recordsCount < 5)
+            {
+                this.ViewData["PagesCount"] = recordsCount / 5;
+            }
+            else
+            {
+                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
+            }
+
+            ListingMoviesViewModel viewModel = new ListingMoviesViewModel
+            {
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
+                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
+                Reviews = this.reviewsService.GetAll<ReviewViewModel>().ToList(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        public IActionResult ListingMostPopularGrid(int pageNumber = 1)
+        {
+            this.ViewData["CurrentPage"] = pageNumber;
+            int pageSize = 20;
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+            int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
+            this.ViewData["RecordsCount"] = recordsCount;
+
+            if (recordsCount % 20 == 0 || recordsCount < 20)
             {
                 this.ViewData["PagesCount"] = recordsCount / 5;
             }
