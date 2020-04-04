@@ -7,7 +7,7 @@
 
     public interface IReviewsService
     {
-        Task AddReview(string title, string content, string movieId, string userId);
+        Task AddReview(string title, string content, double rating, string movieId, string userId);
 
         IEnumerable<T> GetAll<T>();
     }

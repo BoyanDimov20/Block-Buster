@@ -122,7 +122,7 @@
                                             </div>
                                             <!-- movie user review -->
                                             <div class="mv-user-review-item">
-                                                <h3>Best Marvel movie in my opinion</h3>
+                                                <h3>Best Movie Ever</h3>
                                                 <div class="no-star">
                                                     <i class="ion-android-star"></i>
                                                     <i class="ion-android-star"></i>
@@ -232,23 +232,19 @@
                                                         <div class="review-content">
                                                             <input asp-for="ReviewFormInputModel.Title" name="Title" type="text" placeholder="Title">
                                                         </div>
+                                                        <br />
                                                         <div class="no-star">
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star"></i>
-                                                            <i class="ion-android-star last"></i>
+                                                            Rate: <i class="ion-android-star"></i>
+                                                        </div>
+                                                        <div class="review-content">
+                                                            <input asp-for="ReviewFormInputModel.Rating" name="Rating" type="number" max="10" min="0" />
                                                         </div>
                                                         <p class="time">
                                                             Logged as <a asp-controller="Profiles" asp-action="UserProfile"> @User.Identity.Name</a>
                                                         </p>
                                                     </div>
                                                 </div>
+                                                <br />
                                                 <div class="review-content">
                                                     <p>
                                                         <textarea class="form-control" asp-for="ReviewFormInputModel.Content" name="Content" rows="4" placeholder="Write a review"></textarea>
@@ -341,7 +337,7 @@
                                 <div id="cast" class="tab">
                                     <div class="row">
                                         <h3>Cast & Crew of</h3>
-                                        <h2>Avengers: Age of Ultron</h2>
+                                        <h2>@Model.Title</h2>
                                         <!-- //== -->
                                         <div class="title-hd-sm">
                                             <h4>Directors</h4>
@@ -413,7 +409,7 @@
                                         <div class="rv-hd">
                                             <div>
                                                 <h3>Videos & Photos of</h3>
-                                                <h2>Skyfall: Quantum of Spectre</h2>
+                                                <h2>@Model.Title</h2>
                                             </div>
                                         </div>
                                         <div class="title-hd-sm">
@@ -532,7 +528,7 @@
                                 <div id="moviesrelated" class="tab">
                                     <div class="row">
                                         <h3>Related Movies To</h3>
-                                        <h2>Skyfall: Quantum of Spectre</h2>
+                                        <h2>@Model.Title</h2>
                                         <div class="topbar-filter">
                                             <p>Found <span>12 movies</span> in total</p>
                                             <label>Sort by:</label>

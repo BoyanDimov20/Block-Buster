@@ -19,13 +19,14 @@
             this.repository = repository;
         }
 
-        public async Task AddReview(string title, string content, string movieId, string userId)
+        public async Task AddReview(string title, string content, double rating, string movieId, string userId)
         {
             Review review = new Review
             {
                 Id = Guid.NewGuid().ToString(),
                 Title = title,
                 Content = content,
+                Rating = rating,
                 MovieId = movieId,
                 UserId = userId,
             };

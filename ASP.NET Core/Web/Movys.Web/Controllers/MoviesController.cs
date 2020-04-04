@@ -88,7 +88,7 @@
         public async Task<IActionResult> ReviewForm(ReviewFormInputModel inputModel, string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, id, userId);
+            await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, inputModel.Rating, id, userId);
 
             return this.Redirect($"/Movies/ById?id={id}");
         }

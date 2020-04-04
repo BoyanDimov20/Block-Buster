@@ -1,16 +1,16 @@
 ﻿@using Movys.Web.ViewModels.Movies
 
 @model ListingMoviesViewModel
-
+    
 <div class="hero common-hero">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="hero-ct">
-                    <h1> movie listing - grid</h1>
+                    <h1> Most Popular Movies - grid</h1>
                     <ul class="breadcumb">
                         <li class="active"><a href="/">Home</a></li>
-                        <li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+                        <li> <span class="ion-ios-arrow-right"></span> Most Popular</li>
                     </ul>
                 </div>
             </div>
@@ -32,8 +32,8 @@
                         <option value="date">Release date Descending</option>
                         <option value="date">Release date Ascending</option>
                     </select>
-                    <a href="movielist.html" class="list"><i class="ion-ios-list-outline "></i></a>
-                    <a href="moviegrid.html" class="grid"><i class="ion-grid active"></i></a>
+                    <a asp-action="ListingMostPopular" class="list"><i class="ion-ios-list-outline "></i></a>
+                    <a class="grid"><i class="ion-grid active"></i></a>
                 </div>
                 <div class="flex-wrap-movielist">
                     @foreach (var movie in Model.Movies)
