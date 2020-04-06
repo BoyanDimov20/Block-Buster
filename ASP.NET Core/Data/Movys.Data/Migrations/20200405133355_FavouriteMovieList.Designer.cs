@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movys.Data;
 
 namespace Movys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200405133355_FavouriteMovieList")]
+    partial class FavouriteMovieList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,11 +351,8 @@ namespace Movys.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("MovieId")
+                    b.Property<string>("CastMemberId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -361,7 +360,7 @@ namespace Movys.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
+                    b.HasIndex("CastMemberId");
 
                     b.ToTable("MediaLinks");
                 });
@@ -661,9 +660,9 @@ namespace Movys.Data.Migrations
 
             modelBuilder.Entity("Movys.Data.Models.Media", b =>
                 {
-                    b.HasOne("Movys.Data.Models.Movie", "Movie")
+                    b.HasOne("Movys.Data.Models.CastMember", "CastMember")
                         .WithMany("MediaUrls")
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("CastMemberId");
                 });
 
             modelBuilder.Entity("Movys.Data.Models.MoviesCastMember", b =>

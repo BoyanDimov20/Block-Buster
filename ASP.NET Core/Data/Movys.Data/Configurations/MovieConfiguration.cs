@@ -27,6 +27,10 @@
             builder.HasMany(x => x.Reviews)
                 .WithOne(x => x.Movie)
                 .HasForeignKey(x => x.MovieId);
+
+            builder.HasMany(x => x.MediaUrls)
+                .WithOne(x => x.Movie)
+                .HasForeignKey(x => x.MovieId);
         }
     }
 }

@@ -10,11 +10,13 @@
         [Key]
         public string Id { get; set; }
 
+        public string Title { get; set; }
+
         [Required]
         public string Url { get; set; }
 
-        public string CastMemberId { get; set; }
+        public string MovieId { get; set; }
 
-        public virtual CastMember CastMember { get; set; }
+        public virtual Movie Movie { get; set; }
     }
 }

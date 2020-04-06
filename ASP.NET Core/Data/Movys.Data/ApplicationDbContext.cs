@@ -31,7 +31,7 @@
 
         public DbSet<Movie> Movies { get; set; }
 
-        public DbSet<MoviesUser> MoviesUsers { get; set; }
+        public DbSet<MoviesUser> UsersFavouriteMovies { get; set; }
 
         public DbSet<MoviesCastMember> MoviesCastMembers { get; set; }
 

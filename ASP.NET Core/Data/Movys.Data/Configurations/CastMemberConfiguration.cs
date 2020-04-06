@@ -19,10 +19,6 @@
             builder.HasMany(x => x.Movies)
                 .WithOne(x => x.CastMember)
                 .HasForeignKey(x => x.CastMemberId);
-
-            builder.HasMany(x => x.MediaUrls)
-                .WithOne(x => x.CastMember)
-                .HasForeignKey(x => x.CastMemberId);
         }
     }
 }
