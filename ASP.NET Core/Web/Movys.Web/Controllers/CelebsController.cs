@@ -23,5 +23,15 @@
             SingleCelebViewModel viewModel = this.celebsService.GetAll<SingleCelebViewModel>().First(x => x.Id == id);
             return this.View(viewModel);
         }
+
+        public IActionResult ListingMostPopular()
+        {
+            ListingCelebsViewModel viewModel = new ListingCelebsViewModel
+            {
+                CastMembers = this.celebsService.GetAll<SingleCelebViewModel>().ToList(),
+            };
+
+            return this.View(viewModel);
+        }
     }
 }
