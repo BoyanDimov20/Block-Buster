@@ -27,18 +27,27 @@
                             <div><a href="@Model.TrailerUrl" class="item item-1 redbtn"> <i class="ion-play"></i> Watch Trailer</a></div>
                             <div><a href="@Model.TrailerUrl" class="item item-2 redbtn fancybox-media hvr-grow"><i class="ion-play"></i></a></div>
                         </div>
-                        <div class="btn-transform transform-vertical">
-                            <div><a href="#" class="item item-1 yellowbtn"> <i class="ion-card"></i> Buy ticket</a></div>
-                            <div><a href="#" class="item item-2 yellowbtn"><i class="ion-card"></i></a></div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
                     <h1 class="bd-hd">@Model.Title <span>@Model.ReleaseYear</span></h1>
+
                     <div class="social-btn">
-                        <a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
+                        <form method="post">
+                            <a href="#" onclick="addToFavorite()" id="favourite" class="parent-btn">
+                                @if (Model.IsAddedToFavorite)
+                                {
+                                    <i class="ion-heart"></i><span>Added</span>
+                                }
+                                else
+                                {
+                                    <i class="ion-heart"></i><span>Add to favourite</span>
+                                }
+                            </a>
+                        </form>
+
                         <div class="hover-bnt">
                             <a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
                             <div class="hvr-item">
@@ -146,9 +155,9 @@
                                                 <h6>Director: </h6>
                                                 <p>
                                                     @foreach (var director in Model.CastMembers.Where(x => x.RoleType == RoleType.Director))
-	                                                {
+                                                    {
                                                         <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName,</a>
-	                                                }
+                                                    }
                                                 </p>
                                             </div>  
                                             <div class="sb-it">
@@ -213,7 +222,7 @@
 
                                         </div>
                                         <div class="topbar-filter">
-                                            <p>Found <span>56 reviews</span> in total</p>
+                                            <p>Found <span>@Model.ReviewsCount reviews</span> in total</p>
                                             <label>Filter by:</label>
                                             <select>
                                                 <option value="popularity">Popularity Descending</option>
@@ -224,6 +233,8 @@
                                                 <option value="date">Release date Ascending</option>
                                             </select>
                                         </div>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
                                         <div class="mv-user-review-item">
                                             <form method="post" asp-action="ReviewForm" asp-route-id="@Model.Id">
                                                 <div class="user-infor">
@@ -260,7 +271,7 @@
                                                 <br />
                                             </form>
                                         </div>
-                                        
+                                        }
                                         @foreach (var review in Model.Reviews)
                                         {
                                             <div class="mv-user-review-item">
@@ -413,114 +424,32 @@
                                             </div>
                                         </div>
                                         <div class="title-hd-sm">
-                                            <h4>Videos <span>(8)</span></h4>
+                                            <h4>Videos <span>(@Model.MediaUrls.Count(x => x.MediaType == MediaType.Video))</span></h4>
                                         </div>
                                         <div class="mvsingle-item media-item">
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item1.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
+                                            @foreach (var media in Model.MediaUrls.Where(x => x.MediaType == MediaType.Video))
+                                            {
+                                                <div class="vd-item">
+                                                    <div class="vd-it">
+                                                        <img class="vd-img" src="@media.HoverImageUrl" alt="">
+                                                        <a class="fancybox-media hvr-grow" href="@media.Url"><img src="~/images/uploads/play-vd.png" alt=""></a>
+                                                    </div>
+                                                    <div class="vd-infor">
+                                                        <h6> <a href="@media.Url">@media.Title</a></h6>
+                                                        <p class="time"> @media.Time</p>
+                                                    </div>
                                                 </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Trailer:  Watch New Scenes</a></h6>
-                                                    <p class="time"> 1: 31</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item2.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Featurette: “Avengers Re-Assembled</a></h6>
-                                                    <p class="time"> 1: 03</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item3.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Interview: Robert Downey Jr</a></h6>
-                                                    <p class="time"> 3:27</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item4.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Interview: Scarlett Johansson</a></h6>
-                                                    <p class="time"> 3:27</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item1.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Featurette: Meet Quicksilver & The Scarlet Witch</a></h6>
-                                                    <p class="time"> 1: 31</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item2.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Interview: Director Joss Whedon</a></h6>
-                                                    <p class="time"> 1: 03</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item3.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Interview: Mark Ruffalo</a></h6>
-                                                    <p class="time"> 3:27</p>
-                                                </div>
-                                            </div>
-                                            <div class="vd-item">
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/vd-item4.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                                <div class="vd-infor">
-                                                    <h6> <a href="#">Official Trailer #2</a></h6>
-                                                    <p class="time"> 3:27</p>
-                                                </div>
-                                            </div>
+                                            }
                                         </div>
                                         <div class="title-hd-sm">
-                                            <h4>Photos <span> (21)</span></h4>
+                                            <h4>Photos <span> (@Model.MediaUrls.Count(x => x.MediaType == MediaType.Photo))</span></h4>
                                         </div>
                                         <div class="mvsingle-item">
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image11.jpg"><img src="~/images/uploads/image1.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image21.jpg"><img src="~/images/uploads/image2.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image31.jpg"><img src="~/images/uploads/image3.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image41.jpg"><img src="~/images/uploads/image4.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image51.jpg"><img src="~/images/uploads/image5.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image61.jpg"><img src="~/images/uploads/image6.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image71.jpg"><img src="~/images/uploads/image7.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image81.jpg"><img src="~/images/uploads/image8.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image91.jpg"><img src="~/images/uploads/image9.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image101.jpg"><img src="~/images/uploads/image10.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image111.jpg"><img src="~/images/uploads/image1-1.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image121.jpg"><img src="~/images/uploads/image12.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image131.jpg"><img src="~/images/uploads/image13.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image141.jpg"><img src="~/images/uploads/image14.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image151.jpg"><img src="~/images/uploads/image15.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image161.jpg"><img src="~/images/uploads/image16.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image171.jpg"><img src="~/images/uploads/image17.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image181.jpg"><img src="~/images/uploads/image18.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image191.jpg"><img src="~/images/uploads/image19.jpg" alt=""></a>
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image201.jpg"><img src="~/images/uploads/image20.jpg" alt=""></a>
+                                            @foreach (var photo in Model.MediaUrls.Where(x => x.MediaType == MediaType.Photo))
+                                            {
+                                                <a class="img-lightbox" data-fancybox-group="gallery" href="@photo.Url" ><img width="100" height="100" src="@photo.Url" alt=""></a>
+
+                                            }
                                             <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image211.jpg"><img src="~/images/uploads/image2-1.jpg" alt=""></a>
                                         </div>
                                     </div>
@@ -530,61 +459,21 @@
                                         <h3>Related Movies To</h3>
                                         <h2>@Model.Title</h2>
                                         <div class="topbar-filter">
-                                            <p>Found <span>12 movies</span> in total</p>
-                                            <label>Sort by:</label>
-                                            <select>
-                                                <option value="popularity">Popularity Descending</option>
-                                                <option value="popularity">Popularity Ascending</option>
-                                                <option value="rating">Rating Descending</option>
-                                                <option value="rating">Rating Ascending</option>
-                                                <option value="date">Release date Descending</option>
-                                                <option value="date">Release date Ascending</option>
-                                            </select>
+                                            <p>Found <span>@Model.RelatedMovies.Count() movies</span> in total</p>
                                         </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/uploads/mv1.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">oblivion <span>(2012)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
-                                                <p class="describe">Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Joss Whedon</a></p>
-                                                <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                        @foreach (var movie in Model.RelatedMovies)
+                                        {
+                                            <div class="movie-item-style-2">
+                                                <img width="170" height="250" src="@movie.ImageUrl" alt="">
+                                                <div class="mv-item-infor">
+                                                    <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title <span>(@movie.ReleaseYear)</span></a></h6>
+                                                    <p class="rate"><i class="ion-android-star"></i><span>@movie.Rating</span> /10</p>
+                                                    <p class="describe">@movie.Description...</p>
+                                                    <p>Director: <a href="#">Joss Whedon</a></p>
+                                                    <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/uploads/mv2.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">into the wild <span>(2014)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.8</span> /10</p>
-                                                <p class="describe">As Steve Rogers struggles to embrace his role in the modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black Widow, to battle a new threat...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Anthony Russo,</a><a href="#">Joe Russo</a></p>
-                                                <p>Stars: <a href="#">Chris Evans,</a> <a href="#">Samuel L. Jackson,</a> <a href="#">  Scarlett Johansson</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/uploads/mv3.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">blade runner  <span>(2015)</span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.3</span> /10</p>
-                                                <p class="describe">Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help...</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Peyton Reed</a></p>
-                                                <p>Stars: <a href="#">Paul Rudd,</a> <a href="#"> Michael Douglas</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/uploads/mv4.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">Mulholland pride<span> (2013)  </span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.2</span> /10</p>
-                                                <p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Shane Black</a></p>
-                                                <p>Stars: <a href="#">Robert Downey Jr., </a> <a href="#">  Guy Pearce,</a><a href="#">Don Cheadle</a></p>
-                                            </div>
-                                        </div>
+                                        }
                                         <div class="movie-item-style-2">
                                             <img src="~/images/uploads/mv5.jpg" alt="">
                                             <div class="mv-item-infor">
@@ -619,3 +508,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    function addToFavorite() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                if (document.getElementById("favourite").innerHTML == "<i class=\"ion-heart\"></i><span>Add to favourite</span>") {
+
+                    document.getElementById("favourite").innerHTML = "<i class=\"ion-heart\"></i><span>Added</span>";
+                }
+                else {
+                    document.getElementById("favourite").innerHTML = "<i class=\"ion-heart\"></i><span>Add to favourite</span>";
+                }
+                addFavorite();
+            }
+        }
+        xhr.open("POST", "/Movies/AddToFavourite?movieId=@Model.Id", true);
+        xhr.send();
+    }
+</script>

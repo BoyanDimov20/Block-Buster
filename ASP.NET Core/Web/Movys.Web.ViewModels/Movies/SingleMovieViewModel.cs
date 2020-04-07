@@ -26,6 +26,8 @@
 
         public int ReviewsCount => this.Reviews.Count();
 
+        public bool IsAddedToFavorite { get; set; }
+
         public double Rating => (this.ReviewsCount == 0) ? 0 : this.Reviews.Average(x => x.Rating);
 
         public IEnumerable<ReviewViewModel> Reviews { get; set; }

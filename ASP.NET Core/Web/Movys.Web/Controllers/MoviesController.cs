@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore.Internal;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
     using Movys.Services.Data;
@@ -17,20 +18,22 @@
         private readonly IMoviesService moviesService;
         private readonly IGenresMovieService genresMovieService;
         private readonly IReviewsService reviewsService;
-        private readonly IRepository<MoviesUser> repository;
+        private readonly IRepository<MoviesUser> favouriteMovieRepository;
 
-        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService, IReviewsService reviewsService, IRepository<MoviesUser> repository)
+        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService, IReviewsService reviewsService, IRepository<MoviesUser> favouriteMovieRepository)
         {
             this.moviesService = moviesService;
             this.genresMovieService = genresMovieService;
             this.reviewsService = reviewsService;
-            this.repository = repository;
+            this.favouriteMovieRepository = favouriteMovieRepository;
         }
 
         public IActionResult ById(string id)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             SingleMovieViewModel viewModel = this.moviesService.GetAll<SingleMovieViewModel>().First(x => x.Id == id);
             viewModel.RelatedMovies = this.moviesService.GetAll<MovieViewModel>().Where(x => x.Genres.Any(y => viewModel.Genres.Any(z => z.GenreName == y.GenreName)) && x.Id != id);
+            viewModel.IsAddedToFavorite = this.favouriteMovieRepository.All().Any(x => x.UserId == userId && id == x.MovieId);
             return this.View(viewModel);
         }
 
@@ -54,7 +57,7 @@
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
-                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
+                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
             };
 
             return this.View(viewModel);
@@ -99,11 +102,11 @@
         public async Task<IActionResult> AddToFavourite(string movieId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var vote = this.repository.All().FirstOrDefault(x => x.MovieId == movieId && x.UserId == userId);
+            var vote = this.favouriteMovieRepository.All().FirstOrDefault(x => x.MovieId == movieId && x.UserId == userId);
 
             if (vote != null)
             {
-                this.repository.Delete(vote);
+                this.favouriteMovieRepository.Delete(vote);
             }
             else
             {
@@ -112,10 +115,10 @@
                     MovieId = movieId,
                     UserId = userId,
                 };
-                await this.repository.AddAsync(vote);
+                await this.favouriteMovieRepository.AddAsync(vote);
             }
 
-            await this.repository.SaveChangesAsync();
+            await this.favouriteMovieRepository.SaveChangesAsync();
 
             return this.Ok();
         }
