@@ -1,6 +1,7 @@
 ﻿namespace Movys.Web.ViewModels.Movies
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Text;
 
