@@ -28,7 +28,7 @@
         public IActionResult UserRating()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            IEnumerable<ReviewViewModel> viewModel = this.reviewsService.GetAll<ReviewViewModel>().Where(x => x.UserId == userId);
+            IEnumerable<ReviewViewModel> viewModel = this.reviewsService.GetAll<ReviewViewModel>().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn);
             return this.View(viewModel);
         }
 
