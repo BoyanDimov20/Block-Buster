@@ -5,11 +5,12 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Movys.Services.Data;
     using Movys.Web.ViewModels.Profiles;
 
+    [Authorize]
     public class ProfilesController : BaseController
     {
         private readonly IReviewsService reviewsService;

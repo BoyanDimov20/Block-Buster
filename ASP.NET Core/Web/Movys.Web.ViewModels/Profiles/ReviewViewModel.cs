@@ -15,7 +15,7 @@
 
         public string Content { get; set; }
 
-        public string Rating { get; set; }
+        public double Rating { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

@@ -1,7 +1,6 @@
 ﻿@using Movys.Web.ViewModels.Profiles
 @model IEnumerable<ReviewViewModel>
 
-
 <div class="hero user-hero">
     <div class="container">
         <div class="row">
@@ -29,23 +28,23 @@
                     <div class="user-fav">
                         <p>Account Details</p>
                         <ul>
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Favorite movies</a></li>
-                            <li class="active"><a href="#">Rated movies</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserProfile">Profile</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserFavouriteList">Favorite movies</a></li>
+                            <li class="active"><a>Rated movies</a></li>
                         </ul>
                     </div>
                     <div class="user-fav">
                         <p>Others</p>
                         <ul>
-                            <li><a href="#">Change password</a></li>
-                            <li><a href="#">Log out</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserProfile">Change password</a></li>
+                            <li><a asp-controller="Users" asp-action="Logout">Log out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
-                    <p>Found <span>3 rates</span> in total</p>
+                    <p>Found <span>@Model.Count() rates</span> in total</p>
                     <label>Sort by:</label>
                     <select>
                         <option value="range">-- Choose option --</option>

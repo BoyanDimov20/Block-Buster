@@ -1,18 +1,18 @@
-﻿namespace Movys.Data.Models
+﻿namespace Movys.Web.ViewModels.Movies
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.Text;
 
-    public class Media
+    using Movys.Data.Models;
+    using Movys.Services.Mapping;
+
+    public class MediaViewModel : IMapFrom<Media>
     {
-        [Key]
         public string Id { get; set; }
 
         public string Title { get; set; }
 
-        [Required]
         public string Url { get; set; }
 
         public string HoverImageUrl { get; set; }
@@ -20,9 +20,5 @@
         public string Time { get; set; }
 
         public MediaType MediaType { get; set; }
-
-        public string MovieId { get; set; }
-
-        public virtual Movie Movie { get; set; }
     }
 }
