@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using Movys.Data.Common.Models;
 
     public class Movie : BaseDeletableModel<string>

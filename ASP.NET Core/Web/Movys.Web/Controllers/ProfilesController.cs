@@ -14,10 +14,12 @@
     public class ProfilesController : BaseController
     {
         private readonly IReviewsService reviewsService;
+        private readonly IFavoriteMoviesService favoriteMoviesService;
 
-        public ProfilesController(IReviewsService reviewsService)
+        public ProfilesController(IReviewsService reviewsService, IFavoriteMoviesService favoriteMoviesService)
         {
             this.reviewsService = reviewsService;
+            this.favoriteMoviesService = favoriteMoviesService;
         }
 
         public IActionResult UserProfile()
@@ -34,7 +36,14 @@
 
         public IActionResult UserFavouriteList()
         {
-            return this.View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ListingFavoriteMoviesViewModel viewModel = new ListingFavoriteMoviesViewModel
+            {
+                Movies = this.favoriteMoviesService.GetAllByUserId<FavoriteMovieViewModel>(userId),
+            };
+
+            return this.View(viewModel);
         }
     }
 }

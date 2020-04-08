@@ -36,14 +36,14 @@
 
                     <div class="social-btn">
                         <form method="post">
-                            <a href="#" onclick="addToFavorite()" id="favourite" class="parent-btn">
+                            <a onclick="addToFavorite()" id="favourite" class="parent-btn">
                                 @if (Model.IsAddedToFavorite)
                                 {
                                     <i class="ion-heart"></i><span>Added</span>
                                 }
                                 else
                                 {
-                                    <i class="ion-heart"></i><span>Add to favourite</span>
+                                    <i class="ion-ios-heart-outline"></i><span>Add to favourite</span>
                                 }
                             </a>
                         </form>
@@ -447,8 +447,7 @@
                                         <div class="mvsingle-item">
                                             @foreach (var photo in Model.MediaUrls.Where(x => x.MediaType == MediaType.Photo))
                                             {
-                                                <a class="img-lightbox" data-fancybox-group="gallery" href="@photo.Url" ><img width="100" height="100" src="@photo.Url" alt=""></a>
-
+                                                <a class="img-lightbox" data-fancybox-group="gallery" href="@photo.Url" ><img src="@photo.Url" style="width:100px;height:100px;" alt=""></a>
                                             }
                                             <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image211.jpg"><img src="~/images/uploads/image2-1.jpg" alt=""></a>
                                         </div>
@@ -464,7 +463,7 @@
                                         @foreach (var movie in Model.RelatedMovies)
                                         {
                                             <div class="movie-item-style-2">
-                                                <img width="170" height="250" src="@movie.ImageUrl" alt="">
+                                                <img src="@movie.ImageUrl" style="width:170px;height:260px;" alt="">
                                                 <div class="mv-item-infor">
                                                     <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title <span>(@movie.ReleaseYear)</span></a></h6>
                                                     <p class="rate"><i class="ion-android-star"></i><span>@movie.Rating</span> /10</p>
@@ -514,12 +513,12 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                if (document.getElementById("favourite").innerHTML == "<i class=\"ion-heart\"></i><span>Add to favourite</span>") {
+                if (document.getElementById("favourite").innerHTML == "<i class=\"ion-ios-heart-outline\"></i><span>Add to favourite</span>") {
 
                     document.getElementById("favourite").innerHTML = "<i class=\"ion-heart\"></i><span>Added</span>";
                 }
                 else {
-                    document.getElementById("favourite").innerHTML = "<i class=\"ion-heart\"></i><span>Add to favourite</span>";
+                    document.getElementById("favourite").innerHTML = "<i class=\"ion-ios-heart-outline\"></i><span>Add to favourite</span>";
                 }
                 addFavorite();
             }
