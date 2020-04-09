@@ -73,12 +73,12 @@
                 }
                 else
                 {
-                    this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return this.View();
+                    this.ModelState.AddModelError("Username", "Invalid Login Attempt.");
+                    return this.Login();
                 }
             }
 
-            return this.Redirect("/");
+            return this.Login();
         }
 
         public async Task<IActionResult> Logout()

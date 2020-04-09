@@ -7317,9 +7317,39 @@ p.ceb-single {
   text-align: center;
   /* makes sure it stays on top */
 }
+#preloader span {
+    color: #dd003f;
+}
+#preloader h3{
+    color: #fff;
+}
+#preloader button {
+    display: inline-block;
+    padding: 0.35em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 300;
+    color: #000000;
+    text-align: center;
+    transition: all 0.2s;
+}
+#preloader .preloaderText {
+    color: #fff;
+}
+#preloader .preloaderTextHover {
+    color: #666;
+}
+#preloader .preloaderTextHover:hover{
+    color: #fff
+}
 #preloader img {
   margin-top: 100px;
 }
+
 @media (max-width: 767px) {
   #preloader img {
     margin-bottom: 50px;

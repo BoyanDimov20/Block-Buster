@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore.Internal;
     using Movys.Data.Common.Repositories;
@@ -98,6 +98,7 @@
             return this.Redirect($"/Movies/ById?id={id}");
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddToFavourite(string movieId)
         {

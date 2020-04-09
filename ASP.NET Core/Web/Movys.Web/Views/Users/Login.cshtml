@@ -12,27 +12,31 @@
             <div class="row">
                 <label>
                     <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
-                    <input type="text" asp-for="Username" required="required" placeholder="Username"/>
-                    <span asp-validation-for="Username" class="text-danger"></span>
+                    <input type="text" asp-for="Username" required="required" placeholder="Username" />
                 </label>
             </div>
             <br />
             <div class="row">
                 <label>
                     <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
-                    <input type="password" asp-for="Password" required="required" placeholder="Password"/>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <input type="password" asp-for="Password" required="required" placeholder="Password" />
                 </label>
             </div>
+            <br />
             <div class="row">
                 <div class="remember">
                     <div>
-                        <input type="checkbox" name="remember" value="Remember me"><span>Remember me</span>
+                        <input type="checkbox" name="remember" value="Remember me"><a class="preloaderText">Remember me</a>
                     </div>
-                    <a href="#">Forget password ?</a> <!--TODO-->
+                    <a class="preloaderTextHover" href="#">Forget password ?</a> <!--TODO-->
                 </div>
             </div>
+
             <br />
+            <span asp-validation-for="Username"></span>
+            <span asp-validation-for="Password"></span>
+            <br />
+
             <div class="row">
                 <button class="btn" type="submit">Login</button>
             </div>

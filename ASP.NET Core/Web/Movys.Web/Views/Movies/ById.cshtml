@@ -35,19 +35,21 @@
                     <h1 class="bd-hd">@Model.Title <span>@Model.ReleaseYear</span></h1>
 
                     <div class="social-btn">
-                        <form method="post">
-                            <a onclick="addToFavorite()" id="favourite" class="parent-btn">
-                                @if (Model.IsAddedToFavorite)
-                                {
-                                    <i class="ion-heart"></i><span>Added</span>
-                                }
-                                else
-                                {
-                                    <i class="ion-ios-heart-outline"></i><span>Add to favourite</span>
-                                }
-                            </a>
-                        </form>
-
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form method="post">
+                                <a onclick="addToFavorite()" id="favourite" class="parent-btn">
+                                    @if (Model.IsAddedToFavorite)
+                                    {
+                                        <i class="ion-heart"></i><span>Added</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="ion-ios-heart-outline"></i><span>Add to favourite</span>
+                                    }
+                                </a>
+                            </form>
+                        }
                         <div class="hover-bnt">
                             <a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
                             <div class="hvr-item">
