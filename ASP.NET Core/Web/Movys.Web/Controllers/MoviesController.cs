@@ -37,8 +37,9 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ListingMostPopular(int pageNumber = 1)
+        public IActionResult Listing(string crit, int pageNumber = 1)
         {
+            this.ViewData["Crit"] = crit;
             this.ViewData["CurrentPage"] = pageNumber;
             int pageSize = 5;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
@@ -56,15 +57,30 @@
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
                 Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
             };
 
+            // Sorting
+            if (crit == "popularity")
+            {
+                this.ViewData["Title"] = "MOST POPULAR MOVIES";
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Reviews.Count()).ToList();
+            }
+            else if (crit == "rating")
+            {
+                this.ViewData["Title"] = "TOP RATED MOVIES";
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Rating).ToList();
+            }
+
+            // Pagination
+            viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
             return this.View(viewModel);
         }
 
-        public IActionResult ListingMostPopularGrid(int pageNumber = 1)
+        public IActionResult ListingGrid(string crit, int pageNumber = 1)
         {
+            this.ViewData["Crit"] = crit;
             this.ViewData["CurrentPage"] = pageNumber;
             int pageSize = 20;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
@@ -82,13 +98,26 @@
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Skip(excludeRecords).Take(pageSize).ToList(),
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
                 Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
             };
 
+            // Sorting
+            if (crit == "popularity")
+            {
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Reviews.Count()).ToList();
+            }
+            else if (crit == "rating")
+            {
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Rating).ToList();
+            }
+
+            // Pagination
+            viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
             return this.View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> ReviewForm(ReviewFormInputModel inputModel, string id)
         {

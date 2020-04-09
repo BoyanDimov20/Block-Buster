@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="hero-ct">
-                    <h1> Most Popular Movies - list</h1>
+                    <h1> @ViewData["Title"] - list</h1>
                     <ul class="breadcumb">
                         <li class="active"><a href="/">Home</a></li>
-                        <li> <span class="ion-ios-arrow-right"></span>Most Popular Movies</li>
+                        <li> <span class="ion-ios-arrow-right"></span>@ViewData["Title"]</li>
                     </ul>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="topbar-filter">
                     <p>Found <span>@ViewData["RecordsCount"] movies</span> in total</p>
                     <a class="list"><i class="ion-ios-list-outline active"></i></a>
-                    <a asp-action="ListingMostPopularGrid" class="grid"><i class="ion-grid"></i></a>
+                    <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@ViewData["CurrentPage"]" class="grid"><i class="ion-grid"></i></a>
                 </div>
 
                 @for (int i = 0; i < Model.Movies.Count; i++)
@@ -65,7 +65,7 @@
                         <span>Page @ViewData["CurrentPage"] of @ViewData["PagesCount"]:</span>
                         @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
                         {
-                            <a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a>
+                            <a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i" >@i</a>
                         }
                     </div>
                 </div>

@@ -32,7 +32,7 @@
                         <option value="date">Release date Descending</option>
                         <option value="date">Release date Ascending</option>
                     </select>
-                    <a asp-action="ListingMostPopular" class="list"><i class="ion-ios-list-outline "></i></a>
+                    <a asp-action="Listing" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@ViewData["CurrentPage"]" class="list"><i class="ion-ios-list-outline "></i></a>
                     <a class="grid"><i class="ion-grid active"></i></a>
                 </div>
                 <div class="flex-wrap-movielist">
@@ -49,16 +49,6 @@
                             </div>
                         </div>
                     }
-                    <div class="movie-item-style-2 movie-item-style-1">
-                        <img src="~/images/uploads/mv-item12.jpg" alt="">
-                        <div class="hvr-inner">
-                            <a href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
-                        </div>
-                        <div class="mv-item-infor">
-                            <h6><a href="#">la la land</a></h6>
-                            <p class="rate"><i class="ion-android-star"></i><span>7.4</span> /10</p>
-                        </div>
-                    </div>
                 </div>
                 <div class="topbar-filter">
                     <label>Movies per page:</label>
@@ -72,7 +62,7 @@
 
                         @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
                         {
-                            <a asp-action="ListingMostPopularGrid" asp-route-pageNumber="@i">@i</a>
+                            <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a>
                         }
                     </div>
                 </div>

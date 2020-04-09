@@ -69,8 +69,8 @@
                                 movies<i class="fa fa-angle-down" aria-hidden="true"></i>
                             </a>
                             <ul class="dropdown-menu level1">
-                                <li><a asp-controller="Movies" asp-action="ListingMostPopular">Most Popular Movies</a></li>
-                                <li><a asp-controller="Movies" asp-action="ListingTopRated">Top Rated Movies</a></li>
+                                <li><a asp-controller="Movies" asp-action="Listing" asp-route-crit="popularity">Most Popular Movies</a></li>
+                                <li><a asp-controller="Movies" asp-action="Listing" asp-route-crit="rating">Top Rated Movies</a></li>
                                 <li class="it-last"><a href="#">Browse Movies By Genre</a></li>
                             </ul>
                         </li>
@@ -79,8 +79,8 @@
                                 celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </a>
                             <ul class="dropdown-menu level1">
-                                <li><a href="celebritygrid01.html">Most Popular Celebrities</a></li>
-                                <li class="it-last"><a href="celebritysingle.html">Celebrity News</a></li>
+                                <li><a asp-controller="Celebs" asp-action="ListingMostPopular">Most Popular Celebrities</a></li>
+                                <li class="it-last"><a href="#">Celebrity News</a></li>
                             </ul>
                         </li>
                         <li><a asp-controller="Blogs" asp-action="Listing">News</a></li>
