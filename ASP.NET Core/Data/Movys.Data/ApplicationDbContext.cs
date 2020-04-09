@@ -25,8 +25,6 @@
 
         public DbSet<Setting> Settings { get; set; }
 
-        public DbSet<TVShow> TVShows { get; set; }
-
         public DbSet<CastMember> CastMembers { get; set; }
 
         public DbSet<Movie> Movies { get; set; }
@@ -35,13 +33,9 @@
 
         public DbSet<MoviesCastMember> MoviesCastMembers { get; set; }
 
-        public DbSet<TVShowsCastMember> TVShowsCastMembers { get; set; }
-
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<GenresMovie> GenresMovies { get; set; }
-
-        public DbSet<GenresTVShow> GenresTVShows { get; set; }
 
         public DbSet<Review> Reviews { get; set; }
 

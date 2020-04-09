@@ -1,5 +1,6 @@
 ﻿namespace Movys.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -13,6 +14,8 @@
         public string Description { get; set; }
 
         public string ReleaseYear { get; set; }
+
+        public DateTime ReleaseDate { get; set; }
 
         public string ImageUrl { get; set; }
 

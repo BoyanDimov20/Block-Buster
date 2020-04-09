@@ -33,7 +33,5 @@
         public string LinkedInUrl { get; set; }
 
         public virtual ICollection<MoviesCastMember> Movies { get; set; } = new HashSet<MoviesCastMember>();
-
-        public virtual ICollection<TVShowsCastMember> TVShows { get; set; } = new HashSet<TVShowsCastMember>();
     }
 }

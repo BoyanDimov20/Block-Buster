@@ -12,10 +12,6 @@
     {
         public void Configure(EntityTypeBuilder<CastMember> builder)
         {
-            builder.HasMany(x => x.TVShows)
-                .WithOne(x => x.CastMember)
-                .HasForeignKey(x => x.CastMemberId);
-
             builder.HasMany(x => x.Movies)
                 .WithOne(x => x.CastMember)
                 .HasForeignKey(x => x.CastMemberId);

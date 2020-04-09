@@ -15,7 +15,5 @@
         public string Name { get; set; }
 
         public virtual ICollection<GenresMovie> Movies { get; set; } = new HashSet<GenresMovie>();
-
-        public virtual ICollection<GenresTVShow> TVShows { get; set; } = new HashSet<GenresTVShow>();
     }
 }
