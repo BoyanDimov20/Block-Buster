@@ -7323,19 +7323,72 @@ p.ceb-single {
 #preloader h3{
     color: #fff;
 }
-#preloader button {
+
+#preloader button.button2 {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
     display: inline-block;
-    padding: 0.35em 1.2em;
-    border: 0.1em solid #FFFFFF;
+    padding: 0.5em 3em;
+    border: 0.16em solid #FFFFFF;
     margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
     box-sizing: border-box;
     text-decoration: none;
+    text-transform: uppercase;
     font-family: 'Roboto',sans-serif;
-    font-weight: 300;
-    color: #000000;
+    font-weight: 400;
+    color: #FFFFFF;
     text-align: center;
-    transition: all 0.2s;
+    transition: all 0.15s;
+}
+
+#preloader button.button2:hover {
+    color: #DDDDDD;
+    border-color: #DDDDDD;
+}
+
+#preloader button.button2:active {
+    color: #BBBBBB;
+    border-color: #BBBBBB;
+}
+
+@media all and (max-width:30em) {
+    #preloader button.button2 {
+        display: block;
+        margin: 0.4em auto;
+    }
+}
+#preloader button {
+    display: inline-block;
+    padding: 0.5em 3em;
+    border: 0.16em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 400;
+    color: #FFFFFF;
+    text-align: center;
+    transition: all 0.15s;
+}
+#preloader button:hover{
+    color:#DDDDDD;
+    border-color:#DDDDDD;
+}
+#preloader button:active{
+    color:#BBBBBB;
+    border-color:#BBBBBB;
+}
+@media all and (max-width:30em){
+     #preloader button {
+        display: block;
+        margin: 0.4em auto;
+    }
 }
 #preloader .preloaderText {
     color: #fff;
