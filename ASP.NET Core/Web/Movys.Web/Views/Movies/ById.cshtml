@@ -295,7 +295,7 @@
                                                             }
                                                         </div>
                                                         <p class="time">
-                                                            @review.CreatedOn.ToString("dd MMMM yyyy") by <a href="#"> @User.Identity.Name</a>
+                                                            @review.CreatedOn.ToString(GlobalConstants.DateTimeFormat) by <a href="#"> @User.Identity.Name</a>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -515,14 +515,13 @@
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                if (document.getElementById("favourite").innerHTML == "<i class=\"ion-ios-heart-outline\"></i><span>Add to favourite</span>") {
+                if (document.getElementById("favourite").innerHTML == '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>') {
 
-                    document.getElementById("favourite").innerHTML = "<i class=\"ion-heart\"></i><span>Added</span>";
+                    document.getElementById("favourite").innerHTML = '<i class="ion-heart"></i><span>Added</span>';
                 }
                 else {
-                    document.getElementById("favourite").innerHTML = "<i class=\"ion-ios-heart-outline\"></i><span>Add to favourite</span>";
+                    document.getElementById("favourite").innerHTML = '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>';
                 }
-                addFavorite();
             }
         }
         xhr.open("POST", "/Movies/AddToFavourite?movieId=@Model.Id", true);

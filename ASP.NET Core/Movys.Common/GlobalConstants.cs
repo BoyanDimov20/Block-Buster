@@ -5,5 +5,7 @@
         public const string SystemName = "Movys";
 
         public const string AdministratorRoleName = "Administrator";
+
+        public const string DateTimeFormat = "dd MMMM yyyy";
     }
 }

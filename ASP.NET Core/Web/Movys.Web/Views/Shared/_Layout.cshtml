@@ -40,7 +40,6 @@
         </div>
     </div>
     <!--end of preloading-->
-   
     <!-- BEGIN | Header -->
     <header class="ht-header">
         <div class="container">
@@ -83,7 +82,7 @@
                                 <li class="it-last"><a href="#">Celebrity News</a></li>
                             </ul>
                         </li>
-                        <li><a asp-controller="Blogs" asp-action="Listing">News</a></li>
+                        <li><a asp-controller="News" asp-action="Listing">News</a></li>
                         <li class="dropdown first">
                             <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
                                 community <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -126,14 +125,14 @@
             </nav>
 
             <!-- top search form -->
-                <div class="top-search">
-                    <select>
-                        <option value="all">All</option>
-                        <option value="movies">Movies</option>
-                        <option value="tvshows">TVShows</option>
-                    </select>
-                    <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-                </div>
+            <div class="top-search">
+                <select>
+                    <option value="all">All</option>
+                    <option value="movies">Movies</option>
+                    <option value="tvshows">TVShows</option>
+                </select>
+                <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
+            </div>
         </div>
     </header>
     <!-- END | Header -->
