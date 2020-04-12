@@ -1,0 +1,24 @@
+﻿@model Movys.Web.ViewModels.Celebs.SearchInputModel
+
+<form class="form-style-1 celebrity-form" method="get" asp-controller="Celebs" asp-action="Result" asp-route-result="@Model.Content" asp-route-category="@Model.Category">
+    <div class="row">
+        <div class="col-md-12 form-it">
+            <label>Celebrity name</label>
+            <input asp-for="Content" name="result" type="text" placeholder="Enter keywords">
+        </div>
+        <div class="col-md-12 form-it">
+            <label>Category</label>
+            <select asp-for="Category" name="category">
+                <option value="-1">Any</option>
+                <option value="0">Actor</option>
+                <option value="1">Director</option>
+                <option value="2">Writer</option>
+                <option value="3">Producer</option>
+                <option value="4">Screenwriter</option>
+            </select>
+        </div>
+        <div class="col-md-12 ">
+            <input class="submit" type="submit" value="submit">
+        </div>
+    </div>
+</form>

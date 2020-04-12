@@ -20,5 +20,7 @@
         public string MovieReleaseYear { get; set; }
 
         public string MovieImageUrl { get; set; }
+
+        public string CastMemberId { get; set; }
     }
 }

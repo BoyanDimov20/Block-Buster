@@ -10,5 +10,7 @@
         public IEnumerable<SingleCelebViewModel> CastMembers { get; set; }
 
         public int CelebsCount => this.CastMembers.Count();
+
+        public SearchInputModel SearchInputModel { get; set; } = new SearchInputModel();
     }
 }

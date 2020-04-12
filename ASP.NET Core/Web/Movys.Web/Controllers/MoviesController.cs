@@ -159,7 +159,7 @@
             return this.Ok();
         }
 
-        [Route("/Search")]
+        [Route("/Movies/Search")]
         public IActionResult Result(string result, string genre, double rating, int pageNumber = 1)
         {
             this.ViewData["SearchString"] = result;

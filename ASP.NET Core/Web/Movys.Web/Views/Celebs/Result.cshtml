@@ -1,4 +1,5 @@
-﻿@model Movys.Web.ViewModels.Celebs.ListingCelebsViewModel
+﻿
+@model Movys.Web.ViewModels.Celebs.ListingCelebsViewModel
 
 <div class="hero common-hero">
     <div class="container">
@@ -7,7 +8,7 @@
                 <div class="hero-ct">
                     <h1>celebrity listing - list</h1>
                     <ul class="breadcumb">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                         <li> <span class="ion-ios-arrow-right"></span> celebrity listing</li>
                     </ul>
                 </div>
@@ -22,34 +23,21 @@
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
                     <p class="pad-change">Found <span>@Model.CelebsCount celebrities</span> in total</p>
-                    
-                    <a class="list"><i class="ion-ios-list-outline active"></i></a>
-                    <a asp-controller="Celebs" asp-action="ListingMostPopularGrid" class="grid"><i class="ion-grid "></i></a>
                 </div>
                 <div class="row">
-                    @foreach (var celeb in Model.CastMembers)
+                    @foreach (var cast in Model.CastMembers)
                     {
                         <div class="col-md-12">
                             <div class="ceb-item-style-2">
-                                <img src="@celeb.ImageUrl" style="width:100px;height:130px;" alt="">
+                                <img src="@cast.ImageUrl" style="width:100px;height:130px;" alt="">
                                 <div class="ceb-infor">
-                                    <h2><a asp-controller="Celebs" asp-action="ById" asp-route-id="@celeb.Id">@celeb.Name</a></h2>
-                                    <span>actor, @celeb.CountryBornIn</span>
-                                    <p>@celeb.Description... </p>
+                                    <h2><a asp-controller="Celebs" asp-action="ById" asp-route-id="@cast.Id">@cast.Name</a></h2>
+                                    <span>@string.Join(", ", cast.Movies.Select(x => x.RoleType)), @cast.CountryBornIn</span>
+                                    <p>@cast.Description ... </p>
                                 </div>
                             </div>
                         </div>
                     }
-                    <div class="col-md-12">
-                        <div class="ceb-item-style-2">
-                            <img src="~/images/uploads/ceblist8.jpg" alt="">
-                            <div class="ceb-infor">
-                                <h2><a href="celebritysingle.html">Jason Momoa</a></h2>
-                                <span>actor, usa</span>
-                                <p>Joseph Jason Namakaeha Momoa was born on August 1, 1979 in Honolulu, Hawaii. He is the son of Coni (Lemke), a photographer, and Joseph Momoa, a painter...</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="topbar-filter">
                     <label>Reviews per page:</label>
