@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore.Internal;
@@ -37,23 +38,11 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Listing(string crit, int pageNumber = 1)
+        public IActionResult Listing(string crit, int pageNumber = 1, int pageSize = 5)
         {
             this.ViewData["Crit"] = crit;
-            this.ViewData["CurrentPage"] = pageNumber;
-            int pageSize = 5;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
             int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
-            this.ViewData["RecordsCount"] = recordsCount;
-
-            if (recordsCount % 5 == 0 || recordsCount < 5)
-            {
-                this.ViewData["PagesCount"] = recordsCount / 5;
-            }
-            else
-            {
-                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
-            }
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
@@ -62,7 +51,19 @@
                 {
                     Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
                 },
+                CurrentPage = pageNumber,
+                MoviesPerPage = pageSize,
+                MoviesCountFound = recordsCount,
             };
+
+            if (recordsCount % 5 == 0 || recordsCount < 5)
+            {
+                viewModel.PagesCount = recordsCount / 5;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 5) + 1;
+            }
 
             // Sorting
             if (crit == "popularity")

@@ -21,15 +21,15 @@
         <div class="row ipad-width2">
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
-                    <p>Found <span>@ViewData["RecordsCount"] movies</span> in total</p>
+                    <p>Found <span>@Model.MoviesCountFound movies</span> in total</p>
                     <a class="list"><i class="ion-ios-list-outline active"></i></a>
-                    <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@ViewData["CurrentPage"]" class="grid"><i class="ion-grid"></i></a>
+                    <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@Model.CurrentPage" class="grid"><i class="ion-grid"></i></a>
                 </div>
 
                 @for (int i = 0; i < Model.Movies.Count; i++)
                 {
                     <div class="movie-item-style-2">
-                        <img src="@Model.Movies[i].ImageUrl" alt="">
+                        <img src="@Model.Movies[i].ImageUrl" style="width:185px; height:275px;" alt="">
                         <div class="mv-item-infor">
                             <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@Model.Movies[i].Id">@Model.Movies[i].Title <span>(@Model.Movies[i].ReleaseYear)</span></a></h6>
                             <p class="rate"><i class="ion-android-star"></i><span>@Model.Movies[i].Rating</span> /10</p>
@@ -58,12 +58,12 @@
                 <div class="topbar-filter">
                     <label>Movies per page:</label>
                     <select>
-                        <option value="range">5 Movies</option>
-                        <option value="saab">10 Movies</option>
+                        <option value="5">5 Movies</option>
+                        <option value="10">10 Movies</option>
                     </select>
                     <div class="pagination2">
-                        <span>Page @ViewData["CurrentPage"] of @ViewData["PagesCount"]:</span>
-                        @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
+                        <span>Page @Model.CurrentPage of @Model.PagesCount:</span>
+                        @for (int i = 1; i <= Model.PagesCount; i++)
                         {
                             <a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i" >@i</a>
                         }
@@ -99,3 +99,4 @@
         </div>
     </div>
 </div>
+

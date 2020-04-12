@@ -34,22 +34,12 @@
                                 <img src="@celeb.ImageUrl" style="width:100px;height:130px;" alt="">
                                 <div class="ceb-infor">
                                     <h2><a asp-controller="Celebs" asp-action="ById" asp-route-id="@celeb.Id">@celeb.Name</a></h2>
-                                    <span>actor, @celeb.CountryBornIn</span>
+                                    <span>@string.Join(", ", celeb.Movies.Select(x => x.RoleType).Distinct()), @celeb.CountryBornIn</span>
                                     <p>@celeb.Description... </p>
                                 </div>
                             </div>
                         </div>
                     }
-                    <div class="col-md-12">
-                        <div class="ceb-item-style-2">
-                            <img src="~/images/uploads/ceblist8.jpg" alt="">
-                            <div class="ceb-infor">
-                                <h2><a href="celebritysingle.html">Jason Momoa</a></h2>
-                                <span>actor, usa</span>
-                                <p>Joseph Jason Namakaeha Momoa was born on August 1, 1979 in Honolulu, Hawaii. He is the son of Coni (Lemke), a photographer, and Joseph Momoa, a painter...</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="topbar-filter">
                     <label>Reviews per page:</label>
