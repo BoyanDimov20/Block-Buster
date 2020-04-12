@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="hero-ct">
-                    <h1>Edward kennedy’s profile</h1>
+                    <h1>@User.Identity.Name’s profile</h1>
                     <ul class="breadcumb">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="/">Home</a></li>
                         <li> <span class="ion-ios-arrow-right"></span>Profile</li>
                     </ul>
                 </div>
@@ -21,22 +21,22 @@
             <div class="col-md-3 col-sm-12 col-xs-12">
                 <div class="user-information">
                     <div class="user-img">
-                        <a href="#"><img src="images/uploads/user-img.png" alt=""><br></a>
+                        <a href="#"><img src="@User. " alt=""><br></a>
                         <a href="#" class="redbtn">Change avatar</a>
                     </div>
                     <div class="user-fav">
                         <p>Account Details</p>
                         <ul>
-                            <li class="active"><a href="userprofile.html">Profile</a></li>
-                            <li><a href="userfavoritelist.html">Favorite movies</a></li>
-                            <li><a href="userrate.html">Rated movies</a></li>
+                            <li class="active"><a>Profile</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserFavouriteList">Favorite movies</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserRating">Rated movies</a></li>
                         </ul>
                     </div>
                     <div class="user-fav">
                         <p>Others</p>
                         <ul>
-                            <li><a href="#">Change password</a></li>
-                            <li><a href="#">Log out</a></li>
+                            <li><a asp-controller="Profiles" asp-action="UserProfile">Change password</a></li>
+                            <li><a asp-controller="Users" asp-action="Logout">Log out</a></li>
                         </ul>
                     </div>
                 </div>

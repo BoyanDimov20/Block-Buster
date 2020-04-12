@@ -5,8 +5,11 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Movys.Data.Models;
     using Movys.Services.Data;
     using Movys.Web.ViewModels.Profiles;
 
@@ -15,15 +18,18 @@
     {
         private readonly IReviewsService reviewsService;
         private readonly IFavoriteMoviesService favoriteMoviesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ProfilesController(IReviewsService reviewsService, IFavoriteMoviesService favoriteMoviesService)
+        public ProfilesController(IReviewsService reviewsService, IFavoriteMoviesService favoriteMoviesService, UserManager<ApplicationUser> userManager)
         {
             this.reviewsService = reviewsService;
             this.favoriteMoviesService = favoriteMoviesService;
+            this.userManager = userManager;
         }
 
         public IActionResult UserProfile()
         {
+            //var userPic = this.userManager.FindByNameAsync(this.User.Identity.Name).Result.
             return this.View();
         }
 
