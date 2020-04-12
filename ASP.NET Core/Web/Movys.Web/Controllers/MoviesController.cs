@@ -58,7 +58,10 @@
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
-                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
+                SearchFormInputModel = new SearchFormInputModel()
+                {
+                    Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
+                },
             };
 
             // Sorting
@@ -99,7 +102,10 @@
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
-                Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct().ToList(),
+                SearchFormInputModel = new SearchFormInputModel()
+                {
+                    Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
+                },
             };
 
             // Sorting
@@ -151,6 +157,50 @@
             await this.favouriteMovieRepository.SaveChangesAsync();
 
             return this.Ok();
+        }
+
+        [Route("/Search")]
+        public IActionResult Result(string result, string genre, double rating, int pageNumber = 1)
+        {
+            this.ViewData["SearchString"] = result;
+            this.ViewData["CurrentPage"] = pageNumber;
+            int pageSize = 5;
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+
+            if (result == null)
+            {
+                result = string.Empty;
+            }
+
+            string normalizedResult = result.ToLower();
+            int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(normalizedResult) || x.Description.ToLower().Contains(normalizedResult)).Count();
+            this.ViewData["RecordsCount"] = recordsCount;
+            if (recordsCount % 5 == 0)
+            {
+                this.ViewData["PagesCount"] = recordsCount / 5;
+            }
+            else
+            {
+                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
+            }
+
+            ListingMoviesViewModel viewModel = new ListingMoviesViewModel
+            {
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).Skip(excludeRecords).Take(pageSize).ToList(),
+            };
+
+            if (genre != null)
+            {
+                viewModel.Movies = viewModel.Movies.Where(x => x.Genres.Any(x => x.GenreId == genre)).ToList();
+            }
+
+            if (rating != 0)
+            {
+                viewModel.Movies = viewModel.Movies.Where(x => x.Rating >= rating).ToList();
+            }
+
+            viewModel.SearchFormInputModel.Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList();
+            return this.View(viewModel);
         }
     }
 }

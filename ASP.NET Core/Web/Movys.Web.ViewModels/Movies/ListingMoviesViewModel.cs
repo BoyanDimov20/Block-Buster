@@ -15,6 +15,5 @@
 
         public SearchFormInputModel SearchFormInputModel { get; set; } = new SearchFormInputModel();
 
-        public IEnumerable<GenreViewModel> Genres { get; set; }
     }
 }

@@ -74,62 +74,7 @@
                 <div class="sidebar">
                     <div class="searh-form">
                         <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" method="get" asp-controller="Search" asp-action="Result" asp-route-result="@Model.SearchFormInputModel.Result">
-                            <div class="row">
-                                <div class="col-md-12 form-it">
-                                    <label>Movie name</label>
-                                    <input asp-for="SearchFormInputModel.Result" name="result" type="text" placeholder="Enter keywords">
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Genres & Subgenres</label>
-                                    <div class="group-ip">
-                                        <select asp-for="SearchFormInputModel.Genre" name="genre" multiple="" class="ui fluid dropdown">
-                                            <option value="">Enter to filter genres</option>
-                                            @foreach (var genre in Model.Genres)
-                                            {
-                                                <option value="@genre.GenreId">@genre.GenreName</option>
-                                            }
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Rating Range</label>
-
-                                    <select asp-for="SearchFormInputModel.Rating" name="rating">
-                                        <option value="0">-- Any --</option>
-                                        <option value="5">-- 5.0+ --</option>
-                                        <option value="7.5">-- 7.5+ --</option>
-                                        <option value="9">-- 9.0+ --</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Release Year</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">From</option>
-                                                <option value="number">10</option>
-                                                <option value="number">20</option>
-                                                <option value="number">30</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">To</option>
-                                                <option value="number">20</option>
-                                                <option value="number">30</option>
-                                                <option value="number">40</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <input class="submit" type="submit" value="submit">
-                                </div>
-                            </div>
-                        </form>
+                        @await Html.PartialAsync("_SearchFormPartial", Model.SearchFormInputModel)
                     </div>
                     <div class="ads">
                         <img src="images/uploads/ads1.png" alt="">

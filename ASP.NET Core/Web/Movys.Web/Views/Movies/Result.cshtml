@@ -75,63 +75,7 @@
                 <div class="sidebar">
                     <div class="searh-form">
                         <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" asp-action="ListingMostPopular">
-                            <div class="row">
-                                <div class="col-md-12 form-it">
-                                    <label>Movie name</label>
-                                    <input type="text" placeholder="Enter keywords">
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Genres & Subgenres</label>
-                                    <div class="group-ip">
-                                        <select name="skills" multiple="" class="ui fluid dropdown">
-                                            <option value="">Enter to filter genres</option>
-                                            <option value="Action1">Action 1</option>
-                                            <option value="Action2">Action 2</option>
-                                            <option value="Action3">Action 3</option>
-                                            <option value="Action4">Action 4</option>
-                                            <option value="Action5">Action 5</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Rating Range</label>
-
-                                    <select>
-                                        <option value="range">-- Select the rating range below --</option>
-                                        <option value="saab">-- Select the rating range below --</option>
-                                        <option value="saab">-- Select the rating range below --</option>
-                                        <option value="saab">-- Select the rating range below --</option>
-                                    </select>
-
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Release Year</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">From</option>
-                                                <option value="number">10</option>
-                                                <option value="number">20</option>
-                                                <option value="number">30</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">To</option>
-                                                <option value="number">20</option>
-                                                <option value="number">30</option>
-                                                <option value="number">40</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <input class="submit" type="submit" value="submit">
-                                </div>
-                            </div>
-                        </form>
+                        @await Html.PartialAsync("_SearchFormPartial", Model.SearchFormInputModel)
                     </div>
                     <div class="ads">
                         <img src="images/uploads/ads1.png" alt="">
