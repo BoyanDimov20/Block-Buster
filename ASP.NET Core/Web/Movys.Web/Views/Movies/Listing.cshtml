@@ -55,20 +55,21 @@
                         </div>
                     </div>
                 }
-                <div class="topbar-filter">
-                    <label>Movies per page:</label>
-                    <select>
-                        <option value="5">5 Movies</option>
-                        <option value="10">10 Movies</option>
-                    </select>
-                    <div class="pagination2">
-                        <span>Page @Model.CurrentPage of @Model.PagesCount:</span>
-                        @for (int i = 1; i <= Model.PagesCount; i++)
+                <ul class="pagination">
+                    <li class="icon-prev"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
+                    @for (int i = 1; i <= Model.PagesCount; i++)
+                    {
+                        if (Model.CurrentPage == i)
                         {
-                            <a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i" >@i</a>
+                            <li class="active"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a></li>
                         }
-                    </div>
-                </div>
+                        else
+                        {
+                            <li><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                    }
+                    <li class="icon-next"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
+                </ul>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="sidebar">

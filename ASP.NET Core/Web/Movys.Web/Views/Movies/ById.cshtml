@@ -225,15 +225,6 @@
                                         </div>
                                         <div class="topbar-filter">
                                             <p>Found <span>@Model.ReviewsCount reviews</span> in total</p>
-                                            <label>Filter by:</label>
-                                            <select>
-                                                <option value="popularity">Popularity Descending</option>
-                                                <option value="popularity">Popularity Ascending</option>
-                                                <option value="rating">Rating Descending</option>
-                                                <option value="rating">Rating Ascending</option>
-                                                <option value="date">Release date Descending</option>
-                                                <option value="date">Release date Ascending</option>
-                                            </select>
                                         </div>
                                         @if (User.Identity.IsAuthenticated)
                                         {
@@ -328,23 +319,15 @@
 
                                             <p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
                                         </div>
-                                        <div class="topbar-filter">
-                                            <label>Reviews per page:</label>
-                                            <select>
-                                                <option value="range">5 Reviews</option>
-                                                <option value="saab">10 Reviews</option>
-                                            </select>
-                                            <div class="pagination2">
-                                                <span>Page 1 of 6:</span>
-                                                <a class="active" href="#">1</a>
-                                                <a href="#">2</a>
-                                                <a href="#">3</a>
-                                                <a href="#">4</a>
-                                                <a href="#">5</a>
-                                                <a href="#">6</a>
-                                                <a href="#"><i class="ion-arrow-right-b"></i></a>
-                                            </div>
-                                        </div>
+                                        
+                                        <ul class="pagination">
+                                            <li class="icon-prev"><a href="#"><i class="ion-ios-arrow-left"></i></a></li>
+                                            <li class="active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li class="icon-next"><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div id="cast" class="tab">
@@ -511,16 +494,19 @@
 </div>
 
 <script>
+    var isAdded = '@(Model.IsAddedToFavorite)';
+
     function addToFavorite() {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                if (document.getElementById("favourite").innerHTML == '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>') {
-
-                    document.getElementById("favourite").innerHTML = '<i class="ion-heart"></i><span>Added</span>';
+                if (isAdded == 'True') {
+                    document.getElementById("favourite").innerHTML = '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>';
+                    isAdded = 'False';
                 }
                 else {
-                    document.getElementById("favourite").innerHTML = '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>';
+                    document.getElementById("favourite").innerHTML = '<i class="ion-heart"></i><span>Added</span>';
+                    isAdded = 'True';
                 }
             }
         }
