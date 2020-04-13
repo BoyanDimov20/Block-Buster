@@ -17,6 +17,7 @@ namespace Movys.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.MovieWatchList = new HashSet<MoviesUser>();
             this.Reviews = new HashSet<Review>();
+            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -38,5 +39,7 @@ namespace Movys.Data.Models
         public virtual ICollection<MoviesUser> MovieWatchList { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

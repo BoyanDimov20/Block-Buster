@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movys.Data;
 
 namespace Movys.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200413213159_CommentsModel")]
+    partial class CommentsModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,17 +323,12 @@ namespace Movys.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("NewsId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("NewsId");
 
                     b.HasIndex("UserId");
 
@@ -637,10 +634,6 @@ namespace Movys.Data.Migrations
 
             modelBuilder.Entity("Movys.Data.Models.Comment", b =>
                 {
-                    b.HasOne("Movys.Data.Models.News", "News")
-                        .WithMany("Comments")
-                        .HasForeignKey("NewsId");
-
                     b.HasOne("Movys.Data.Models.ApplicationUser", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId");

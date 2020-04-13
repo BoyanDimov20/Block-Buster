@@ -43,6 +43,8 @@
 
         public DbSet<News> News { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -1,8 +1,8 @@
 ﻿namespace Movys.Data.Configurations
 {
-    using Movys.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Movys.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
@@ -34,6 +34,10 @@
                 .HasForeignKey(x => x.UserId);
 
             appUser.HasMany(x => x.Reviews)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+
+            appUser.HasMany(x => x.Comments)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
         }
