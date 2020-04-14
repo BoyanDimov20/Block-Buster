@@ -1,4 +1,4 @@
-﻿
+﻿@model Movys.Web.ViewModels.Profiles.ProfileInfoViewModel
 
 <div class="hero user-hero">
     <div class="container">
@@ -21,8 +21,7 @@
             <div class="col-md-3 col-sm-12 col-xs-12">
                 <div class="user-information">
                     <div class="user-img">
-                        <a href="#"><img src="@User. " alt=""><br></a>
-                        <a href="#" class="redbtn">Change avatar</a>
+                        @await Html.PartialAsync("_ChangeAvatarPartial", Model.AvatarViewModel)
                     </div>
                     <div class="user-fav">
                         <p>Account Details</p>
@@ -118,3 +117,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    function Upload() {
+         var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+            }
+        }
+        xhr.open("POST", "/Profiles/Upload?file=@Model.AvatarViewModel.Avatar", true);
+        xhr.send();
+    }
+</script>

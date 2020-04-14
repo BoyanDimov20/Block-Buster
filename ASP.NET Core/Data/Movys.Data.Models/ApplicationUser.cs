@@ -41,5 +41,9 @@ namespace Movys.Data.Models
         public virtual ICollection<Review> Reviews { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ProfilePicture ProfilePicture { get; set; }
+
+        public string ProfilePictureId { get; set; }
     }
 }

@@ -40,6 +40,10 @@
             appUser.HasMany(x => x.Comments)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
+
+            appUser.HasOne(x => x.ProfilePicture)
+                .WithOne(x => x.User)
+                .HasForeignKey<ProfilePicture>(x => x.UserId);
         }
     }
 }
