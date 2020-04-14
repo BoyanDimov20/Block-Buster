@@ -4,14 +4,14 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public class ListingFavoriteMoviesViewModel
+    public class UserRatingViewModel
     {
-        public IEnumerable<FavoriteMovieViewModel> Movies { get; set; }
+        public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
         public int CurrentPage { get; set; }
 
         public int PagesCount { get; set; }
 
-        public int MoviesCount { get; set; }
+        public int ReviewsCount { get; set; }
     }
 }
