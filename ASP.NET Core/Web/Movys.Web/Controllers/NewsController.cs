@@ -22,12 +22,27 @@
             this.commentsService = commentsService;
         }
 
-        public IActionResult Listing()
+        public IActionResult Listing(int pageNumber = 1, int pageSize = 5)
         {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+            int recordsCount = this.newsService.GetAll<NewsViewModel>().Count();
+
             ListingNewsViewModel viewModel = new ListingNewsViewModel
             {
                 News = this.newsService.GetAll<NewsViewModel>().OrderByDescending(x => x.CreatedOn).ToList(),
+                CurrentPage = pageNumber,
             };
+
+            if (recordsCount % 5 == 0 || recordsCount < 5)
+            {
+                viewModel.PagesCount = recordsCount / 5;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 5) + 1;
+            }
+
+            viewModel.News = viewModel.News.Skip(excludeRecords).Take(pageSize).ToList();
 
             return this.View(viewModel);
         }

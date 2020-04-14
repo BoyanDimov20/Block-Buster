@@ -25,12 +25,28 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ListingMostPopular()
+        public IActionResult ListingMostPopular(int pageNumber = 1, int pageSize = 5)
         {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+            int recordsCount = this.celebsService.GetAll<SingleCelebViewModel>().Count();
+
             ListingCelebsViewModel viewModel = new ListingCelebsViewModel
             {
                 CastMembers = this.celebsService.GetAll<SingleCelebViewModel>().ToList(),
+                CurrentPage = pageNumber,
+                CelebsCount = recordsCount,
             };
+
+            if (recordsCount % 5 == 0 || recordsCount < 5)
+            {
+                viewModel.PagesCount = recordsCount / 5;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 5) + 1;
+            }
+
+            viewModel.CastMembers = viewModel.CastMembers.Skip(excludeRecords).Take(pageSize).ToList();
 
             return this.View(viewModel);
         }

@@ -7,5 +7,9 @@
     public class ListingNewsViewModel
     {
         public IEnumerable<NewsViewModel> News { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
     }
 }
