@@ -46,7 +46,7 @@
                     </div>
                     <!-- comment items -->
                     <div class="comments">
-                        <h4>04 Comments</h4>
+                        <h4>@Model.Comments.Count() Comments</h4>
                         @foreach (var comment in Model.Comments)
                         {
                             <div class="cmt-item flex-it">
@@ -59,16 +59,6 @@
                                 </div>
                             </div>
                         }
-
-                        <div class="cmt-item flex-it">
-                            <img src="~/images/uploads/author4.png" alt="">
-                            <div class="author-infor">
-                                <div class="flex-it2">
-                                    <h6><a href="#">Margot Robbie</a></h6> <span class="time"> - 27 Mar 2017</span>
-                                </div>
-                                <p>Joan Baez was the sharpest of the Rock Hall inductees, singing about deportees and talking social activism as well as joking about her age and the likelihood that a good portion of the Barclays. </p>
-                            </div>
-                        </div>
                     </div>
                     <div class="comment-form">
                         <h4>Leave a comment</h4>

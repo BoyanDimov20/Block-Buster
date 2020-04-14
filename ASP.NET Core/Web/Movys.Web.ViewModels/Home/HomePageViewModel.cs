@@ -5,6 +5,7 @@
     using System.Text;
 
     using Movys.Web.ViewModels.Movies;
+    using Movys.Web.ViewModels.News;
 
     public class HomePageViewModel
     {
@@ -19,5 +20,7 @@
         public IEnumerable<CastMemberViewModel> Celebrities { get; set; }
 
         public IEnumerable<GenreViewModel> Genres { get; set; }
+
+        public IEnumerable<NewsViewModel> News { get; set; }
     }
 }

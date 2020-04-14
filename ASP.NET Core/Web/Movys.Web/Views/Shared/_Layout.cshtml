@@ -83,17 +83,6 @@
                             </ul>
                         </li>
                         <li><a asp-controller="News" asp-action="Listing">News</a></li>
-                        <li class="dropdown first">
-                            <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
-                                community <i class="fa fa-angle-down" aria-hidden="true"></i>
-                            </a>
-                            <ul class="dropdown-menu level1">
-                                <li><a href="userfavoritegrid.html">user favorite grid</a></li>
-                                <li><a href="userfavoritelist.html">user favorite list</a></li>
-                                <li><a href="userprofile.html">user profile</a></li>
-                                <li class="it-last"><a href="userrate.html">user rate</a></li>
-                            </ul>
-                        </li>
                     </ul>
                     <ul class="nav navbar-nav flex-child-menu menu-right">
                         @if (User.Identity.IsAuthenticated)
@@ -106,8 +95,7 @@
                                 <ul class="dropdown-menu level1">
                                     <li><a asp-controller="Profiles" asp-action="UserProfile">User Profile</a></li>
                                     <li><a asp-controller="Profiles" asp-action="UserRating">User Rating</a></li>
-                                    <li><a asp-controller="Profiles" asp-action="UserFavouriteList">User Favourite List</a></li>
-                                    <li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
+                                    <li class="it-last"><a asp-controller="Profiles" asp-action="UserFavouriteList">User Favourite List</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">Help</a></li>
@@ -123,16 +111,7 @@
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
-
-            <!-- top search form -->
-            <div class="top-search">
-                <select>
-                    <option value="all">All</option>
-                    <option value="movies">Movies</option>
-                    <option value="tvshows">TVShows</option>
-                </select>
-                <input type="text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
-            </div>
+            
         </div>
     </header>
     <!-- END | Header -->

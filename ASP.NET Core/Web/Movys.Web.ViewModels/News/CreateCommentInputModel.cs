@@ -7,6 +7,7 @@
 
     public class CreateCommentInputModel
     {
+        [Required]
         [MinLength(115, ErrorMessage = "Your comment is too short.")]
         public string Content { get; set; }
     }

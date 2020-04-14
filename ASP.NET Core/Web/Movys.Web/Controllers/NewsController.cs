@@ -26,7 +26,7 @@
         {
             ListingNewsViewModel viewModel = new ListingNewsViewModel
             {
-                News = this.newsService.GetAll<NewsViewModel>().ToList(),
+                News = this.newsService.GetAll<NewsViewModel>().OrderByDescending(x => x.CreatedOn).ToList(),
             };
 
             return this.View(viewModel);
@@ -40,10 +40,18 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateComment(string content, string newsId)
+        public async Task<IActionResult> CreateComment(CreateCommentInputModel inputModel, string newsId)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.commentsService.CreateCommentAsync(content, userId, newsId);
+
+            if (this.ModelState.IsValid)
+            {
+                await this.commentsService.CreateCommentAsync(inputModel.Content, userId, newsId);
+            }
+            else
+            {
+                this.ModelState.AddModelError(string.Empty, "Your comment must contain at least 150 characters.");
+            }
 
             return this.Redirect($"/News/ById?id={newsId}");
         }
