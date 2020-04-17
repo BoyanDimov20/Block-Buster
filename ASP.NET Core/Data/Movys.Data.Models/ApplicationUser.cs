@@ -30,6 +30,15 @@ namespace Movys.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        // Additional info
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Country { get; set; }
+
+        public string City { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

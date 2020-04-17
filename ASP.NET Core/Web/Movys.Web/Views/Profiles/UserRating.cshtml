@@ -62,23 +62,21 @@
                         </div>
                     </div>
                 }
-                <div class="topbar-filter">
-                    <ul class="pagination">
-                        <li class="icon-prev"><a asp-action="UserRating" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
-                        @for (int i = 1; i <= Model.PagesCount; i++)
+                <ul class="pagination">
+                    <li class="icon-prev"><a asp-action="UserRating" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
+                    @for (int i = 1; i <= Model.PagesCount; i++)
+                    {
+                        if (Model.CurrentPage == i)
                         {
-                            if (Model.CurrentPage == i)
-                            {
-                                <li class="active"><a asp-action="UserRating" asp-route-pageNumber="@i">@i</a></li>
-                            }
-                            else
-                            {
-                                <li><a asp-action="UserRating" asp-route-pageNumber="@i">@i</a></li>
-                            }
+                            <li class="active"><a asp-action="UserRating" asp-route-pageNumber="@i">@i</a></li>
                         }
-                        <li class="icon-next"><a asp-action="UserRating" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
-                    </ul>
-                </div>
+                        else
+                        {
+                            <li><a asp-action="UserRating" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                    }
+                    <li class="icon-next"><a asp-action="UserRating" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
+                </ul>
             </div>
         </div>
     </div>

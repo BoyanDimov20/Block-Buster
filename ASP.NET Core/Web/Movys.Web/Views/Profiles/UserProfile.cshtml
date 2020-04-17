@@ -42,42 +42,26 @@
             </div>
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="form-style-1 user-pro" action="#">
-                    <form action="#" class="user">
+                    <form method="post" asp-action="ChangeAdditionalInfo" class="user">
                         <h4>01. Profile details</h4>
                         <div class="row">
                             <div class="col-md-6 form-it">
-                                <label>Username</label>
-                                <input type="text" placeholder="edwardkennedy">
-                            </div>
-                            <div class="col-md-6 form-it">
-                                <label>Email Address</label>
-                                <input type="text" placeholder="edward@kennedy.com">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-it">
                                 <label>First Name</label>
-                                <input type="text" placeholder="Edward ">
+                                <input asp-for="AdditionInfoInput.FirstName" type="text" placeholder="@(Model.AdditionInfoViewModel.FirstName??"First Name")">
                             </div>
                             <div class="col-md-6 form-it">
                                 <label>Last Name</label>
-                                <input type="text" placeholder="Kennedy">
+                                <input asp-for="AdditionInfoInput.LastName" type="text" placeholder="@(Model.AdditionInfoViewModel.LastName??"Last Name")">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Country</label>
-                                <select>
-                                    <option value="united">United States</option>
-                                    <option value="saab">Others</option>
-                                </select>
+                                <input asp-for="AdditionInfoInput.Country" type="text" placeholder="@(Model.AdditionInfoViewModel.Country??"Country")">
                             </div>
                             <div class="col-md-6 form-it">
-                                <label>State</label>
-                                <select>
-                                    <option value="united">New York</option>
-                                    <option value="saab">Others</option>
-                                </select>
+                                <label>City</label>
+                                <input asp-for="AdditionInfoInput.City" type="text" placeholder="@(Model.AdditionInfoViewModel.City??"City")">
                             </div>
                         </div>
                         <div class="row">
@@ -86,26 +70,31 @@
                             </div>
                         </div>
                     </form>
-                    <form action="#" class="password">
+                    <form method="post" asp-action="ChangePassword" class="password">
                         <h4>02. Change password</h4>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Old Password</label>
-                                <input type="text" placeholder="**********">
+                                <input asp-for="ChangePasswordInput.OldPassword" type="password" placeholder="**********" required="required">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>New Password</label>
-                                <input type="text" placeholder="***************">
+                                <input asp-for="ChangePasswordInput.NewPassword" type="password" placeholder="***************" required="required">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Confirm New Password</label>
-                                <input type="text" placeholder="*************** ">
+                                <input asp-for="ChangePasswordInput.ConfirmNewPassword" type="password" placeholder="***************" required="required">
                             </div>
                         </div>
+
+                        <span asp-validation-for="ChangePasswordInput.OldPassword"></span>
+                        <span asp-validation-for="ChangePasswordInput.NewPassword"></span>
+                        <span asp-validation-for="ChangePasswordInput.ConfirmNewPassword"></span>
+
                         <div class="row">
                             <div class="col-md-2">
                                 <input class="submit" type="submit" value="change">

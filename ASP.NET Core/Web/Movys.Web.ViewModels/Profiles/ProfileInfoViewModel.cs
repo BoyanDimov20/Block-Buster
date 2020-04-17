@@ -9,5 +9,9 @@
     public class ProfileInfoViewModel
     {
         public ChangeAvatarViewModel AvatarViewModel { get; set; }
+
+        public AdditionInfoViewModel AdditionInfoViewModel { get; set; }
+
+        public AdditionInfoInputModel AdditionInfoInput { get; set; }
     }
 }
