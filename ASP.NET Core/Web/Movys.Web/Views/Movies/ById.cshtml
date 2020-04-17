@@ -89,7 +89,6 @@
                                 <li class="active"><a href="#overview">Overview</a></li>
                                 <li><a href="#reviews"> Reviews</a></li>
                                 <li><a href="#cast">  Cast & Crew </a></li>
-                                <li><a href="#media"> Media</a></li>
                                 <li><a href="#moviesrelated"> Related Movies</a></li>
                             </ul>
                             <div class="tab-content">
@@ -97,19 +96,6 @@
                                     <div class="row">
                                         <div class="col-md-8 col-sm-12 col-xs-12">
                                             <p>@Model.Description</p>
-                                            <div class="title-hd-sm">
-                                                <h4>Videos & Photos</h4>
-                                                <a href="#" class="time">All 5 Videos & 245 Photos <i class="ion-ios-arrow-right"></i></a>
-                                            </div>
-                                            <div class="mvsingle-item ov-item">
-                                                <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image11.jpg"><img src="~/images/uploads/image1.jpg" alt=""></a>
-                                                <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image21.jpg"><img src="~/images/uploads/image2.jpg" alt=""></a>
-                                                <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image31.jpg"><img src="~/images/uploads/image3.jpg" alt=""></a>
-                                                <div class="vd-it">
-                                                    <img class="vd-img" src="~/images/uploads/image4.jpg" alt="">
-                                                    <a class="fancybox-media hvr-grow" href="https://www.youtube.com/embed/o-0hcF97wy0"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                </div>
-                                            </div>
                                             <div class="title-hd-sm">
                                                 <h4>cast</h4>
                                                 <a href="#" class="time">Full Cast & Crew  <i class="ion-ios-arrow-right"></i></a>
@@ -133,23 +119,24 @@
                                             </div>
                                             <!-- movie user review -->
                                             <div class="mv-user-review-item">
-                                                <h3>Best Movie Ever</h3>
+                                                <h3>@Model.MostRecentReview.Title</h3>
                                                 <div class="no-star">
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star"></i>
-                                                    <i class="ion-android-star last"></i>
+                                                    @for (int i = 1; i <= 10; i++)
+                                                    {
+                                                        if (i <= Model.MostRecentReview.Rating)
+                                                        {
+                                                            <i class="ion-android-star"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="ion-android-star last"></i>
+                                                        }
+                                                    }
                                                 </div>
                                                 <p class="time">
-                                                    17 December 2016 by <a href="#"> hawaiipierson</a>
+                                                    @Model.MostRecentReview.CreatedOn.ToString(GlobalConstants.DateTimeFormat) by <a href="#"> @Model.MostRecentReview.UserUserName</a>
                                                 </p>
-                                                <p>This is by far one of my favorite movies from the MCU. The introduction of new Characters both good and bad also makes the movie more exciting. giving the characters more of a back story can also help audiences relate more to different characters better, and it connects a bond between the audience and actors or characters. Having seen the movie three times does not bother me here as it is as thrilling and exciting every time I am watching it. In other words, the movie is by far better than previous movies (and I do love everything Marvel), the plotting is splendid (they really do out do themselves in each film, there are no problems watching it more than once.</p>
+                                                <p>@Model.MostRecentReview.Content</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-12">
@@ -186,7 +173,7 @@
                                                 <p>
                                                     @foreach (var genre in Model.Genres)
                                                     {
-                                                        <a href="#">@genre.GenreName,</a>
+                                                        <a asp-controller="Movies" asp-action="Result" asp-route-crit="rating" asp-route-genre="@genre.GenreId">@genre.GenreName,</a>
                                                     }
                                                 </p>
                                             </div>
@@ -197,16 +184,6 @@
                                             <div class="sb-it">
                                                 <h6>Run Time:</h6>
                                                 <p>141 min</p>
-                                            </div>
-                                            <div class="sb-it">
-                                                <h6>Plot Keywords:</h6>
-                                                <p class="tags">
-                                                    <span class="time"><a href="#">superhero</a></span>
-                                                    <span class="time"><a href="#">marvel universe</a></span>
-                                                    <span class="time"><a href="#">comic</a></span>
-                                                    <span class="time"><a href="#">blockbuster</a></span>
-                                                    <span class="time"><a href="#">final battle</a></span>
-                                                </p>
                                             </div>
                                             <div class="ads">
                                                 <img src="~/images/uploads/ads1.png" alt="">
@@ -286,48 +263,13 @@
                                                             }
                                                         </div>
                                                         <p class="time">
-                                                            @review.CreatedOn.ToString(GlobalConstants.DateTimeFormat) by <a href="#"> @User.Identity.Name</a>
+                                                            @review.CreatedOn.ToString(GlobalConstants.DateTimeFormat) by <a href="#"> @review.UserUserName</a>
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <p>@review.Content</p>
                                             </div>
                                         }
-                                        <div class="mv-user-review-item last">
-                                            <div class="user-infor">
-                                                <img src="~/images/uploads/userava5.jpg" alt="">
-                                                <div>
-                                                    <h3>Impressive Special Effects and Cast</h3>
-                                                    <div class="no-star">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                        <i class="ion-android-star last"></i>
-                                                    </div>
-                                                    <p class="time">
-                                                        26 March 2017 by <a href="#"> johnnylee</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p>The Avengers raid a Hydra base in Sokovia commanded by Strucker and they retrieve Loki's scepter. They also discover that Strucker had been conducting experiments with the orphan twins Pietro Maximoff (Aaron Taylor-Johnson), who has super speed, and Wanda Maximoff (Elizabeth Olsen), who can control minds and project energy. Tony Stark (Robert Downey Jr.) discovers an Artificial Intelligence in the scepter and convinces Bruce Banner (Mark Ruffalo) to secretly help him to transfer the A.I. to his Ultron defense system. However, the Ultron understands that is necessary to annihilate mankind to save the planet, attacks the Avengers and flees to Sokovia with the scepter. He builds an armature for self-protection and robots for his army and teams up with the twins. The Avengers go to Clinton Barton's house to recover, but out of the blue, Nick Fury (Samuel L. Jackson) arrives and convinces them to fight against Ultron. Will they succeed? </p>
-
-                                            <p>"Avengers: Age of Ultron" is an entertaining adventure with impressive special effects and cast. The storyline might be better, since most of the characters do not show any chemistry. However, it is worthwhile watching this film since the amazing special effects are not possible to be described in words. Why Pietro has to die is also not possible to be explained. My vote is eight.</p>
-                                        </div>
-                                        
-                                        <ul class="pagination">
-                                            <li class="icon-prev"><a href="#"><i class="ion-ios-arrow-left"></i></a></li>
-                                            <li class="active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li class="icon-next"><a href="#"><i class="ion-ios-arrow-right"></i></a></li>
-                                        </ul>
                                     </div>
                                 </div>
                                 <div id="cast" class="tab">
@@ -400,44 +342,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="media" class="tab">
-                                    <div class="row">
-                                        <div class="rv-hd">
-                                            <div>
-                                                <h3>Videos & Photos of</h3>
-                                                <h2>@Model.Title</h2>
-                                            </div>
-                                        </div>
-                                        <div class="title-hd-sm">
-                                            <h4>Videos <span>(@Model.MediaUrls.Count(x => x.MediaType == MediaType.Video))</span></h4>
-                                        </div>
-                                        <div class="mvsingle-item media-item">
-                                            @foreach (var media in Model.MediaUrls.Where(x => x.MediaType == MediaType.Video))
-                                            {
-                                                <div class="vd-item">
-                                                    <div class="vd-it">
-                                                        <img class="vd-img" src="@media.HoverImageUrl" alt="">
-                                                        <a class="fancybox-media hvr-grow" href="@media.Url"><img src="~/images/uploads/play-vd.png" alt=""></a>
-                                                    </div>
-                                                    <div class="vd-infor">
-                                                        <h6> <a href="@media.Url">@media.Title</a></h6>
-                                                        <p class="time"> @media.Time</p>
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                        <div class="title-hd-sm">
-                                            <h4>Photos <span> (@Model.MediaUrls.Count(x => x.MediaType == MediaType.Photo))</span></h4>
-                                        </div>
-                                        <div class="mvsingle-item">
-                                            @foreach (var photo in Model.MediaUrls.Where(x => x.MediaType == MediaType.Photo))
-                                            {
-                                                <a class="img-lightbox" data-fancybox-group="gallery" href="@photo.Url" ><img src="@photo.Url" style="width:100px;height:100px;" alt=""></a>
-                                            }
-                                            <a class="img-lightbox" data-fancybox-group="gallery" href="~/images/uploads/image211.jpg"><img src="~/images/uploads/image2-1.jpg" alt=""></a>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="moviesrelated" class="tab">
                                     <div class="row">
                                         <h3>Related Movies To</h3>
@@ -453,35 +357,23 @@
                                                     <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.Id">@movie.Title <span>(@movie.ReleaseYear)</span></a></h6>
                                                     <p class="rate"><i class="ion-android-star"></i><span>@movie.Rating</span> /10</p>
                                                     <p class="describe">@movie.Description...</p>
-                                                    <p>Director: <a href="#">Joss Whedon</a></p>
-                                                    <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                                    <p>
+                                                        Director:
+                                                        @foreach (var item in movie.CastMembers.Where(x => x.RoleType == RoleType.Director))
+                                                        {
+                                                            <a asp-controller="Movies" asp-action="ById" asp-route-id="@item.CastMemberId">@item.CastMemberName,</a>
+                                                        }
+                                                    </p>
+                                                    <p>
+                                                        Stars:
+                                                        @foreach (var item in movie.CastMembers.Where(x => x.RoleType == RoleType.Actor))
+                                                        {
+                                                            <a asp-controller="Movies" asp-action="ById" asp-route-id="@item.CastMemberId">@item.CastMemberName,</a>
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                         }
-                                        <div class="movie-item-style-2">
-                                            <img src="~/images/uploads/mv5.jpg" alt="">
-                                            <div class="mv-item-infor">
-                                                <h6><a href="#">skyfall: evil of boss<span> (2013)  </span></a></h6>
-                                                <p class="rate"><i class="ion-android-star"></i><span>7.0</span> /10</p>
-                                                <p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-                                                <p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-                                                <p>Director: <a href="#">Alan Taylor</a></p>
-                                                <p>Stars: <a href="#">Chris Hemsworth,  </a> <a href="#">  Natalie Portman,</a><a href="#">Tom Hiddleston</a></p>
-                                            </div>
-                                        </div>
-                                        <div class="topbar-filter">
-                                            <label>Movies per page:</label>
-                                            <select>
-                                                <option value="range">5 Movies</option>
-                                                <option value="saab">10 Movies</option>
-                                            </select>
-                                            <div class="pagination2">
-                                                <span>Page 1 of 2:</span>
-                                                <a class="active" href="#">1</a>
-                                                <a href="#">2</a>
-                                                <a href="#"><i class="ion-arrow-right-b"></i></a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

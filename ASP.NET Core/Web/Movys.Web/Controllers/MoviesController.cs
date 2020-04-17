@@ -56,7 +56,7 @@
                 MoviesCountFound = recordsCount,
             };
 
-            if (recordsCount % 5 == 0 || recordsCount < 5)
+            if (recordsCount % 5 == 0)
             {
                 viewModel.PagesCount = recordsCount / 5;
             }
@@ -85,20 +85,9 @@
         public IActionResult ListingGrid(string crit, int pageNumber = 1)
         {
             this.ViewData["Crit"] = crit;
-            this.ViewData["CurrentPage"] = pageNumber;
-            int pageSize = 20;
+            int pageSize = 12;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
             int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
-            this.ViewData["RecordsCount"] = recordsCount;
-
-            if (recordsCount % 20 == 0 || recordsCount < 20)
-            {
-                this.ViewData["PagesCount"] = recordsCount / 5;
-            }
-            else
-            {
-                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
-            }
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
@@ -107,7 +96,19 @@
                 {
                     Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
                 },
+                CurrentPage = pageNumber,
+                MoviesPerPage = pageSize,
+                MoviesCountFound = recordsCount,
             };
+
+            if (recordsCount % 12 == 0)
+            {
+                viewModel.PagesCount = recordsCount / 12;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 12) + 1;
+            }
 
             // Sorting
             if (crit == "popularity")
@@ -174,20 +175,10 @@
             }
 
             string normalizedResult = result.ToLower();
-            int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(normalizedResult) || x.Description.ToLower().Contains(normalizedResult)).Count();
-            this.ViewData["RecordsCount"] = recordsCount;
-            if (recordsCount % 5 == 0)
-            {
-                this.ViewData["PagesCount"] = recordsCount / 5;
-            }
-            else
-            {
-                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
-            }
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).Skip(excludeRecords).Take(pageSize).ToList(),
+                Movies = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).ToList(),
             };
 
             if (genre != null)
@@ -200,6 +191,18 @@
                 viewModel.Movies = viewModel.Movies.Where(x => x.Rating >= rating).ToList();
             }
 
+            int recordsCount = viewModel.Movies.Count();
+            this.ViewData["RecordsCount"] = recordsCount;
+            if (recordsCount % 5 == 0)
+            {
+                this.ViewData["PagesCount"] = recordsCount / 5;
+            }
+            else
+            {
+                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
+            }
+
+            viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
             viewModel.SearchFormInputModel.Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList();
             return this.View(viewModel);
         }

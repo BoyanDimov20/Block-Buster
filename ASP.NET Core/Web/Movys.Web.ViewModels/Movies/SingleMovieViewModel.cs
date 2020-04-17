@@ -41,5 +41,7 @@
         public IEnumerable<MovieViewModel> RelatedMovies { get; set; }
 
         public ReviewFormInputModel ReviewFormInputModel { get; set; } = new ReviewFormInputModel();
+
+        public ReviewViewModel MostRecentReview => this.Reviews.OrderByDescending(x => x.CreatedOn).First();
     }
 }

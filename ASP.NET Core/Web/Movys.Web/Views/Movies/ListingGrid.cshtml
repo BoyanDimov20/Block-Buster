@@ -23,15 +23,6 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
                     <p>Found <span>@Model.MoviesCount movies</span> in total</p>
-                    <label>Sort by:</label>
-                    <select>
-                        <option value="popularity">Popularity Descending</option>
-                        <option value="popularity">Popularity Ascending</option>
-                        <option value="rating">Rating Descending</option>
-                        <option value="rating">Rating Ascending</option>
-                        <option value="date">Release date Descending</option>
-                        <option value="date">Release date Ascending</option>
-                    </select>
                     <a asp-action="Listing" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@ViewData["CurrentPage"]" class="list"><i class="ion-ios-list-outline "></i></a>
                     <a class="grid"><i class="ion-grid active"></i></a>
                 </div>
@@ -50,75 +41,27 @@
                         </div>
                     }
                 </div>
-                <div class="topbar-filter">
-                    <label>Movies per page:</label>
-                    <select>
-                        <option value="range">20 Movies</option>
-                        <option value="saab">10 Movies</option>
-                    </select>
-
-                    <div class="pagination2">
-                        <span>Page @ViewData["CurrentPage"] of @ViewData["PagesCount"]:</span>
-
-                        @for (int i = 1; i <= (int)ViewData["PagesCount"]; i++)
+                <ul class="pagination">
+                    <li class="icon-prev"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
+                    @for (int i = 1; i <= Model.PagesCount; i++)
+                    {
+                        if (Model.CurrentPage == i)
                         {
-                            <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a>
+                            <li class="active"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a></li>
                         }
-                    </div>
-                </div>
+                        else
+                        {
+                            <li><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                    }
+                    <li class="icon-next"><a asp-action="Listing" asp-route-crit="@ViewData["Crit"].ToString()" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
+                </ul>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="sidebar">
                     <div class="searh-form">
                         <h4 class="sb-title">Search for movie</h4>
-                        <form class="form-style-1" action="#">
-                            <div class="row">
-                                <div class="col-md-12 form-it">
-                                    <label>Movie name</label>
-                                    <input type="text" placeholder="Enter keywords">
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Genres & Subgenres</label>
-                                    <div class="group-ip">
-                                        <select name="skills" multiple="" class="ui fluid dropdown">
-                                            <option value="">Enter to filter genres</option>
-                                            <option value="Action1">Action 1</option>
-                                            <option value="Action2">Action 2</option>
-                                            <option value="Action3">Action 3</option>
-                                            <option value="Action4">Action 4</option>
-                                            <option value="Action5">Action 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Rating Range</label>
-                                    <select>
-                                        <option value="range">-- Select the rating range below --</option>
-                                        <option value="saab">-- Select the rating range below --</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 form-it">
-                                    <label>Release Year</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">From</option>
-                                                <option value="number">10</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <select>
-                                                <option value="range">To</option>
-                                                <option value="number">20</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <input class="submit" type="submit" value="submit">
-                                </div>
-                            </div>
-                        </form>
+                        @await Html.PartialAsync("_SearchFormPartial", Model.SearchFormInputModel)
                     </div>
                     <div class="ads">
                         <img src="images/uploads/ads1.png" alt="">
