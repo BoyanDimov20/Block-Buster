@@ -15,7 +15,7 @@
             if (!dbContext.GenresMovies.Any())
             {
                 var movies = dbContext.Movies.Select(x => x.Id).ToList();
-                var genres = dbContext.Movies.Select(x => x.Id).ToList();
+                var genres = dbContext.Genres.Select(x => x.Id).ToList();
                 Random rng = new Random();
 
                 foreach (var movieId in movies)
@@ -28,9 +28,8 @@
                         MovieId = movieId,
                     };
 
-                    await dbContext.AddAsync(genreMovie);
+                    await dbContext.GenresMovies.AddAsync(genreMovie);
                 }
-
             }
         }
     }
