@@ -30,6 +30,12 @@
                               new CastMembersSeeder(),
                               new MoviesSeeder(),
                               new GenresSeeder(),
+                              new GenresMovieSeeder(),
+                              new MoviesCastMemberSeeder(),
+                              new NewsSeeder(),
+                              new ApplicationUsersSeeder(),
+                              new ReviewsSeeder(),
+                              new CommentsSeeder(),
                           };
 
             foreach (var seeder in seeders)
