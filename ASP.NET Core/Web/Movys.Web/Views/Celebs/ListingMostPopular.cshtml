@@ -22,9 +22,6 @@
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="topbar-filter">
                     <p class="pad-change">Found <span>@Model.CelebsCount celebrities</span> in total</p>
-                    
-                    <a class="list"><i class="ion-ios-list-outline active"></i></a>
-                    <a asp-controller="Celebs" asp-action="ListingMostPopularGrid" class="grid"><i class="ion-grid "></i></a>
                 </div>
                 <div class="row">
                     @foreach (var celeb in Model.CastMembers)
@@ -41,23 +38,21 @@
                         </div>
                     }
                 </div>
-                <div class="topbar-filter">
-                    <ul class="pagination">
-                        <li class="icon-prev"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
-                        @for (int i = 1; i <= Model.PagesCount; i++)
+                <ul class="pagination">
+                    <li class="icon-prev"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
+                    @for (int i = 1; i <= Model.PagesCount; i++)
+                    {
+                        if (Model.CurrentPage == i)
                         {
-                            if (Model.CurrentPage == i)
-                            {
-                                <li class="active"><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
-                            }
-                            else
-                            {
-                                <li><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
-                            }
+                            <li class="active"><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
                         }
-                        <li class="icon-next"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
-                    </ul>
-                </div>
+                        else
+                        {
+                            <li><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                    }
+                    <li class="icon-next"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
+                </ul>
             </div>
             <div class="col-md-3 col-xs-12 col-sm-12">
                 <div class="sidebar">

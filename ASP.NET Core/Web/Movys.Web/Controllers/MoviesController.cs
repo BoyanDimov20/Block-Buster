@@ -165,7 +165,6 @@
         public IActionResult Result(string result, string genre, double rating, int pageNumber = 1)
         {
             this.ViewData["SearchString"] = result;
-            this.ViewData["CurrentPage"] = pageNumber;
             int pageSize = 5;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
 
@@ -179,6 +178,8 @@
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
                 Movies = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).ToList(),
+                CurrentPage = pageNumber,
+                MoviesPerPage = pageSize,
             };
 
             if (genre != null)
@@ -192,14 +193,14 @@
             }
 
             int recordsCount = viewModel.Movies.Count();
-            this.ViewData["RecordsCount"] = recordsCount;
+            viewModel.MoviesCountFound = recordsCount;
             if (recordsCount % 5 == 0)
             {
-                this.ViewData["PagesCount"] = recordsCount / 5;
+                viewModel.PagesCount = recordsCount / 5;
             }
             else
             {
-                this.ViewData["PagesCount"] = (recordsCount / 5) + 1;
+                viewModel.PagesCount = (recordsCount / 5) + 1;
             }
 
             viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();

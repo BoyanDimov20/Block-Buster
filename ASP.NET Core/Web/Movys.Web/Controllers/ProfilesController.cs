@@ -11,6 +11,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Web.Helpers;
     using Movys.Data.Models;
     using Movys.Services.Data;
@@ -36,6 +37,11 @@
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
+
+            //if (this.TempData["ViewData"] != null)
+            //{
+            //    this.ViewData = (ViewDataDictionary)this.TempData["ViewData"];
+            //}
 
             ProfileInfoViewModel viewModel = new ProfileInfoViewModel
             {
@@ -68,14 +74,15 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordInputModel changePasswordInput)
+        public async Task<IActionResult> ChangePassword(ChangePasswordInputModel inputModel)
         {
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
             if (this.ModelState.IsValid)
             {
-                var result = await this.userManager.ChangePasswordAsync(user, changePasswordInput.OldPassword, changePasswordInput.NewPassword);
+                var result = await this.userManager.ChangePasswordAsync(user, inputModel.OldPassword, inputModel.NewPassword);
                 if (result.Succeeded)
                 {
+                    return this.Ok();
                     return this.Redirect("/Profiles/UserProfile");
                 }
 
@@ -85,7 +92,8 @@
                 }
             }
 
-            return this.View("UserProfile");
+            return this.ValidationProblem();
+            return this.Redirect("/Profiles/UserProfile");
         }
 
         public IActionResult UserRating(int pageNumber = 1, int pageSize = 5)

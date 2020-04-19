@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </form>
-                    <form method="post" asp-action="ChangePassword" class="password">
+                    <form id="password" method="post" asp-action="ChangePassword" class="password">
                         <h4>02. Change password</h4>
                         <div class="row">
                             <div class="col-md-6 form-it">
@@ -117,4 +117,19 @@
         xhr.open("POST", "/Profiles/Upload?file=@Model.AvatarViewModel.Avatar", true);
         xhr.send();
     }
+
+    function ChangePass() {
+         var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("password").append('<input class="submit" value="Password was changed successfully.">')
+            }
+            else {
+                alert("Wrong input data.");
+            }
+        }
+        xhr.open("POST", "/Profiles/ChangePassword?input=@Model.ChangePasswordInput", true);
+        xhr.send();
+    }
+    
 </script>

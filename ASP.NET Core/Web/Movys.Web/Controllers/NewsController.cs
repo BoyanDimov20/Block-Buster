@@ -8,6 +8,7 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Movys.Data.Models;
     using Movys.Services.Data;
     using Movys.Web.ViewModels.News;
 
@@ -33,7 +34,7 @@
                 CurrentPage = pageNumber,
             };
 
-            if (recordsCount % 5 == 0 || recordsCount < 5)
+            if (recordsCount % 5 == 0)
             {
                 viewModel.PagesCount = recordsCount / 5;
             }
@@ -50,6 +51,44 @@
         public IActionResult ById(string id)
         {
             SingleNewsViewModel viewModel = this.newsService.GetAll<SingleNewsViewModel>().FirstOrDefault(x => x.Id == id);
+            return this.View(viewModel);
+        }
+
+        [Route("/News/Search")]
+        public IActionResult Result(string result, string category, int pageNumber = 1, int pageSize = 5)
+        {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+
+            if (result == null)
+            {
+                result = string.Empty;
+            }
+
+            ListingNewsViewModel viewModel = new ListingNewsViewModel
+            {
+                News = this.newsService.GetAll<NewsViewModel>().Where(x => x.Title.ToLower().Contains(result.ToLower()) || x.Content.ToLower().Contains(result.ToLower())).OrderByDescending(x => x.CreatedOn).ToList(),
+                CurrentPage = pageNumber,
+            };
+
+            if (category != "0")
+            {
+                NewsCategory newsCategory = (NewsCategory)Enum.Parse(typeof(NewsCategory), category);
+                viewModel.News = viewModel.News.Where(x => x.Category == newsCategory);
+            }
+
+            int recordsCount = viewModel.News.Count();
+
+            if (recordsCount % 5 == 0)
+            {
+                viewModel.PagesCount = recordsCount / 5;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 5) + 1;
+            }
+
+            viewModel.News = viewModel.News.Skip(excludeRecords).Take(pageSize).ToList();
+
             return this.View(viewModel);
         }
 

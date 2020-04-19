@@ -20,6 +20,10 @@
 
         public string Content { get; set; }
 
+        public NewsCategory Category { get; set; }
+
         public string ShortDescription => string.Join(string.Empty, this.Content.Take(170));
+
+        public IEnumerable<TagsViewModel> Tags { get; set; }
     }
 }

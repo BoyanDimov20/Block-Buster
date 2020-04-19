@@ -39,24 +39,21 @@
                         </div>
                     }
                 </div>
-                <div class="topbar-filter">
-                    <label>Reviews per page:</label>
-                    <select>
-                        <option value="range">36 Reviews</option>
-                        <option value="saab">18 Reviews</option>
-                    </select>
-
-                    <div class="pagination2">
-                        <span>Page 1 of 6:</span>
-                        <a class="active" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#"><i class="ion-arrow-right-b"></i></a>
-                    </div>
-                </div>
+                <ul class="pagination">
+                    <li class="icon-prev"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage - 1)"><i class="ion-ios-arrow-left"></i></a></li>
+                    @for (int i = 1; i <= Model.PagesCount; i++)
+                    {
+                        if (Model.CurrentPage == i)
+                        {
+                            <li class="active"><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-action="ListingMostPopular" asp-route-pageNumber="@i">@i</a></li>
+                        }
+                    }
+                    <li class="icon-next"><a asp-action="ListingMostPopular" asp-route-pageNumber="@(Model.CurrentPage + 1)"><i class="ion-ios-arrow-right"></i></a></li>
+                </ul>
             </div>
             <div class="col-md-3 col-xs-12 col-sm-12">
                 <div class="sidebar">

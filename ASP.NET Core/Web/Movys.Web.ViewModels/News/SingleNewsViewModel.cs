@@ -21,6 +21,10 @@
 
         public IEnumerable<CommentViewModel> Comments { get; set; }
 
+        public IEnumerable<TagsViewModel> Tags { get; set; }
+
         public CreateCommentInputModel CommentInputModel { get; set; } = new CreateCommentInputModel();
+
+        public NewsSearchInputModel NewsSearchInputModel { get; set; } = new NewsSearchInputModel();
     }
 }

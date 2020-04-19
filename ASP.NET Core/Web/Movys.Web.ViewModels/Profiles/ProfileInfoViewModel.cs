@@ -13,5 +13,7 @@
         public AdditionInfoViewModel AdditionInfoViewModel { get; set; }
 
         public AdditionInfoInputModel AdditionInfoInput { get; set; }
+
+        public ChangePasswordInputModel ChangePasswordInput { get; set; }
     }
 }

@@ -37,7 +37,7 @@
                 CelebsCount = recordsCount,
             };
 
-            if (recordsCount % 5 == 0 || recordsCount < 5)
+            if (recordsCount % 5 == 0)
             {
                 viewModel.PagesCount = recordsCount / 5;
             }
@@ -52,11 +52,14 @@
         }
 
         [Route("/Celebs/Search")]
-        public IActionResult Result(string result, string category)
+        public IActionResult Result(string result, string category, int pageNumber = 1, int pageSize = 5)
         {
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+
             ListingCelebsViewModel viewModel = new ListingCelebsViewModel()
             {
                 CastMembers = this.celebsService.GetAll<SingleCelebViewModel>(),
+                CurrentPage = pageNumber,
             };
 
             if (result != null)
@@ -69,6 +72,20 @@
                 RoleType role = (RoleType)Enum.Parse(typeof(RoleType), category);
                 viewModel.CastMembers = viewModel.CastMembers.Where(x => x.Movies.Any(y => y.RoleType == role.ToString()));
             }
+
+            int recordsCount = viewModel.CastMembers.Count();
+            viewModel.CelebsCount = recordsCount;
+
+            if (recordsCount % 5 == 0)
+            {
+                viewModel.PagesCount = recordsCount / 5;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 5) + 1;
+            }
+
+            viewModel.CastMembers = viewModel.CastMembers.Skip(excludeRecords).Take(pageSize).ToList();
 
             return this.View(viewModel);
         }

@@ -1,0 +1,21 @@
+﻿@model Movys.Web.ViewModels.News.NewsSearchInputModel
+
+<form class="form-style-1" method="get" asp-controller="News" asp-action="Result" asp-route-result="@Model.Result" asp-route-category="@Model.Category">
+    <div class="row">
+        <div class="col-md-12 form-it">
+            <input asp-for="Result" name="result" type="text" placeholder="Enter keywords">
+        </div>
+        <div class="col-md-12 form-it">
+            <select asp-for="Category" name="category">
+                <option value="0">Any</option>
+                <option value="1">Awards</option>
+                <option value="2">Film Review</option>
+                <option value="3">Global</option>
+                <option value="4">Celebrity News</option>
+            </select>
+        </div>
+        <div class="col-md-12 ">
+            <input class="submit" type="submit" value="submit">
+        </div>
+    </div>
+</form>

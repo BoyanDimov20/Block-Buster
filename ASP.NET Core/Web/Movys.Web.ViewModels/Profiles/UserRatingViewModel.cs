@@ -14,6 +14,6 @@
 
         public int ReviewsCount { get; set; }
 
-        public ChangeAvatarViewModel AvatarViewModel { get; set; }
+        public ChangeAvatarViewModel AvatarViewModel { get; set; } = new ChangeAvatarViewModel();
     }
 }
