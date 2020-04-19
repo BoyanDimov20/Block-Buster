@@ -114,7 +114,7 @@
                 },
             };
 
-            if (recordsCount % 5 == 0 || recordsCount < 5)
+            if (recordsCount % 5 == 0)
             {
                 viewModel.PagesCount = recordsCount / 5;
             }
@@ -132,20 +132,21 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.reviewsService.GetAll<ReviewViewModel>().Count();
 
             ListingFavoriteMoviesViewModel viewModel = new ListingFavoriteMoviesViewModel
             {
                 Movies = this.favoriteMoviesService.GetAllByUserId<FavoriteMovieViewModel>(userId),
                 CurrentPage = pageNumber,
-                MoviesCount = recordsCount,
                 AvatarViewModel = new ChangeAvatarViewModel
                 {
                     CurrentAvatar = this.profilePicturesService.GetAvatarByUserId(userId),
                 },
             };
 
-            if (recordsCount % 5 == 0 || recordsCount < 5)
+            viewModel.MoviesCount = viewModel.Movies.Count();
+            int recordsCount = viewModel.MoviesCount;
+
+            if (recordsCount % 5 == 0)
             {
                 viewModel.PagesCount = recordsCount / 5;
             }
