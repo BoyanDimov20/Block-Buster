@@ -30,6 +30,8 @@
 
         public double Rating => (this.ReviewsCount == 0) ? 0 : this.Reviews.Average(x => x.Rating);
 
+        public string CurrentUserAvatar { get; set; }
+
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
         public IEnumerable<CastMemberViewModel> CastMembers { get; set; }

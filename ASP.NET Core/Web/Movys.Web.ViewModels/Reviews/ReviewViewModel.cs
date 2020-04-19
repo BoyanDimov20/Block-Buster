@@ -20,5 +20,7 @@
         public string UserId { get; set; }
 
         public string UserUserName { get; set; }
+
+        public string UserAvatar { get; set; }
     }
 }

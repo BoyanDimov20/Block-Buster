@@ -20,19 +20,28 @@
         private readonly IGenresMovieService genresMovieService;
         private readonly IReviewsService reviewsService;
         private readonly IRepository<MoviesUser> favouriteMovieRepository;
+        private readonly IProfilePicturesService profilePicturesService;
 
-        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService, IReviewsService reviewsService, IRepository<MoviesUser> favouriteMovieRepository)
+        public MoviesController(IMoviesService moviesService, IGenresMovieService genresMovieService, IReviewsService reviewsService, IRepository<MoviesUser> favouriteMovieRepository, IProfilePicturesService profilePicturesService)
         {
             this.moviesService = moviesService;
             this.genresMovieService = genresMovieService;
             this.reviewsService = reviewsService;
             this.favouriteMovieRepository = favouriteMovieRepository;
+            this.profilePicturesService = profilePicturesService;
         }
 
         public IActionResult ById(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             SingleMovieViewModel viewModel = this.moviesService.GetAll<SingleMovieViewModel>().First(x => x.Id == id);
+
+            foreach (var review in viewModel.Reviews)
+            {
+                review.UserAvatar = this.profilePicturesService.GetAvatarByUserId(review.UserId);
+            }
+
+            viewModel.CurrentUserAvatar = this.profilePicturesService.GetAvatarByUserId(userId);
             viewModel.RelatedMovies = this.moviesService.GetAll<MovieViewModel>().Where(x => x.Genres.Any(y => viewModel.Genres.Any(z => z.GenreName == y.GenreName)) && x.Id != id);
             viewModel.IsAddedToFavorite = this.favouriteMovieRepository.All().Any(x => x.UserId == userId && id == x.MovieId);
             return this.View(viewModel);

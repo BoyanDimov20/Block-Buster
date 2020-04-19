@@ -208,7 +208,7 @@
                                         <div class="mv-user-review-item">
                                             <form method="post" asp-action="ReviewForm" asp-route-id="@Model.Id">
                                                 <div class="user-infor">
-                                                    <img src="~/images/uploads/userava1.jpg" alt="">
+                                                    <img src="data:image/png;base64, @(Model.CurrentUserAvatar??string.Empty)" style="width:45px;height:45px;" alt="">
                                                     <div>
                                                         <div class="review-content">
                                                             <input asp-for="ReviewFormInputModel.Title" name="Title" type="text" placeholder="Title">
@@ -246,7 +246,7 @@
                                         {
                                             <div class="mv-user-review-item">
                                                 <div class="user-infor">
-                                                    <img src="~/images/uploads/userava1.jpg" alt="">
+                                                    <img src="data:image/png;base64, @(review.UserAvatar??string.Empty)" style="width:45px;height:45px;" alt="">
                                                     <div>
                                                         <h3>@review.Title</h3>
                                                         <div class="no-star">

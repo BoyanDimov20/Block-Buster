@@ -50,7 +50,7 @@
                         @foreach (var comment in Model.Comments)
                         {
                             <div class="cmt-item flex-it">
-                                <img src="~/images/uploads/author.png" alt="">
+                                <img src="data:image/png;base64, @(comment.Avatar??string.Empty)" style="width:70px; height:70px;" alt="">
                                 <div class="author-infor">
                                     <div class="flex-it2">
                                         <h6><a href="#">@comment.UserUserName</a></h6> <span class="time"> - @comment.CreatedOn.ToString(GlobalConstants.DateTimeFormat)</span>

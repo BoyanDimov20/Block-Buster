@@ -36,6 +36,7 @@
                               new ApplicationUsersSeeder(),
                               new ReviewsSeeder(),
                               new CommentsSeeder(),
+                              new ProfilePicturesSeeder(),
                           };
 
             foreach (var seeder in seeders)

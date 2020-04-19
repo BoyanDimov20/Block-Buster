@@ -16,11 +16,13 @@
     {
         private readonly INewsService newsService;
         private readonly ICommentsService commentsService;
+        private readonly IProfilePicturesService profilePicturesService;
 
-        public NewsController(INewsService newsService, ICommentsService commentsService)
+        public NewsController(INewsService newsService, ICommentsService commentsService, IProfilePicturesService profilePicturesService)
         {
             this.newsService = newsService;
             this.commentsService = commentsService;
+            this.profilePicturesService = profilePicturesService;
         }
 
         public IActionResult Listing(int pageNumber = 1, int pageSize = 5)
@@ -51,6 +53,11 @@
         public IActionResult ById(string id)
         {
             SingleNewsViewModel viewModel = this.newsService.GetAll<SingleNewsViewModel>().FirstOrDefault(x => x.Id == id);
+            foreach (var comment in viewModel.Comments)
+            {
+                comment.Avatar = this.profilePicturesService.GetAvatarByUserId(comment.UserId);
+            }
+
             return this.View(viewModel);
         }
 
