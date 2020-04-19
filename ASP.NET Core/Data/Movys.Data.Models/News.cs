@@ -14,6 +14,10 @@
 
         public string Content { get; set; }
 
-        public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+        public NewsCategory Category { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+
+        public virtual ICollection<NewsTags> Tags { get; set; } = new HashSet<NewsTags>();
     }
 }

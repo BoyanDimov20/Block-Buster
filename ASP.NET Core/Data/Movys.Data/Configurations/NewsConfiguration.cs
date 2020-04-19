@@ -15,6 +15,10 @@
             builder.HasMany(x => x.Comments)
                 .WithOne(x => x.News)
                 .HasForeignKey(x => x.NewsId);
+
+            builder.HasMany(x => x.Tags)
+                .WithOne(x => x.News)
+                .HasForeignKey(x => x.NewsId);
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Movys.Data.Migrations
+﻿namespace Movys.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ConfiguredModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +20,7 @@ namespace Movys.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    BornInfo = table.Column<string>(nullable: true)
+                    BornInfo = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,7 @@ namespace Movys.Data.Migrations
                     ReleaseYear = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     TrailerUrl = table.Column<string>(nullable: true),
-                    ReviewsCount = table.Column<int>(nullable: false)
+                    ReviewsCount = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -59,7 +60,7 @@ namespace Movys.Data.Migrations
                     ReleaseYear = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     TrailerUrl = table.Column<string>(nullable: true),
-                    ReviewsCount = table.Column<int>(nullable: false)
+                    ReviewsCount = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -72,7 +73,7 @@ namespace Movys.Data.Migrations
                 {
                     MovieId = table.Column<string>(nullable: false),
                     CastMemberId = table.Column<string>(nullable: false),
-                    RoleType = table.Column<int>(nullable: false)
+                    RoleType = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -96,7 +97,7 @@ namespace Movys.Data.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -121,7 +122,7 @@ namespace Movys.Data.Migrations
                 {
                     TVShowId = table.Column<string>(nullable: false),
                     CastMemberId = table.Column<string>(nullable: false),
-                    RoleType = table.Column<int>(nullable: false)
+                    RoleType = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

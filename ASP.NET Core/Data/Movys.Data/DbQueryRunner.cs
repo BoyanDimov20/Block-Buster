@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using Movys.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using Movys.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

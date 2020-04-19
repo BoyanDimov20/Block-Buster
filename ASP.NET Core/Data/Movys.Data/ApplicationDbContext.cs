@@ -47,6 +47,10 @@
 
         public DbSet<ProfilePicture> ProfilePictures { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<NewsTags> NewsTags { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
