@@ -41,7 +41,11 @@
                 review.UserAvatar = this.profilePicturesService.GetAvatarByUserId(review.UserId);
             }
 
-            viewModel.CurrentUserAvatar = this.profilePicturesService.GetAvatarByUserId(userId);
+            if (this.User.Identity.IsAuthenticated)
+            {
+                viewModel.CurrentUserAvatar = this.profilePicturesService.GetAvatarByUserId(userId);
+            }
+
             viewModel.RelatedMovies = this.moviesService.GetAll<MovieViewModel>().Where(x => x.Genres.Any(y => viewModel.Genres.Any(z => z.GenreName == y.GenreName)) && x.Id != id);
             viewModel.IsAddedToFavorite = this.favouriteMovieRepository.All().Any(x => x.UserId == userId && id == x.MovieId);
             return this.View(viewModel);

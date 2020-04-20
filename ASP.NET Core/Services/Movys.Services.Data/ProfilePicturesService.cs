@@ -52,6 +52,35 @@
             return false;
         }
 
+        public async Task AddPictureAsync(string imagePath, string userId)
+        {
+            byte[] imageByteArray = null;
+            using FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+            using BinaryReader reader = new BinaryReader(fileStream);
+            imageByteArray = new byte[reader.BaseStream.Length];
+            for (int i = 0; i < reader.BaseStream.Length; i++)
+            {
+                imageByteArray[i] = reader.ReadByte();
+            }
+
+            var photo = new ProfilePicture()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UploadDate = DateTime.UtcNow,
+                Content = imageByteArray,
+                Size = imageByteArray.Length,
+                UserId = userId,
+            };
+
+            if (this.repository.All().Any(x => x.UserId == userId))
+            {
+                this.repository.Delete(this.repository.All().First(x => x.UserId == userId));
+            }
+
+            await this.repository.AddAsync(photo);
+            await this.repository.SaveChangesAsync();
+        }
+
         public string GetAvatarByUserId(string userId)
         {
             byte[] bytesArr = this.repository.All().FirstOrDefault(x => x.UserId == userId).Content;

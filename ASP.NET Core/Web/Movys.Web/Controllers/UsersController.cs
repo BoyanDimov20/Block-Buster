@@ -8,17 +8,20 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Movys.Data.Models;
+    using Movys.Services.Data;
     using Movys.Web.ViewModels.Users;
 
     public class UsersController : BaseController
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IProfilePicturesService profilePicturesService;
 
-        public UsersController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public UsersController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IProfilePicturesService profilePicturesService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.profilePicturesService = profilePicturesService;
         }
 
         public IActionResult Register()
@@ -31,8 +34,11 @@
         {
             if (this.ModelState.IsValid)
             {
+                var userId = Guid.NewGuid().ToString();
+
                 var user = new ApplicationUser
                 {
+                    Id = userId,
                     UserName = inputModel.Username,
                     Email = inputModel.Email,
                 };
@@ -41,6 +47,7 @@
 
                 if (result.Succeeded)
                 {
+                    await this.profilePicturesService.AddPictureAsync("wwwroot/images/DefaultPhoto.png", userId);
                     await this.signInManager.SignInAsync(user, isPersistent: false);
                     return this.Redirect("/");
                 }

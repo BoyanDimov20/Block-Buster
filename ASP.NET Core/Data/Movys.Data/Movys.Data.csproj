@@ -11,6 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\DefaultPhoto.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 
@@ -18,6 +22,10 @@
     <Content Include="appsettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\DefaultPhoto.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
@@ -40,6 +48,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Movys.Common\Movys.Common.csproj" />
+    <ProjectReference Include="..\..\Services\Movys.Services.Data\Movys.Services.Data.csproj" />
     <ProjectReference Include="..\Movys.Data.Common\Movys.Data.Common.csproj" />
     <ProjectReference Include="..\Movys.Data.Models\Movys.Data.Models.csproj" />
   </ItemGroup>

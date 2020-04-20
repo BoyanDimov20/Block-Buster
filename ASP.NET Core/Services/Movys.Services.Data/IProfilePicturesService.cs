@@ -11,6 +11,8 @@
     {
         Task<bool> AddPictureAsync(IFormFile file, string userId);
 
+        Task AddPictureAsync(string imagePath, string userId);
+
         string GetAvatarByUserId(string userId);
     }
 }

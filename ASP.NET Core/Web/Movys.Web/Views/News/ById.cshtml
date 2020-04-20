@@ -60,6 +60,8 @@
                             </div>
                         }
                     </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
                     <div class="comment-form">
                         <h4>Leave a comment</h4>
                         <form asp-controller="News" asp-action="CreateComment" asp-route-newsId="@Model.Id" method="post">
@@ -72,6 +74,7 @@
                             <input class="submit" type="submit" placeholder="submit">
                         </form>
                     </div>
+                    }
                 </div>
             </div>
             <div class="col-md-3 col-sm-12 col-xs-12">
