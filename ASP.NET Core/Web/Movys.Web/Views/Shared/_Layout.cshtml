@@ -70,7 +70,7 @@
                             <ul class="dropdown-menu level1">
                                 <li><a asp-controller="Movies" asp-action="Listing" asp-route-crit="popularity">Most Popular Movies</a></li>
                                 <li><a asp-controller="Movies" asp-action="Listing" asp-route-crit="rating">Top Rated Movies</a></li>
-                                <li class="it-last"><a href="#">Browse Movies By Genre</a></li>
+                                <li class="it-last"><a asp-controller="Movies" asp-action="Listing" asp-route-crit="reviews">Most Reviewed Movies</a></li>
                             </ul>
                         </li>
                         <li class="dropdown first">
@@ -79,7 +79,7 @@
                             </a>
                             <ul class="dropdown-menu level1">
                                 <li><a asp-controller="Celebs" asp-action="ListingMostPopular">Most Popular Celebrities</a></li>
-                                <li class="it-last"><a href="#">Celebrity News</a></li>
+                                <li class="it-last"><a asp-controller="News" asp-action="Result" asp-route-category="4">Celebrity News</a></li>
                             </ul>
                         </li>
                         <li><a asp-controller="News" asp-action="Listing">News</a></li>

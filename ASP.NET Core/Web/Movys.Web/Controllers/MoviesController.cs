@@ -89,6 +89,11 @@
                 this.ViewData["Title"] = "TOP RATED MOVIES";
                 viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Rating).ToList();
             }
+            else if (crit == "reviews")
+            {
+                this.ViewData["Title"] = "MOST REVIEWED MOVIES";
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Reviews.Count()).ToList();
+            }
 
             // Pagination
             viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
@@ -131,6 +136,10 @@
             else if (crit == "rating")
             {
                 viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Rating).ToList();
+            }
+            else if (crit == "reviews")
+            {
+                viewModel.Movies = viewModel.Movies.OrderByDescending(x => x.Reviews.Count()).ToList();
             }
 
             // Pagination
