@@ -1,4 +1,4 @@
-# Movys
+# Block Buster
 Movie Reviews Application Built with ASP.NET Core
 
 
