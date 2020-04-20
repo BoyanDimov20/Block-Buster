@@ -20,7 +20,8 @@
 
                 foreach (var movieId in movies)
                 {
-                    foreach (var castMemberId in castMembers)
+                    int numberOfCastMembers = rng.Next(1, 5);
+                    foreach (var castMemberId in castMembers.Take(numberOfCastMembers))
                     {
                         RoleType role = (RoleType)rng.Next(0, 5);
                         var moviesCastMember = new MoviesCastMember

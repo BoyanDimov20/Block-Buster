@@ -261,7 +261,7 @@
                         @foreach (var celebrity in Model.Celebrities)
                         {
                             <div class="celeb-item">
-                                <a asp-controller="Celebs" asp-action="ById" asp-route-id="@celebrity.Id"><img src="@celebrity.ImageUrl" alt="" width="70" height="70"></a>
+                                <a asp-controller="Celebs" asp-action="ById" asp-route-id="@celebrity.Id"><img src="@celebrity.ImageUrl" alt="" style="width:70px; height:100px;"></a>
                                 <div class="celeb-author">
                                     <h6><a asp-controller="Celebs" asp-action="ById" asp-route-id="@celebrity.Id">@celebrity.Name</a></h6>
                                     <span>@string.Join(", ", celebrity.Movies.Select(x => x.RoleType).Distinct())</span>

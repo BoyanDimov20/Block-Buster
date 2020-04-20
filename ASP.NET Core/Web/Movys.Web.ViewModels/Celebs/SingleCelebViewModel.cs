@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     using Movys.Data.Models;
@@ -15,7 +16,7 @@
 
         public string ImageUrl { get; set; }
 
-        public string Description { get; set; }
+        public string ShortBiography => string.Join(string.Empty, this.FullBiography.Take(200));
 
         public string FullBiography { get; set; }
 
