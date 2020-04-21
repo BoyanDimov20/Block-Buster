@@ -118,6 +118,8 @@
                                                 <a href="#reviews" class="time">See All @Model.ReviewsCount Reviews <i class="ion-ios-arrow-right"></i></a>
                                             </div>
                                             <!-- movie user review -->
+                                            @if (Model.MostRecentReview != null)
+                                            {
                                             <div class="mv-user-review-item">
                                                 <h3>@Model.MostRecentReview.Title</h3>
                                                 <div class="no-star">
@@ -138,6 +140,7 @@
                                                 </p>
                                                 <p>@Model.MostRecentReview.Content</p>
                                             </div>
+                                            }
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-12">
                                             <div class="sb-it">
@@ -395,14 +398,24 @@
                 if (isAdded == 'True') {
                     document.getElementById("favourite").innerHTML = '<i class="ion-ios-heart-outline"></i><span>Add to favourite</span>';
                     isAdded = 'False';
+                    SuccessAlert('Movie removed sucessfully')
                 }
                 else {
                     document.getElementById("favourite").innerHTML = '<i class="ion-heart"></i><span>Added</span>';
                     isAdded = 'True';
+                    SuccessAlert('Movie added sucessfully')
                 }
             }
         }
         xhr.open("POST", "/Movies/AddToFavourite?movieId=@Model.Id", true);
         xhr.send();
+    }
+
+    function SuccessAlert(msg) {
+        Swal.fire(
+            'Good job!',
+            msg,
+            'success'
+        );
     }
 </script>
