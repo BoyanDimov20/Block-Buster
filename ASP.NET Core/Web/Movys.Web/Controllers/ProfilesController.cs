@@ -38,11 +38,6 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
 
-            //if (this.TempData["ViewData"] != null)
-            //{
-            //    this.ViewData = (ViewDataDictionary)this.TempData["ViewData"];
-            //}
-
             ProfileInfoViewModel viewModel = new ProfileInfoViewModel
             {
                 AvatarViewModel = new ChangeAvatarViewModel

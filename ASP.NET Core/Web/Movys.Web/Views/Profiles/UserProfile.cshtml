@@ -112,34 +112,13 @@
          var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                SuccessAlert('Avatar updated successfully!')
             }
         }
         xhr.open("POST", "/Profiles/Upload?file=@Model.AvatarViewModel.Avatar", true);
         xhr.send();
     }
 
-    function ChangePass() {
-        let object = {
-            "oldPassword": $("#oldPasswordInput").val(),
-            "newPassword": $("#newPasswordInput").val(),
-            "confirmNewPassword": $("#confirmPasswordInput").val(),
-        };
-        let isConfirmed = ConfirmAlert();
-        if (isConfirmed) {
-            $.ajax({
-                type: "POST",
-                url: '/Profiles/ChangePassword',
-                data: JSON.stringify(object),
-                contentType: 'application/json; charset=utf-8',
-                success: function () {
-                    SuccessAlert('Password was changed successfully!');
-                },
-                error: function () {
-                    FailedAlert('Error! Please try again!');
-                }
-            })
-        }
-    }
 
     function ChangeAdditionalInfojQuery() {
         let object = {
@@ -177,7 +156,8 @@
             'error'
         );
     }
-    function ConfirmAlert() {
+
+    function ChangePass() {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -187,7 +167,26 @@
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, Change it!'
         }).then((result) => {
-            return result.value;
+            if (result.value) {
+                let object = {
+                    "oldPassword": $("#oldPasswordInput").val(),
+                    "newPassword": $("#newPasswordInput").val(),
+                    "confirmNewPassword": $("#confirmPasswordInput").val(),
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Profiles/ChangePassword',
+                    data: JSON.stringify(object),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function () {
+                        SuccessAlert('Password was changed successfully!');
+                    },
+                    error: function () {
+                        FailedAlert('Error! Please try again!');
+                    }
+                });
+            }
         })
     }
 
