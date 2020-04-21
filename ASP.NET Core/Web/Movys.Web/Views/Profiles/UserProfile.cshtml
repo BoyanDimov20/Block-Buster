@@ -42,52 +42,52 @@
             </div>
             <div class="col-md-9 col-sm-12 col-xs-12">
                 <div class="form-style-1 user-pro" action="#">
-                    <form method="post" asp-action="ChangeAdditionalInfo" class="user">
+                    <form method="post" class="user">
                         <h4>01. Profile details</h4>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>First Name</label>
-                                <input asp-for="AdditionInfoInput.FirstName" type="text" placeholder="@(Model.AdditionInfoViewModel.FirstName??"First Name")">
+                                <input id="firstName" asp-for="AdditionInfoInput.FirstName" type="text" placeholder="@(Model.AdditionInfoViewModel.FirstName??"First Name")">
                             </div>
                             <div class="col-md-6 form-it">
                                 <label>Last Name</label>
-                                <input asp-for="AdditionInfoInput.LastName" type="text" placeholder="@(Model.AdditionInfoViewModel.LastName??"Last Name")">
+                                <input id="lastName" asp-for="AdditionInfoInput.LastName" type="text" placeholder="@(Model.AdditionInfoViewModel.LastName??"Last Name")">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Country</label>
-                                <input asp-for="AdditionInfoInput.Country" type="text" placeholder="@(Model.AdditionInfoViewModel.Country??"Country")">
+                                <input id="country" asp-for="AdditionInfoInput.Country" type="text" placeholder="@(Model.AdditionInfoViewModel.Country??"Country")">
                             </div>
                             <div class="col-md-6 form-it">
                                 <label>City</label>
-                                <input asp-for="AdditionInfoInput.City" type="text" placeholder="@(Model.AdditionInfoViewModel.City??"City")">
+                                <input id="city" asp-for="AdditionInfoInput.City" type="text" placeholder="@(Model.AdditionInfoViewModel.City??"City")">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <input class="submit" type="submit" value="save">
+                                <input class="submit" type="button" onclick="ChangeAdditionalInfojQuery()" value="save">
                             </div>
                         </div>
                     </form>
-                    <form id="password" method="post" asp-action="ChangePassword" class="password">
+                    <form id="password" method="post" class="password">
                         <h4>02. Change password</h4>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Old Password</label>
-                                <input asp-for="ChangePasswordInput.OldPassword" type="password" placeholder="**********" required="required">
+                                <input id="oldPasswordInput" asp-for="ChangePasswordInput.OldPassword" type="password" placeholder="**********" required="required">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>New Password</label>
-                                <input asp-for="ChangePasswordInput.NewPassword" type="password" placeholder="***************" required="required">
+                                <input id="newPasswordInput" asp-for="ChangePasswordInput.NewPassword" type="password" placeholder="***************" required="required">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Confirm New Password</label>
-                                <input asp-for="ChangePasswordInput.ConfirmNewPassword" type="password" placeholder="***************" required="required">
+                                <input id="confirmPasswordInput" asp-for="ChangePasswordInput.ConfirmNewPassword" type="password" placeholder="***************" required="required">
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
 
                         <div class="row">
                             <div class="col-md-2">
-                                <input class="submit" type="submit" value="change">
+                                <input class="submit" type="button" onclick="ChangePass()" value="change">
                             </div>
                         </div>
                     </form>
@@ -119,17 +119,76 @@
     }
 
     function ChangePass() {
-         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("password").append('<input class="submit" value="Password was changed successfully.">')
-            }
-            else {
-                alert("Wrong input data.");
-            }
+        let object = {
+            "oldPassword": $("#oldPasswordInput").val(),
+            "newPassword": $("#newPasswordInput").val(),
+            "confirmNewPassword": $("#confirmPasswordInput").val(),
+        };
+        let isConfirmed = ConfirmAlert();
+        if (isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: '/Profiles/ChangePassword',
+                data: JSON.stringify(object),
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    SuccessAlert('Password was changed successfully!');
+                },
+                error: function () {
+                    FailedAlert('Error! Please try again!');
+                }
+            })
         }
-        xhr.open("POST", "/Profiles/ChangePassword?input=@Model.ChangePasswordInput", true);
-        xhr.send();
     }
-    
+
+    function ChangeAdditionalInfojQuery() {
+        let object = {
+            "firstName": $("#firstName").val(),
+            "lastName": $("#lastName").val(),
+            "city": $("#city").val(),
+            "country": $("#country").val(),
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '/Profiles/ChangeAdditionalInfo',
+            data: JSON.stringify(object),
+            contentType: 'application/json; charset=utf-8',
+            success: function () {
+                SuccessAlert('Changes saved successfully!')
+            },
+            error: function () {
+                FailedAlert('Error! Please try again!');
+            }
+        });
+    }
+
+    function SuccessAlert(msg) {
+        Swal.fire(
+            'Good job!',
+            msg,
+            'success'
+        );
+    }
+    function FailedAlert(msg) {
+        Swal.fire(
+            "Error!",
+            msg,
+            'error'
+        );
+    }
+    function ConfirmAlert() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Change it!'
+        }).then((result) => {
+            return result.value;
+        })
+    }
+
 </script>

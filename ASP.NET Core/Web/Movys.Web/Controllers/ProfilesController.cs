@@ -62,7 +62,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeAdditionalInfo(AdditionInfoInputModel additionInfoInput)
+        public async Task<IActionResult> ChangeAdditionalInfo([FromBody] AdditionInfoInputModel additionInfoInput)
         {
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
             user.FirstName = additionInfoInput.FirstName;
@@ -74,7 +74,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordInputModel inputModel)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordInputModel inputModel)
         {
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
             if (this.ModelState.IsValid)
@@ -83,7 +83,6 @@
                 if (result.Succeeded)
                 {
                     return this.Ok();
-                    return this.Redirect("/Profiles/UserProfile");
                 }
 
                 foreach (var item in result.Errors)
@@ -93,7 +92,6 @@
             }
 
             return this.ValidationProblem();
-            return this.Redirect("/Profiles/UserProfile");
         }
 
         public IActionResult UserRating(int pageNumber = 1, int pageSize = 5)
