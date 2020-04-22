@@ -25,7 +25,7 @@
 
         public T GetById<T>(string id)
         {
-            return this.moviesRepository.All().To<T>().First();
+            return this.moviesRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
         }
     }
 }
