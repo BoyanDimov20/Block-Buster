@@ -22,5 +22,10 @@
         {
             return this.castMembersRepository.All().To<T>().ToList();
         }
+
+        public int GetCount()
+        {
+            return this.castMembersRepository.All().Count();
+        }
     }
 }

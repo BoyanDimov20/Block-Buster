@@ -10,5 +10,7 @@
         IEnumerable<T> GetAllByNewsId<T>(string id);
 
         Task CreateCommentAsync(string content, string userId, string newsId);
+
+        int GetCount();
     }
 }

@@ -4,8 +4,10 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public interface ICelebsService
+    public interface IMoviesService
     {
         IEnumerable<T> GetAll<T>();
+
+        T GetById<T>(string id);
     }
 }

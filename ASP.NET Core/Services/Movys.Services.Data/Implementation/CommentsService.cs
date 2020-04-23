@@ -36,5 +36,10 @@
         {
             return this.entityRepository.All().Where(x => x.NewsId == id).To<T>().ToList();
         }
+
+        public int GetCount()
+        {
+            return this.entityRepository.All().Count();
+        }
     }
 }
