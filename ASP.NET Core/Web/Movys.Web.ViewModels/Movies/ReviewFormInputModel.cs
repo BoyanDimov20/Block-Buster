@@ -11,5 +11,8 @@
         public string Content { get; set; }
 
         public double Rating { get; set; }
+
+        public string MovieId { get; set; }
+
     }
 }
