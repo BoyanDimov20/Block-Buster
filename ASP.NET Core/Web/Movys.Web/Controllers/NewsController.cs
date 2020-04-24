@@ -53,6 +53,7 @@
         public IActionResult ById(string id)
         {
             SingleNewsViewModel viewModel = this.newsService.GetAll<SingleNewsViewModel>().FirstOrDefault(x => x.Id == id);
+            viewModel.Comments = viewModel.Comments.OrderByDescending(x => x.CreatedOn);
             foreach (var comment in viewModel.Comments)
             {
                 comment.Avatar = this.profilePicturesService.GetAvatarByUserId(comment.UserId);
@@ -109,10 +110,6 @@
             if (this.ModelState.IsValid)
             {
                 await this.commentsService.CreateCommentAsync(inputModel.Content, userId, newsId);
-            }
-            else
-            {
-                this.ModelState.AddModelError(string.Empty, "Your comment must contain at least 150 characters.");
             }
 
             return this.Redirect($"/News/ById?id={newsId}");
