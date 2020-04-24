@@ -160,10 +160,10 @@
                 <div class="flex-child-ft item5">
                     <h4>Newsletter</h4>
                     <p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
-                    <form action="#">
-                        <input type="text" placeholder="Enter your email...">
+                    <form method="post">
+                        <input id="emailInput" type="email" placeholder="Enter your email...">
                     </form>
-                    <a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+                    <a href="#" onclick="Subscribe()" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
                 </div>
             </div>
         </div>
@@ -187,7 +187,43 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
     <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-</body>
+    <script>
+        function Subscribe() {
 
+            let object = {
+                "email": $("#emailInput").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '/Home/SubscribeEmail',
+                data: JSON.stringify(object),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'text',
+                success: function (data) {
+                    SuccessAlert(data)
+                },
+                error: function () {
+                    FailedAlert('Invalid Email Address.');
+                }
+            });
+        }
+        function SuccessAlert(msg) {
+            Swal.fire(
+                'Good job!',
+                msg,
+                'success'
+            );
+        }
+        function FailedAlert(msg) {
+            Swal.fire(
+                "Error!",
+                msg,
+                'error'
+            );
+        }
+    </script>
+</body>
+    
 
 </html>
