@@ -65,7 +65,8 @@
         public IActionResult Result(string result, string category, int pageNumber = 1, int pageSize = 5)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-
+            this.ViewData["Result"] = result;
+            this.ViewData["Category"] = category;
             if (result == null)
             {
                 result = string.Empty;

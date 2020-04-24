@@ -101,7 +101,7 @@
                                             </div>
                                             <!-- movie cast -->
                                             <div class="mvcast-item">
-                                                @foreach (var castMember in Model.CastMembers)
+                                                @foreach (var castMember in Model.CastMembers.Where(x => x.RoleType == RoleType.Actor))
                                                 {
                                                     <div class="cast-it">
                                                         <div class="cast-left">

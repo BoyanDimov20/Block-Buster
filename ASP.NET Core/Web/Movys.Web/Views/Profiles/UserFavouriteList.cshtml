@@ -1,4 +1,5 @@
-﻿@model Movys.Web.ViewModels.Profiles.ListingFavoriteMoviesViewModel
+﻿@using Movys.Data.Models
+@model Movys.Web.ViewModels.Profiles.ListingFavoriteMoviesViewModel
 
 <div class="hero user-hero">
     <div class="container">
@@ -55,8 +56,20 @@
                                 <h6><a asp-controller="Movies" asp-action="ById" asp-route-id="@movie.MovieId">@movie.MovieTitle<span>(@movie.MovieReleaseYear)</span></a></h6>
                                 <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
                                 <p class="describe">@movie.MovieDescription...</p>
-                                <p>Director: <a href="#">Joss Whedon</a></p>
-                                <p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
+                                <p>
+                                    Director:
+                                    @foreach (var item in movie.MovieCastMembers.Where(x => x.RoleType == RoleType.Director))
+                                    {
+                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@item.CastMemberId">@item.CastMemberName,</a>
+                                    }
+                                </p>
+                                <p>
+                                    Stars:
+                                    @foreach (var item in movie.MovieCastMembers.Where(x => x.RoleType == RoleType.Actor))
+                                    {
+                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@item.CastMemberId">@item.CastMemberName,</a>
+                                    }
+                                </p>
                             </div>
                         </div>
                     }
