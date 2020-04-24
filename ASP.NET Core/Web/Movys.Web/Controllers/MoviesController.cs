@@ -35,6 +35,7 @@
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             SingleMovieViewModel viewModel = this.moviesService.GetAll<SingleMovieViewModel>().First(x => x.Id == id);
+            viewModel.Reviews = viewModel.Reviews.OrderByDescending(x => x.CreatedOn);
 
             foreach (var review in viewModel.Reviews)
             {
@@ -151,17 +152,16 @@
         [HttpPost]
         public async Task<IActionResult> CreateReview([FromBody] ReviewFormInputModel inputModel)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, inputModel.Rating, inputModel.MovieId, userId);
-            var avatar = this.profilePicturesService.GetAvatarByUserId(userId);
-
-            var obj = new
+            if (this.ModelState.IsValid)
             {
-                Avatar = avatar,
-                CreatedOn = DateTime.UtcNow,
-            };
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, double.Parse(inputModel.Rating), inputModel.MovieId, userId);
+                var avatar = this.profilePicturesService.GetAvatarByUserId(userId);
 
-            return this.Json(obj);
+                return this.Json(new { avatar = avatar, createdOn = DateTime.UtcNow, rating = inputModel.Rating, title = inputModel.Title, content = inputModel.Content });
+            }
+
+            return this.ValidationProblem();
         }
 
         [Authorize]

@@ -208,19 +208,19 @@
                                         @if (User.Identity.IsAuthenticated)
                                         {
                                         <div class="mv-user-review-item">
-                                            <form method="post" asp-action="ReviewForm" asp-route-id="@Model.Id">
+                                            <form method="post">
                                                 <div class="user-infor">
                                                     <img src="data:image/png;base64, @(Model.CurrentUserAvatar??string.Empty)" style="width:45px;height:45px;" alt="">
                                                     <div>
                                                         <div class="review-content">
-                                                            <input asp-for="ReviewFormInputModel.Title" name="Title" type="text" placeholder="Title">
+                                                            <input id="reviewTitleInput" type="text" placeholder="Title" required="required">
                                                         </div>
                                                         <br />
                                                         <div class="no-star">
                                                             Rate: <i class="ion-android-star"></i>
                                                         </div>
                                                         <div class="review-content">
-                                                            <input asp-for="ReviewFormInputModel.Rating" name="Rating" type="number" max="10" min="0" />
+                                                            <input id="reviewRatingInput" type="number" max="10" min="1" value="1" />
                                                         </div>
                                                         <p class="time">
                                                             Logged as <a asp-controller="Profiles" asp-action="UserProfile"> @User.Identity.Name</a>
@@ -230,13 +230,13 @@
                                                 <br />
                                                 <div class="review-content">
                                                     <p>
-                                                        <textarea class="form-control" asp-for="ReviewFormInputModel.Content" name="Content" rows="4" placeholder="Write a review"></textarea>
+                                                        <textarea class="form-control" id="reviewContentInput" asp-for="ReviewFormInputModel.Content" rows="4" placeholder="Write a review" required="required"></textarea>
                                                     </p>
                                                 </div>
 
                                                 <p>
                                                     <div class="btn pull-right">
-                                                        <button class="redbtn" type="submit">Write Review</button>
+                                                        <button class="redbtn" type="button" onclick="AddReview()">Write Review</button>
                                                     </div>
                                                 </p>
                                                 <br />
@@ -244,6 +244,7 @@
                                             </form>
                                         </div>
                                         }
+                                        <div id="reviewListing">
                                         @foreach (var review in Model.Reviews)
                                         {
                                             <div class="mv-user-review-item">
@@ -272,6 +273,7 @@
                                                 <p>@review.Content</p>
                                             </div>
                                         }
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="cast" class="tab">
@@ -410,11 +412,64 @@
         xhr.send();
     }
 
-    function SuccessAlert(msg) {
+    function FailedAlert(msg) {
         Swal.fire(
-            'Good job!',
+            'Error!',
             msg,
-            'success'
+            'error'
         );
+    }
+
+    function AddReview() {
+
+        let object = {
+            "title": $("#reviewTitleInput").val(),
+            "content": $("#reviewContentInput").val(),
+            "rating": $("#reviewRatingInput").val(),
+            "movieId": '@Model.Id',
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '/Movies/CreateReview',
+            data: JSON.stringify(object),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (data) {
+
+                AppendReview(data);
+                ClearReviewInput();
+            },
+            error: function () {
+                FailedAlert('Failed');
+            }
+
+        })
+    }
+
+    function AppendReview(data) {
+        let starsString = "";
+        for (var i = 1; i <= 10; i++) {
+            if (i <= parseInt(data.rating)) {
+                starsString += '<i class="ion-android-star"></i> ';
+            }
+            else {
+                starsString += '<i class="ion-android-star last"></i> ';
+            }
+        }
+
+        let date = Date.parse(data.createdOn);
+        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
+        let mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(date);
+        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+
+        let formattedDate = `${da} ${mo} ${ye}`;
+        let result = `<div class="mv-user-review-item"> <div class="user-infor"> <img src="data:image/png;base64, ${data.avatar}" style="width:45px;height:45px;" alt=""> <div> <h3>${data.title}</h3> <div class="no-star"> ${starsString} </div><p class="time"> ${formattedDate} by <a href="#"> @User.Identity.Name</a> </p></div></div><p>${data.content}</p></div>`;
+        $("#reviewListing").prepend(result);
+    }
+    function ClearReviewInput() {
+        $("#reviewTitleInput").val("");
+        $("#reviewContentInput").val("");
+        $("#reviewRatingInput").val("0");
     }
 </script>
