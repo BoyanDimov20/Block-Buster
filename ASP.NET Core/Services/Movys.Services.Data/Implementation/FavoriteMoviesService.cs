@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
     using Movys.Services.Mapping;
@@ -18,9 +20,9 @@
             this.repository = repository;
         }
 
-        public IEnumerable<T> GetAllByUserId<T>(string userId)
+        public async Task<IEnumerable<T>> GetAllByUserId<T>(string userId)
         {
-            return this.repository.All().Where(x => x.UserId == userId).To<T>().ToList();
+            return await this.repository.All().Where(x => x.UserId == userId).To<T>().ToListAsync();
         }
     }
 }

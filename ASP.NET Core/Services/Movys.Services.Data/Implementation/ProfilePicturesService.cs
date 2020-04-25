@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
 
@@ -81,9 +82,9 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public string GetAvatarByUserId(string userId)
+        public async Task<string> GetAvatarByUserId(string userId)
         {
-            byte[] bytesArr = this.repository.All().FirstOrDefault(x => x.UserId == userId).Content;
+            byte[] bytesArr = (await this.repository.All().FirstOrDefaultAsync(x => x.UserId == userId)).Content;
             var result = Convert.ToBase64String(bytesArr);
             return result;
         }

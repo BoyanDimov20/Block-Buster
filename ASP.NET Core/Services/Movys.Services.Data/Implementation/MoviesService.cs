@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
     using Movys.Services.Mapping;
@@ -18,14 +20,14 @@
             this.moviesRepository = moviesRepository;
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAll<T>()
         {
-            return this.moviesRepository.All().To<T>().ToList();
+            return await this.moviesRepository.All().To<T>().ToListAsync();
         }
 
-        public T GetById<T>(string id)
+        public async Task<T> GetById<T>(string id)
         {
-            return this.moviesRepository.All().Where(x => x.Id == id).To<T>().FirstOrDefault();
+            return await this.moviesRepository.All().Where(x => x.Id == id).To<T>().FirstAsync();
         }
     }
 }

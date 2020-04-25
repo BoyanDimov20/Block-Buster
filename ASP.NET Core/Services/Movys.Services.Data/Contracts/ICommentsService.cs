@@ -7,7 +7,7 @@
 
     public interface ICommentsService
     {
-        IEnumerable<T> GetAllByNewsId<T>(string id);
+        Task<IEnumerable<T>> GetAllByNewsId<T>(string id);
 
         Task CreateCommentAsync(string content, string userId, string newsId);
 
