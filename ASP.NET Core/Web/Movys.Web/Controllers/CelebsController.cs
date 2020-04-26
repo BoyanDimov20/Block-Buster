@@ -19,20 +19,20 @@
             this.celebsService = celebsService;
         }
 
-        public IActionResult ById(string id)
+        public async Task<IActionResult> ById(string id)
         {
-            SingleCelebViewModel viewModel = this.celebsService.GetAll<SingleCelebViewModel>().First(x => x.Id == id);
+            SingleCelebViewModel viewModel = (await this.celebsService.GetAll<SingleCelebViewModel>()).First(x => x.Id == id);
             return this.View(viewModel);
         }
 
-        public IActionResult ListingMostPopular(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> ListingMostPopular(int pageNumber = 1, int pageSize = 5)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.celebsService.GetAll<SingleCelebViewModel>().Count();
+            int recordsCount = (await this.celebsService.GetAll<SingleCelebViewModel>()).Count();
 
             ListingCelebsViewModel viewModel = new ListingCelebsViewModel
             {
-                CastMembers = this.celebsService.GetAll<SingleCelebViewModel>().ToList(),
+                CastMembers = await this.celebsService.GetAll<SingleCelebViewModel>(),
                 CurrentPage = pageNumber,
                 CelebsCount = recordsCount,
             };
@@ -52,7 +52,7 @@
         }
 
         [Route("/Celebs/Search")]
-        public IActionResult Result(string result, string category, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Result(string result, string category, int pageNumber = 1, int pageSize = 5)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
             this.ViewData["Result"] = result;
@@ -60,7 +60,7 @@
 
             ListingCelebsViewModel viewModel = new ListingCelebsViewModel()
             {
-                CastMembers = this.celebsService.GetAll<SingleCelebViewModel>(),
+                CastMembers = await this.celebsService.GetAll<SingleCelebViewModel>(),
                 CurrentPage = pageNumber,
             };
 

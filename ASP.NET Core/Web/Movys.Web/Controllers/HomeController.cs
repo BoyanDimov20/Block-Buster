@@ -27,16 +27,16 @@
             this.newsLettersRepository = newsLettersRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             HomePageViewModel viewModel = new HomePageViewModel
             {
-                MostPopularMovies = this.moviesService.GetAll<MovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Take(10),
-                TopRatedMovies = this.moviesService.GetAll<MovieViewModel>().OrderByDescending(x => x.Rating).Take(10),
-                ComingSoonMovies = this.moviesService.GetAll<MovieViewModel>().Take(10),
-                MostReviewedMovies = this.moviesService.GetAll<MovieViewModel>().OrderByDescending(x => x.Reviews.Count()).Take(10),
-                Celebrities = this.celebsService.GetAll<ViewModels.Home.CastMemberViewModel>().Take(4),
-                News = this.newsService.GetAll<NewsViewModel>().OrderByDescending(x => x.CreatedOn).Take(5),
+                MostPopularMovies = (await this.moviesService.GetAll<MovieViewModel>()).OrderByDescending(x => x.Reviews.Count()).Take(10),
+                TopRatedMovies = (await this.moviesService.GetAll<MovieViewModel>()).OrderByDescending(x => x.Rating).Take(10),
+                ComingSoonMovies = (await this.moviesService.GetAll<MovieViewModel>()).Take(10),
+                MostReviewedMovies = (await this.moviesService.GetAll<MovieViewModel>()).OrderByDescending(x => x.Reviews.Count()).Take(10),
+                Celebrities = (await this.celebsService.GetAll<ViewModels.Home.CastMemberViewModel>()).Take(4),
+                News = (await this.newsService.GetAll<NewsViewModel>()).OrderByDescending(x => x.CreatedOn).Take(5),
             };
             return this.View(viewModel);
         }
