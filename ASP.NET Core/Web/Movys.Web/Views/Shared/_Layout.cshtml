@@ -1,4 +1,5 @@
-﻿
+﻿@using Movys.Common
+
 <!DOCTYPE html>
 <!--[if IE 7]>
 <html class="ie ie7 no-js" lang="en-US">
@@ -83,6 +84,18 @@
                             </ul>
                         </li>
                         <li><a asp-controller="News" asp-action="Listing">News</a></li>
+                        @if (User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <li class="dropdown first">
+                                <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                                    Admin Panel<i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </a>
+                                <ul class="dropdown-menu level1">
+                                    <li><a asp-controller="Admin" asp-action="AddMovie">Add Movie</a></li>
+                                    <li class="it-last"><a asp-controller="Admin" asp-action="AddCelebrity">Add Celebrity</a></li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav flex-child-menu menu-right">
                         @if (User.Identity.IsAuthenticated)

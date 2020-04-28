@@ -1,0 +1,118 @@
+﻿@model Movys.Web.ViewModels.Admin.CreateMovieViewModel
+
+
+<div class="hero user-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero-ct">
+                    <h1>@User.Identity.Name’s profile</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a href="/">Home</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span>Profile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-single">
+    <div class="container">
+        <div class="row ipad-width">
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="form-style-1 user-pro" action="#">
+                    <form method="post" class="user">
+                        <h4>01. Profile details</h4>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Title</label>
+                                <input id="title" type="text" placeholder="Title">
+                            </div>
+                            <div class="col-md-6 form-it">
+                                <label>Release Date</label>
+                                <input id="releaseDate" type="date">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Country</label>
+                                <input id="country" type="text" placeholder="Country">
+                            </div>
+                            <div class="col-md-6 form-it">
+                                <label>Run time</label>
+                                <input id="runTime" type="number" placeholder="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Image Url</label>
+                                <input id="imageUrl" type="text" placeholder="Image Url..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Trailer Url</label>
+                                <input id="trailerUrl" type="text" placeholder="Trailer Url..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Genres</label>
+                                <div class="group-ip">
+                                    <select name="genre" multiple="" class="ui fluid dropdown">
+                                        <option value="">Enter to filter genres</option>
+                                        @foreach (var genre in Model.Genres)
+                                        {
+                                            <option value="@genre.Id">@genre.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Plot</label>
+                                <div class="review-content">
+                                    <textarea class="form-control" id="plot" type="text" placeholder="Description" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input class="submit" type="button" onclick="ChangeAdditionalInfojQuery()" value="save">
+                            </div>
+                        </div>
+                    </form>
+                    <form id="password" method="post" class="password">
+                        <h4>02. Change password</h4>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Old Password</label>
+                                <input id="oldPasswordInput" type="password" placeholder="**********" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>New Password</label>
+                                <input id="newPasswordInput" type="password" placeholder="***************" required="required">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Confirm New Password</label>
+                                <input id="confirmPasswordInput" type="password" placeholder="***************" required="required">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input class="submit" type="button" onclick="ChangePass()" value="change">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
