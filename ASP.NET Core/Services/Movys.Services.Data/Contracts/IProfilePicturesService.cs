@@ -13,6 +13,6 @@
 
         Task AddPictureAsync(string imagePath, string userId);
 
-        string GetAvatarByUserId(string userId);
+        Task<string> GetAvatarByUserId(string userId);
     }
 }

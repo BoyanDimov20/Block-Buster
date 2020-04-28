@@ -67,7 +67,7 @@
                         <form asp-controller="News" asp-action="CreateComment" asp-route-newsId="@Model.Id" method="post">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <textarea asp-for="CommentInputModel.Content" name="content" placeholder="Message" minlength="115"></textarea>
+                                    <textarea asp-for="CommentInputModel.Content" name="content" placeholder="Message" required="required"></textarea>
                                     <span asp-validation-for="CommentInputModel.Content"></span>
                                 </div>
                             </div>

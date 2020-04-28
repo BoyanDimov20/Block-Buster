@@ -26,9 +26,9 @@
             <div class="row">
                 <div class="remember">
                     <div>
-                        <input type="checkbox" name="remember" value="Remember me"><a class="preloaderText">Remember me</a>
+                        <input type="checkbox" asp-for="RememberMe" name="remember" value="Remember me"><a class="preloaderText">Remember me</a>
                     </div>
-                    <a class="preloaderTextHover" href="#">Forget password ?</a> <!--TODO-->
+                    <a class="preloaderTextHover" asp-controller="Users" asp-action="Register">Create Account</a>
                 </div>
             </div>
 

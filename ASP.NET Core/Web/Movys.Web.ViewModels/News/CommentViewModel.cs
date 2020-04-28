@@ -21,5 +21,7 @@
 
         public string Avatar { get; set; }
 
+        public string NewsId { get; set; }
+
     }
 }

@@ -44,6 +44,6 @@
 
         public ReviewFormInputModel ReviewFormInputModel { get; set; } = new ReviewFormInputModel();
 
-        public ReviewViewModel MostRecentReview => this.Reviews.OrderByDescending(x => x.CreatedOn).First();
+        public ReviewViewModel MostRecentReview => this.Reviews.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
     }
 }

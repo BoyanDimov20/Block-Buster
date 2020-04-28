@@ -3,11 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
 
     public interface IMoviesService
     {
-        IEnumerable<T> GetAll<T>();
+        Task<IEnumerable<T>> GetAll<T>();
 
-        T GetById<T>(string id);
+        Task<T> GetById<T>(string id);
     }
 }

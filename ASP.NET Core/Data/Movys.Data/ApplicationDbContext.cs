@@ -51,6 +51,8 @@
 
         public DbSet<NewsTags> NewsTags { get; set; }
 
+        public DbSet<Newsletter> Newsletters { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

@@ -38,16 +38,11 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.userManager.FindByNameAsync(this.User.Identity.Name);
 
-            //if (this.TempData["ViewData"] != null)
-            //{
-            //    this.ViewData = (ViewDataDictionary)this.TempData["ViewData"];
-            //}
-
             ProfileInfoViewModel viewModel = new ProfileInfoViewModel
             {
                 AvatarViewModel = new ChangeAvatarViewModel
                 {
-                    CurrentAvatar = this.profilePicturesService.GetAvatarByUserId(userId),
+                    CurrentAvatar = await this.profilePicturesService.GetAvatarByUserId(userId),
                 },
                 AdditionInfoViewModel = new AdditionInfoViewModel
                 {
@@ -94,21 +89,21 @@
             return this.ValidationProblem();
         }
 
-        public IActionResult UserRating(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> UserRating(int pageNumber = 1, int pageSize = 5)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.reviewsService.GetAll<ReviewViewModel>().Count(x => x.UserId == userId);
+            int recordsCount = (await this.reviewsService.GetAll<ReviewViewModel>()).Count(x => x.UserId == userId);
 
             UserRatingViewModel viewModel = new UserRatingViewModel
             {
-                Reviews = this.reviewsService.GetAll<ReviewViewModel>().Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn),
+                Reviews = (await this.reviewsService.GetAll<ReviewViewModel>()).Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedOn),
                 CurrentPage = pageNumber,
                 ReviewsCount = recordsCount,
                 AvatarViewModel = new ChangeAvatarViewModel
                 {
-                    CurrentAvatar = this.profilePicturesService.GetAvatarByUserId(userId),
+                    CurrentAvatar = await this.profilePicturesService.GetAvatarByUserId(userId),
                 },
             };
 
@@ -125,7 +120,7 @@
             return this.View(viewModel);
         }
 
-        public IActionResult UserFavouriteList(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> UserFavouriteList(int pageNumber = 1, int pageSize = 5)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -133,11 +128,11 @@
 
             ListingFavoriteMoviesViewModel viewModel = new ListingFavoriteMoviesViewModel
             {
-                Movies = this.favoriteMoviesService.GetAllByUserId<FavoriteMovieViewModel>(userId),
+                Movies = await this.favoriteMoviesService.GetAllByUserId<FavoriteMovieViewModel>(userId),
                 CurrentPage = pageNumber,
                 AvatarViewModel = new ChangeAvatarViewModel
                 {
-                    CurrentAvatar = this.profilePicturesService.GetAvatarByUserId(userId),
+                    CurrentAvatar = await this.profilePicturesService.GetAvatarByUserId(userId),
                 },
             };
 

@@ -23,7 +23,7 @@
                 <div class="topbar-filter">
                     <p>Found <span>@Model.MoviesCountFound movies</span> in total</p>
                     <a class="list"><i class="ion-ios-list-outline active"></i></a>
-                    <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"]" asp-route-pageNumber="@Model.CurrentPage" class="grid"><i class="ion-grid"></i></a>
+                    <a asp-action="ListingGrid" asp-route-crit="@ViewData["Crit"]" class="grid"><i class="ion-grid"></i></a>
                 </div>
 
                 @for (int i = 0; i < Model.Movies.Count; i++)

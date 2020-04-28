@@ -31,38 +31,39 @@
             this.profilePicturesService = profilePicturesService;
         }
 
-        public IActionResult ById(string id)
+        public async Task<IActionResult> ById(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            SingleMovieViewModel viewModel = this.moviesService.GetAll<SingleMovieViewModel>().First(x => x.Id == id);
+            SingleMovieViewModel viewModel = (await this.moviesService.GetAll<SingleMovieViewModel>()).First(x => x.Id == id);
+            viewModel.Reviews = viewModel.Reviews.OrderByDescending(x => x.CreatedOn);
 
             foreach (var review in viewModel.Reviews)
             {
-                review.UserAvatar = this.profilePicturesService.GetAvatarByUserId(review.UserId);
+                review.UserAvatar = await this.profilePicturesService.GetAvatarByUserId(review.UserId);
             }
 
             if (this.User.Identity.IsAuthenticated)
             {
-                viewModel.CurrentUserAvatar = this.profilePicturesService.GetAvatarByUserId(userId);
+                viewModel.CurrentUserAvatar = await this.profilePicturesService.GetAvatarByUserId(userId);
             }
 
-            viewModel.RelatedMovies = this.moviesService.GetAll<MovieViewModel>().Where(x => x.Genres.Any(y => viewModel.Genres.Any(z => z.GenreName == y.GenreName)) && x.Id != id);
+            viewModel.RelatedMovies = (await this.moviesService.GetAll<MovieViewModel>()).Where(x => x.Genres.Any(y => viewModel.Genres.Any(z => z.GenreName == y.GenreName)) && x.Id != id);
             viewModel.IsAddedToFavorite = this.favouriteMovieRepository.All().Any(x => x.UserId == userId && id == x.MovieId);
             return this.View(viewModel);
         }
 
-        public IActionResult Listing(string crit, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Listing(string crit, int pageNumber = 1, int pageSize = 5)
         {
             this.ViewData["Crit"] = crit;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
+            int recordsCount = (await this.moviesService.GetAll<SingleMovieViewModel>()).Count();
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
+                Movies = (await this.moviesService.GetAll<SingleMovieViewModel>()).ToList(),
                 SearchFormInputModel = new SearchFormInputModel()
                 {
-                    Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
+                    Genres = (await this.genresMovieService.GetAll<GenreViewModel>()).Distinct(new GenreComparer()).ToList(),
                 },
                 CurrentPage = pageNumber,
                 MoviesPerPage = pageSize,
@@ -100,19 +101,19 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ListingGrid(string crit, int pageNumber = 1)
+        public async Task<IActionResult> ListingGrid(string crit, int pageNumber = 1)
         {
             this.ViewData["Crit"] = crit;
             int pageSize = 12;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.moviesService.GetAll<SingleMovieViewModel>().Count();
+            int recordsCount = (await this.moviesService.GetAll<SingleMovieViewModel>()).Count();
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().ToList(),
+                Movies = (await this.moviesService.GetAll<SingleMovieViewModel>()).ToList(),
                 SearchFormInputModel = new SearchFormInputModel()
                 {
-                    Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList(),
+                    Genres = (await this.genresMovieService.GetAll<GenreViewModel>()).Distinct(new GenreComparer()).ToList(),
                 },
                 CurrentPage = pageNumber,
                 MoviesPerPage = pageSize,
@@ -149,12 +150,18 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> ReviewForm(ReviewFormInputModel inputModel, string id)
+        public async Task<IActionResult> CreateReview([FromBody] ReviewFormInputModel inputModel)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, inputModel.Rating, id, userId);
+            if (this.ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await this.reviewsService.AddReview(inputModel.Title, inputModel.Content, double.Parse(inputModel.Rating), inputModel.MovieId, userId);
+                var avatar = await this.profilePicturesService.GetAvatarByUserId(userId);
 
-            return this.Redirect($"/Movies/ById?id={id}");
+                return this.Json(new { avatar = avatar, createdOn = DateTime.UtcNow, rating = inputModel.Rating, title = inputModel.Title, content = inputModel.Content });
+            }
+
+            return this.ValidationProblem();
         }
 
         [Authorize]
@@ -184,9 +191,12 @@
         }
 
         [Route("/Movies/Search")]
-        public IActionResult Result(string result, string genre, double rating, int pageNumber = 1)
+        public async Task<IActionResult> Result(string result, string genre, double rating, int pageNumber = 1)
         {
-            this.ViewData["SearchString"] = result;
+            this.ViewData["Result"] = result ?? string.Empty;
+            this.ViewData["Genre"] = genre ?? string.Empty;
+            this.ViewData["Rating"] = rating;
+
             int pageSize = 5;
             int excludeRecords = (pageSize * pageNumber) - pageSize;
 
@@ -199,7 +209,7 @@
 
             ListingMoviesViewModel viewModel = new ListingMoviesViewModel
             {
-                Movies = this.moviesService.GetAll<SingleMovieViewModel>().Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).ToList(),
+                Movies = (await this.moviesService.GetAll<SingleMovieViewModel>()).Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).ToList(),
                 CurrentPage = pageNumber,
                 MoviesPerPage = pageSize,
             };
@@ -226,7 +236,57 @@
             }
 
             viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
-            viewModel.SearchFormInputModel.Genres = this.genresMovieService.GetAll<GenreViewModel>().Distinct(new GenreComparer()).ToList();
+            viewModel.SearchFormInputModel.Genres = (await this.genresMovieService.GetAll<GenreViewModel>()).Distinct(new GenreComparer()).ToList();
+            return this.View(viewModel);
+        }
+
+        [Route("/Movies/SearchGrid")]
+        public async Task<IActionResult> ResultGrid(string result, string genre, double rating, int pageNumber = 1)
+        {
+            this.ViewData["Result"] = result ?? string.Empty;
+            this.ViewData["Genre"] = genre ?? string.Empty;
+            this.ViewData["Rating"] = rating;
+
+            int pageSize = 12;
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
+
+            if (result == null)
+            {
+                result = string.Empty;
+            }
+
+            string normalizedResult = result.ToLower();
+
+            ListingMoviesViewModel viewModel = new ListingMoviesViewModel
+            {
+                Movies = (await this.moviesService.GetAll<SingleMovieViewModel>()).Where(x => x.Title.ToLower().Contains(result) || x.Description.ToLower().Contains(result)).ToList(),
+                CurrentPage = pageNumber,
+                MoviesPerPage = pageSize,
+            };
+
+            if (genre != null)
+            {
+                viewModel.Movies = viewModel.Movies.Where(x => x.Genres.Any(x => x.GenreId == genre)).ToList();
+            }
+
+            if (rating != 0)
+            {
+                viewModel.Movies = viewModel.Movies.Where(x => x.Rating >= rating).ToList();
+            }
+
+            int recordsCount = viewModel.Movies.Count();
+            viewModel.MoviesCountFound = recordsCount;
+            if (recordsCount % 12 == 0)
+            {
+                viewModel.PagesCount = recordsCount / 12;
+            }
+            else
+            {
+                viewModel.PagesCount = (recordsCount / 12) + 1;
+            }
+
+            viewModel.Movies = viewModel.Movies.Skip(excludeRecords).Take(pageSize).ToList();
+            viewModel.SearchFormInputModel.Genres = (await this.genresMovieService.GetAll<GenreViewModel>()).Distinct(new GenreComparer()).ToList();
             return this.View(viewModel);
         }
     }

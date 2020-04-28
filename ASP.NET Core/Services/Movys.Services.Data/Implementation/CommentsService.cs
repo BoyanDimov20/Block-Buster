@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
     using Movys.Services.Mapping;
@@ -32,9 +33,14 @@
             await this.entityRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetAllByNewsId<T>(string id)
+        public async Task<IEnumerable<T>> GetAllByNewsId<T>(string id)
         {
-            return this.entityRepository.All().Where(x => x.NewsId == id).To<T>().ToList();
+            return await this.entityRepository.All().Where(x => x.NewsId == id).To<T>().ToListAsync();
+        }
+
+        public int GetCount()
+        {
+            return this.entityRepository.All().Count();
         }
     }
 }

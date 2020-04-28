@@ -25,14 +25,14 @@
             this.profilePicturesService = profilePicturesService;
         }
 
-        public IActionResult Listing(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Listing(int pageNumber = 1, int pageSize = 5)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-            int recordsCount = this.newsService.GetAll<NewsViewModel>().Count();
+            int recordsCount = (await this.newsService.GetAll<NewsViewModel>()).Count();
 
             ListingNewsViewModel viewModel = new ListingNewsViewModel
             {
-                News = this.newsService.GetAll<NewsViewModel>().OrderByDescending(x => x.CreatedOn).ToList(),
+                News = (await this.newsService.GetAll<NewsViewModel>()).OrderByDescending(x => x.CreatedOn).ToList(),
                 CurrentPage = pageNumber,
             };
 
@@ -50,22 +50,24 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ById(string id)
+        public async Task<IActionResult> ById(string id)
         {
-            SingleNewsViewModel viewModel = this.newsService.GetAll<SingleNewsViewModel>().FirstOrDefault(x => x.Id == id);
+            SingleNewsViewModel viewModel = (await this.newsService.GetAll<SingleNewsViewModel>()).FirstOrDefault(x => x.Id == id);
+            viewModel.Comments = viewModel.Comments.OrderByDescending(x => x.CreatedOn);
             foreach (var comment in viewModel.Comments)
             {
-                comment.Avatar = this.profilePicturesService.GetAvatarByUserId(comment.UserId);
+                comment.Avatar = await this.profilePicturesService.GetAvatarByUserId(comment.UserId);
             }
 
             return this.View(viewModel);
         }
 
         [Route("/News/Search")]
-        public IActionResult Result(string result, string category, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Result(string result, string category, int pageNumber = 1, int pageSize = 5)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
-
+            this.ViewData["Result"] = result;
+            this.ViewData["Category"] = category;
             if (result == null)
             {
                 result = string.Empty;
@@ -73,7 +75,7 @@
 
             ListingNewsViewModel viewModel = new ListingNewsViewModel
             {
-                News = this.newsService.GetAll<NewsViewModel>().Where(x => x.Title.ToLower().Contains(result.ToLower()) || x.Content.ToLower().Contains(result.ToLower())).OrderByDescending(x => x.CreatedOn).ToList(),
+                News = (await this.newsService.GetAll<NewsViewModel>()).Where(x => x.Title.ToLower().Contains(result.ToLower()) || x.Content.ToLower().Contains(result.ToLower())).OrderByDescending(x => x.CreatedOn).ToList(),
                 CurrentPage = pageNumber,
             };
 
@@ -108,10 +110,6 @@
             if (this.ModelState.IsValid)
             {
                 await this.commentsService.CreateCommentAsync(inputModel.Content, userId, newsId);
-            }
-            else
-            {
-                this.ModelState.AddModelError(string.Empty, "Your comment must contain at least 150 characters.");
             }
 
             return this.Redirect($"/News/ById?id={newsId}");

@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
 
     public interface IFavoriteMoviesService
     {
-        IEnumerable<T> GetAllByUserId<T>(string userId);
+        Task<IEnumerable<T>> GetAllByUserId<T>(string userId);
     }
 }

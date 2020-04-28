@@ -1,13 +1,14 @@
-﻿namespace Movys.Web.ViewModels.News
+﻿namespace Movys.Web.ViewModels.Home
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Text;
 
-    public class CreateCommentInputModel
+    public class SubscriptionViewModel
     {
         [Required]
-        public string Content { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }

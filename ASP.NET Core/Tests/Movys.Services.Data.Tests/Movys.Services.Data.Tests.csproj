@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -29,6 +29,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\Movys.Data\Movys.Data.csproj" />
     <ProjectReference Include="..\..\Services\Movys.Services.Data\Movys.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\Movys.Web.ViewModels\Movys.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\test1.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\test2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

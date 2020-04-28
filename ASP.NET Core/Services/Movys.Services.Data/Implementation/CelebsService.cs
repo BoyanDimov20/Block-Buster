@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
     using Movys.Services.Mapping;
@@ -18,9 +20,14 @@
             this.castMembersRepository = castMembersRepository;
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAll<T>()
         {
-            return this.castMembersRepository.All().To<T>().ToList();
+            return await this.castMembersRepository.All().To<T>().ToListAsync();
+        }
+
+        public int GetCount()
+        {
+            return this.castMembersRepository.All().Count();
         }
     }
 }

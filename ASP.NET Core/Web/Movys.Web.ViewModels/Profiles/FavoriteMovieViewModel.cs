@@ -21,5 +21,6 @@
 
         public string MovieDescription { get; set; }
 
+        public IEnumerable<MovieViewModel> MovieCastMembers { get; set; }
     }
 }
