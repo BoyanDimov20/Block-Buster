@@ -21,7 +21,12 @@
 
         public async Task<IActionResult> ById(string id)
         {
-            SingleCelebViewModel viewModel = (await this.celebsService.GetAll<SingleCelebViewModel>()).First(x => x.Id == id);
+            SingleCelebViewModel viewModel = (await this.celebsService.GetAll<SingleCelebViewModel>()).FirstOrDefault(x => x.Id == id);
+            if (viewModel == null)
+            {
+                return this.StatusCode(404);
+            }
+
             return this.View(viewModel);
         }
 

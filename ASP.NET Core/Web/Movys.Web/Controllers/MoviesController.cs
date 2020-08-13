@@ -34,7 +34,13 @@
         public async Task<IActionResult> ById(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            SingleMovieViewModel viewModel = (await this.moviesService.GetAll<SingleMovieViewModel>()).First(x => x.Id == id);
+            SingleMovieViewModel viewModel = (await this.moviesService.GetAll<SingleMovieViewModel>()).FirstOrDefault(x => x.Id == id);
+
+            if (viewModel == null)
+            {
+                return this.StatusCode(404);
+            }
+
             viewModel.Reviews = viewModel.Reviews.OrderByDescending(x => x.CreatedOn);
 
             foreach (var review in viewModel.Reviews)

@@ -53,6 +53,11 @@
         public async Task<IActionResult> ById(string id)
         {
             SingleNewsViewModel viewModel = (await this.newsService.GetAll<SingleNewsViewModel>()).FirstOrDefault(x => x.Id == id);
+            if (viewModel == null)
+            {
+                return this.StatusCode(404);
+            }
+
             viewModel.Comments = viewModel.Comments.OrderByDescending(x => x.CreatedOn);
             foreach (var comment in viewModel.Comments)
             {
