@@ -10,28 +10,24 @@
         <form method="post">
             <div class="row">
                 <label>
-                    <!--pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{8,20}$"-->
                     <input type="text" asp-for="Username" placeholder="Username" required="required" />
                 </label>
             </div>
             <br />
             <div class="row">
                 <label>
-                    <!--pattern="(?=^.{8,} $)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
                     <input type="email" asp-for="Email" placeholder="Email" required="required" />
                 </label>
             </div>
             <br />
             <div class="row">
                 <label>
-                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
                     <input type="password" asp-for="Password" placeholder="Password" required="required" />
                 </label>
             </div>
             <br />
             <div class="row">
                 <label>
-                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
                     <input type="password" asp-for="ConfirmPassword" placeholder="Re-Type Password" required="required" />
                 </label>
             </div>
@@ -40,6 +36,7 @@
             <p><span asp-validation-for="Email"></span></p>
             <p><span asp-validation-for="Password"></span></p>
             <p><span asp-validation-for="ConfirmPassword"></span></p>
+            <p><div asp-validation-summary="All" style="color: red"></div></p>
 
             <br />
             <div class="row">
