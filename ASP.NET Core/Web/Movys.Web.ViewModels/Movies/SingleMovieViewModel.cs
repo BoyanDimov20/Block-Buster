@@ -32,6 +32,10 @@
 
         public string CurrentUserAvatar { get; set; }
 
+        public int? Runtime { get; set; }
+
+        public string Country { get; set; }
+
         public IEnumerable<ReviewViewModel> Reviews { get; set; }
 
         public IEnumerable<CastMemberViewModel> CastMembers { get; set; }

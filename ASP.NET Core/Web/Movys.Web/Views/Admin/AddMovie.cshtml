@@ -1,15 +1,14 @@
 ﻿@model Movys.Web.ViewModels.Admin.CreateMovieViewModel
 
-
 <div class="hero user-hero">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="hero-ct">
-                    <h1>@User.Identity.Name’s profile</h1>
+                    <h1>Create Movie Form</h1>
                     <ul class="breadcumb">
-                        <li class="active"><a href="/">Home</a></li>
-                        <li> <span class="ion-ios-arrow-right"></span>Profile</li>
+                        <li class="active"><a href="/">Admin</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span>Create Movie</li>
                     </ul>
                 </div>
             </div>
@@ -27,40 +26,40 @@
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Title</label>
-                                <input id="title" type="text" placeholder="Title">
+                                <input asp-for="Title" id="title" type="text" placeholder="Title">
                             </div>
                             <div class="col-md-6 form-it">
                                 <label>Release Date</label>
-                                <input id="releaseDate" type="date">
+                                <input asp-for="ReleaseDate" id="releaseDate" type="date">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-it">
                                 <label>Country</label>
-                                <input id="country" type="text" placeholder="Country">
+                                <input asp-for="Country" id="country" type="text" placeholder="Country">
                             </div>
                             <div class="col-md-6 form-it">
                                 <label>Run time</label>
-                                <input id="runTime" type="number" placeholder="1">
+                                <input asp-for="Runtime" id="runTime" type="number" placeholder="1">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-it">
                                 <label>Image Url</label>
-                                <input id="imageUrl" type="text" placeholder="Image Url..">
+                                <input asp-for="ImageUrl" id="imageUrl" type="text" placeholder="Image Url..">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-it">
                                 <label>Trailer Url</label>
-                                <input id="trailerUrl" type="text" placeholder="Trailer Url..">
+                                <input asp-for="TrailerUrl" id="trailerUrl" type="text" placeholder="Trailer Url..">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 form-it">
                                 <label>Genres</label>
                                 <div class="group-ip">
-                                    <select name="genre" multiple="" class="ui fluid dropdown">
+                                    <select asp-for="GenreId" name="genreId" multiple="" class="ui fluid dropdown">
                                         <option value="">Enter to filter genres</option>
                                         @foreach (var genre in Model.Genres)
                                         {
@@ -74,42 +73,20 @@
                             <div class="col-md-12 form-it">
                                 <label>Plot</label>
                                 <div class="review-content">
-                                    <textarea class="form-control" id="plot" type="text" placeholder="Description" rows="4"></textarea>
+                                    <textarea asp-for="Description" class="form-control" id="plot" type="text" placeholder="Description" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <input class="submit" type="button" onclick="ChangeAdditionalInfojQuery()" value="save">
+                                <input class="submit" type="submit" value="save">
                             </div>
                         </div>
-                    </form>
-                    <form id="password" method="post" class="password">
-                        <h4>02. Change password</h4>
-                        <div class="row">
-                            <div class="col-md-6 form-it">
-                                <label>Old Password</label>
-                                <input id="oldPasswordInput" type="password" placeholder="**********" required="required">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-it">
-                                <label>New Password</label>
-                                <input id="newPasswordInput" type="password" placeholder="***************" required="required">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 form-it">
-                                <label>Confirm New Password</label>
-                                <input id="confirmPasswordInput" type="password" placeholder="***************" required="required">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input class="submit" type="button" onclick="ChangePass()" value="change">
-                            </div>
-                        </div>
+                        <span asp-validation-for="Title"></span>
+                        <span asp-validation-for="ReleaseDate"></span>
+                        <span asp-validation-for="ImageUrl"></span>
+                        <span asp-validation-for="GenreId"></span>
+                        <span asp-validation-for="Description"></span>
                     </form>
                 </div>
             </div>

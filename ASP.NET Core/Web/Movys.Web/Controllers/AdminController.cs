@@ -11,6 +11,7 @@
     using Movys.Common;
     using Movys.Data.Common.Repositories;
     using Movys.Data.Models;
+    using Movys.Services.Data;
     using Movys.Services.Mapping;
     using Movys.Web.ViewModels.Admin;
 
@@ -18,10 +19,12 @@
     public class AdminController : BaseController
     {
         private readonly IRepository<Genre> genresRepository;
+        private readonly IMoviesService moviesService;
 
-        public AdminController(IRepository<Genre> genresRepository)
+        public AdminController(IRepository<Genre> genresRepository, IMoviesService moviesService)
         {
             this.genresRepository = genresRepository;
+            this.moviesService = moviesService;
         }
 
         public async Task<IActionResult> AddMovie()
@@ -34,10 +37,15 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMovie(string hello)
+        public async Task<IActionResult> AddMovie(CreateMovieViewModel inputModel)
         {
-            // TODO
-            throw new NotImplementedException();
+            if (this.ModelState.IsValid)
+            {
+                var movieId = await this.moviesService.CreateMovie(inputModel.Title, inputModel.ReleaseDate, inputModel.ImageUrl, inputModel.GenreId, inputModel.Description, inputModel.Country, inputModel.Runtime, inputModel.TrailerUrl);
+                return this.Redirect($"/Movies/ById/{movieId}");
+            }
+
+            return this.View();
         }
     }
 }

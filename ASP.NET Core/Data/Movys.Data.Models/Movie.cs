@@ -11,15 +11,23 @@
         [Required]
         public string Title { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
+        [Required]
         public string ReleaseYear { get; set; }
 
+        [Required]
         public DateTime ReleaseDate { get; set; }
 
+        [Required]
         public string ImageUrl { get; set; }
 
         public string TrailerUrl { get; set; }
+
+        public string Country { get; set; }
+
+        public int? Runtime { get; set; }
 
         public virtual ICollection<MoviesCastMember> CastMembers { get; set; } = new HashSet<MoviesCastMember>();
 

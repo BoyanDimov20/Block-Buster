@@ -1,4 +1,4 @@
-﻿@using Movys.Common
+﻿    @using Movys.Common
 @using Movys.Data.Models
 @model Movys.Web.ViewModels.Movies.SingleMovieViewModel
 
@@ -150,13 +150,13 @@
                                                         <a asp-controller="Celebs" asp-action="ById" asp-route-id="@director.CastMemberId">@director.CastMemberName,</a>
                                                     }
                                                 </p>
-                                            </div>  
+                                            </div>
                                             <div class="sb-it">
                                                 <h6>Writer: </h6>
                                                 <p>
                                                     @foreach (var writer in Model.CastMembers.Where(x => x.RoleType == RoleType.Writer))
                                                     {
-                                                    <a asp-controller="Celebs" asp-action="ById" asp-route-id="@writer.CastMemberId">@writer.CastMemberName,</a>
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@writer.CastMemberId">@writer.CastMemberName,</a>
 
                                                     }
                                                 </p>
@@ -166,7 +166,7 @@
                                                 <p>
                                                     @foreach (var actor in Model.CastMembers.Where(x => x.RoleType == RoleType.Actor))
                                                     {
-                                                    <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName,</a>
+                                                        <a asp-controller="Celebs" asp-action="ById" asp-route-id="@actor.CastMemberId">@actor.CastMemberName,</a>
                                                     }
                                                 </p>
                                             </div>
@@ -183,10 +183,20 @@
                                                 <h6>Release Date:</h6>
                                                 <p>@Model.ReleaseYear</p>
                                             </div>
-                                            <div class="sb-it">
-                                                <h6>Run Time:</h6>
-                                                <p>141 min</p>
-                                            </div>
+                                            @if (Model.Runtime != null)
+                                            {
+                                                <div class="sb-it">
+                                                    <h6>Run Time:</h6>
+                                                    <p>@Model.Runtime min</p>
+                                                </div>
+                                            }
+                                            @if (Model.Country != null)
+                                            {
+                                                <div class="sb-it">
+                                                    <h6>Country:</h6>
+                                                    <p>@Model.Country</p>
+                                                </div>
+                                            }
                                             <div class="ads">
                                                 <img src="~/images/uploads/ads1.png" alt="">
                                             </div>
