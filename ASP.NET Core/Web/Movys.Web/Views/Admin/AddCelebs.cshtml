@@ -1,0 +1,95 @@
+﻿@model Movys.Web.ViewModels.Admin.CreateMovieViewModel
+
+<div class="hero user-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero-ct">
+                    <h1>Create Movie Form</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a href="/">Admin</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span>Create Movie</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-single">
+    <div class="container">
+        <div class="row ipad-width">
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="form-style-1 user-pro" action="#">
+                    <form method="post" class="user">
+                        <h4>01. Profile details</h4>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Title</label>
+                                <input asp-for="Title" id="title" type="text" placeholder="Title">
+                            </div>
+                            <div class="col-md-6 form-it">
+                                <label>Release Date</label>
+                                <input asp-for="ReleaseDate" id="releaseDate" type="date">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-it">
+                                <label>Country</label>
+                                <input asp-for="Country" id="country" type="text" placeholder="Country">
+                            </div>
+                            <div class="col-md-6 form-it">
+                                <label>Run time</label>
+                                <input asp-for="Runtime" id="runTime" type="number" placeholder="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Image Url</label>
+                                <input asp-for="ImageUrl" id="imageUrl" type="text" placeholder="Image Url..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Trailer Url</label>
+                                <input asp-for="TrailerUrl" id="trailerUrl" type="text" placeholder="Trailer Url..">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Genres</label>
+                                <div class="group-ip">
+                                    <select asp-for="GenreId" name="genreId" multiple="" class="ui fluid dropdown">
+                                        <option value="">Enter to filter genres</option>
+                                        @foreach (var genre in Model.Genres)
+                                        {
+                                            <option value="@genre.Id">@genre.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-it">
+                                <label>Plot</label>
+                                <div class="review-content">
+                                    <textarea asp-for="Description" class="form-control" id="plot" type="text" placeholder="Description" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input class="submit" type="submit" value="save">
+                            </div>
+                        </div>
+                        <span asp-validation-for="Title"></span>
+                        <span asp-validation-for="ReleaseDate"></span>
+                        <span asp-validation-for="ImageUrl"></span>
+                        <span asp-validation-for="GenreId"></span>
+                        <span asp-validation-for="Description"></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
